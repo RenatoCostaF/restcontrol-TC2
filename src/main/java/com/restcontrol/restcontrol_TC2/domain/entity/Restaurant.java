@@ -111,10 +111,12 @@ public class Restaurant {
             String state,
             String specialty,
             String ownerId
-    ) throws IllegalArgumentException {
-        if (name == null || zipcode == null || ownerId == null);
-    } {
-        if(!isValidZipCode(zipcode){
+    ) {
+        if (name == null || zipcode == null || ownerId == null){
+            throw new IllegalArgumentException("Name, zipcode and ownerId are required");
+        }
+
+        if(!isValidZipCode(zipcode)){
             throw new IllegalArgumentException("Review Zipcode");
         }
 

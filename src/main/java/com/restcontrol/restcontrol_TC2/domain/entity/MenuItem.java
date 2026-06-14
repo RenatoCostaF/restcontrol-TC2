@@ -7,7 +7,7 @@ public class MenuItem {
     private UUID id;
     private String name;
     private String description;
-    private String price;
+    private Double price;
     private Boolean availableForDelivery;
     private String imageUrl;
     private String restaurantId;
@@ -33,11 +33,11 @@ public class MenuItem {
         this.description = description;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -71,5 +71,35 @@ public class MenuItem {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public static Boolean canActivate(MenuItem item){
+        //TO IMPLEMENT LOGIC - CANT ACTIVATE UPON CERTAIN CONDITIONS
+        return true;
+    }
+
+    public static MenuItem create(
+            String name,
+            String description,
+            Double price,
+            Boolean availableForDelivery,
+            String imageUrl,
+            String restaurantId,
+            Boolean isActive
+    ) {
+        if (name == null){
+            throw new IllegalArgumentException("Name is required");
+        }
+
+        MenuItem item = new MenuItem();
+        item.name = name;
+        item.description = description;
+        item.price = price;
+        item.availableForDelivery = availableForDelivery;
+        item.imageUrl= imageUrl;
+        item.isActive = isActive;
+        item.restaurantId = restaurantId;
+
+        return item;
     }
 }
