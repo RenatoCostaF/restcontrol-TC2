@@ -1,5 +1,7 @@
 package com.restcontrol.restcontrol_TC2.domain.entity;
 
+import com.restcontrol.restcontrol_TC2.domain.exception.InvalidRestaurantException;
+
 import java.util.UUID;
 
 public class Restaurant {
@@ -13,7 +15,7 @@ public class Restaurant {
     private String specialty;
     private String ownerId;
 
-    public Restaurant(){
+    public Restaurant() {
 
     }
 
@@ -26,7 +28,7 @@ public class Restaurant {
             String state,
             String specialty,
             String ownerId
-    ){
+    ) {
         this.name = name;
         this.city = city;
         this.zipcode = zipcode;
@@ -96,10 +98,11 @@ public class Restaurant {
         this.ownerId = ownerId;
     }
 
-    private static boolean isValidZipCode(String zipcode){
+    private static boolean isValidZipCode(String zipcode) {
         return zipcode.length() == 5;
     }
-    private static boolean isValidState(String state){
+
+    private static boolean isValidState(String state) {
         return state.length() == 2;
     }
 
@@ -112,16 +115,16 @@ public class Restaurant {
             String specialty,
             String ownerId
     ) {
-        if (name == null || zipcode == null || ownerId == null){
-            throw new IllegalArgumentException("Name, zipcode and ownerId are required");
+        if (name == null || zipcode == null || ownerId == null) {
+            throw new InvalidRestaurantException("Name, zipcode and ownerId are required");
         }
 
-        if(!isValidZipCode(zipcode)){
-            throw new IllegalArgumentException("Review Zipcode");
+        if (!isValidZipCode(zipcode)) {
+            throw new InvalidRestaurantException("Review Zipcode");
         }
 
-        if (!isValidState(state)){
-            throw new IllegalArgumentException("Review State");
+        if (!isValidState(state)) {
+            throw new InvalidRestaurantException("Review State");
         }
 
         Restaurant restaurant = new Restaurant();

@@ -1,5 +1,7 @@
 package com.restcontrol.restcontrol_TC2.domain.entity;
 
+import com.restcontrol.restcontrol_TC2.domain.exception.InvalidMenuItemException;
+
 import java.util.UUID;
 
 public class MenuItem {
@@ -73,7 +75,7 @@ public class MenuItem {
         isActive = active;
     }
 
-    public static Boolean canActivate(MenuItem item){
+    public static Boolean canActivate(MenuItem item) {
         //TO IMPLEMENT LOGIC - CANT ACTIVATE UPON CERTAIN CONDITIONS
         return true;
     }
@@ -87,8 +89,8 @@ public class MenuItem {
             String restaurantId,
             Boolean isActive
     ) {
-        if (name == null){
-            throw new IllegalArgumentException("Name is required");
+        if (name == null) {
+            throw new InvalidMenuItemException("Name is required");
         }
 
         MenuItem item = new MenuItem();
@@ -96,7 +98,7 @@ public class MenuItem {
         item.description = description;
         item.price = price;
         item.availableForDelivery = availableForDelivery;
-        item.imageUrl= imageUrl;
+        item.imageUrl = imageUrl;
         item.isActive = isActive;
         item.restaurantId = restaurantId;
 
