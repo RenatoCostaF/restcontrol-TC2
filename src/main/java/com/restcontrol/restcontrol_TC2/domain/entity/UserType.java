@@ -11,7 +11,10 @@ public class UserType {
     public UserType() {
     }
 
-    public UserType(UUID id, String name) {
+    public UserType(
+            UUID id,
+            String name
+    ) {
         this.id = id;
         this.name = name;
     }
