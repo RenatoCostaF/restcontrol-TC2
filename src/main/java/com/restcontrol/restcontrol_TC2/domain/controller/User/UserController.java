@@ -1,9 +1,9 @@
 package com.restcontrol.restcontrol_TC2.domain.controller.User;
 
-import com.restcontrol.restcontrol_TC2.domain.dto.User.Request.UpdateUserRequestDTO;
-import com.restcontrol.restcontrol_TC2.domain.dto.User.Request.UserRequestDTO;
-import com.restcontrol.restcontrol_TC2.domain.dto.User.Response.UpdateUserResponseDTO;
-import com.restcontrol.restcontrol_TC2.domain.dto.User.Response.UserResponseDTO;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input.UpdateUserInput;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input.UserInput;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Output.UpdateUserOutput;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Output.UserOutput;
 import com.restcontrol.restcontrol_TC2.domain.useCase.User.CreateUserUseCase;
 import com.restcontrol.restcontrol_TC2.domain.useCase.User.DeleteUserUseCase;
 import com.restcontrol.restcontrol_TC2.domain.useCase.User.GetByIdUserUseCase;
@@ -25,30 +25,30 @@ public class UserController {
         this.deleteUserUseCase = deleteUserUseCase;
     }
 
-    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
-        var response = createUserUseCase.execute(userRequestDTO);
+    public UserOutput createUser(UserInput userInput) {
+        var response = createUserUseCase.execute(userInput);
 
-        return new UserResponseDTO(
+        return new UserOutput(
                 response.getName(),
                 response.getEmail(),
                 response.getUserType()
         );
     }
 
-    public UserResponseDTO getByIdUser(UUID id) {
+    public UserOutput getByIdUser(UUID id) {
         var response = getByIdUserUseCase.execute(id);
 
-        return new UserResponseDTO(
+        return new UserOutput(
                 response.getName(),
                 response.getEmail(),
                 response.getUserType()
         );
     }
 
-    public UpdateUserResponseDTO updateUser(UpdateUserRequestDTO updateUserRequestDTO, UUID id) {
-        var response = updateUserUseCase.execute(updateUserRequestDTO, id);
+    public UpdateUserOutput updateUser(UpdateUserInput updateUserInput, UUID id) {
+        var response = updateUserUseCase.execute(updateUserInput, id);
 
-        return new UpdateUserResponseDTO(
+        return new UpdateUserOutput(
                 response.getName(),
                 response.getEmail(),
                 response.getUserType()

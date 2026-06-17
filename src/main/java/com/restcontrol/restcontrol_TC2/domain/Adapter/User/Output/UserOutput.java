@@ -1,11 +1,10 @@
-package com.restcontrol.restcontrol_TC2.domain.dto.User.Request;
+package com.restcontrol.restcontrol_TC2.domain.Adapter.User.Output;
 
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 
-public record UpdateUserRequestDTO(
+public record UserOutput(
         String name,
         String email,
-        String password,
         UserType userType
 ) {
 }

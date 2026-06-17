@@ -1,6 +1,6 @@
 package com.restcontrol.restcontrol_TC2.domain.useCase.User;
 
-import com.restcontrol.restcontrol_TC2.domain.dto.User.Request.UpdateUserRequestDTO;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input.UpdateUserInput;
 import com.restcontrol.restcontrol_TC2.domain.entity.User;
 import com.restcontrol.restcontrol_TC2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.GetByIdUserInterface;
@@ -21,7 +21,7 @@ public class UpdateUserUseCase {
     }
 
 
-    public User execute(UpdateUserRequestDTO updateUserRequestDTO, UUID id) {
+    public User execute(UpdateUserInput updateUserInput, UUID id) {
         var user = getByIdUserGateway.getById(id);
 
         if (user.isEmpty()) {
@@ -31,20 +31,20 @@ public class UpdateUserUseCase {
         var currentUser = user.get();
 
         var newUser = User.create(
-                updateUserRequestDTO.name() != null && !updateUserRequestDTO.name().isBlank()
-                        ? updateUserRequestDTO.name()
+                updateUserInput.name() != null && !updateUserInput.name().isBlank()
+                        ? updateUserInput.name()
                         : currentUser.getName(),
 
-                updateUserRequestDTO.email() != null && !updateUserRequestDTO.email().isBlank()
-                        ? updateUserRequestDTO.email()
+                updateUserInput.email() != null && !updateUserInput.email().isBlank()
+                        ? updateUserInput.email()
                         : currentUser.getEmail(),
 
-                updateUserRequestDTO.password() != null && !updateUserRequestDTO.password().isBlank()
-                        ? updateUserRequestDTO.password()
+                updateUserInput.password() != null && !updateUserInput.password().isBlank()
+                        ? updateUserInput.password()
                         : currentUser.getPassword(),
 
-                updateUserRequestDTO.userType() != null
-                        ? updateUserRequestDTO.userType()
+                updateUserInput.userType() != null
+                        ? updateUserInput.userType()
                         : currentUser.getUserType()
         );
 

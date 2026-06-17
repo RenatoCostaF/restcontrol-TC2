@@ -1,10 +1,11 @@
-package com.restcontrol.restcontrol_TC2.domain.dto.User.Response;
+package com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input;
 
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 
-public record UpdateUserResponseDTO(
+public record UserInput(
         String name,
         String email,
+        String password,
         UserType userType
 ) {
 }
