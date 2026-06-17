@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_TC2.domain.dto.User;
+package com.restcontrol.restcontrol_TC2.domain.dto.User.Request;
 
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 

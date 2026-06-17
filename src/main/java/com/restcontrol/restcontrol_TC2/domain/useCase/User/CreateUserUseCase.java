@@ -1,25 +1,26 @@
 package com.restcontrol.restcontrol_TC2.domain.useCase.User;
 
-import com.restcontrol.restcontrol_TC2.domain.dto.User.NewUserRequestDTO;
+import com.restcontrol.restcontrol_TC2.domain.dto.User.Request.UserRequestDTO;
 import com.restcontrol.restcontrol_TC2.domain.entity.User;
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.CreateUserInterface;
 
 public class CreateUserUseCase {
 
-    private final CreateUserInterface createUserInterface;
+    private final CreateUserInterface createUserGateway;
 
-    public CreateUserUseCase(CreateUserInterface createUserInterface) {
-        this.createUserInterface = createUserInterface;
+    public CreateUserUseCase(CreateUserInterface createUserGateway) {
+        this.createUserGateway = createUserGateway;
     }
 
-    public void execute(NewUserRequestDTO userRequest) {
+    public User execute(UserRequestDTO userRequestDTO) {
+
         var newUser = User.create(
-                userRequest.name(),
-                userRequest.email(),
-                userRequest.password(),
-                userRequest.userType()
+                userRequestDTO.name(),
+                userRequestDTO.email(),
+                userRequestDTO.password(),
+                userRequestDTO.userType()
         );
 
-        createUserInterface.createUser(newUser);
+        return createUserGateway.createUser(newUser);
     }
 }

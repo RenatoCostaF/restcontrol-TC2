@@ -8,17 +8,6 @@ public class UserType {
     private UUID id;
     private String name;
 
-    public UserType() {
-    }
-
-    public UserType(
-            UUID id,
-            String name
-    ) {
-        this.id = id;
-        this.name = name;
-    }
-
     public UUID getId() {
         return id;
     }
@@ -32,13 +21,22 @@ public class UserType {
     }
 
     public void setName(String name) {
+        isValidName(name);
         this.name = name;
     }
 
-    public static UserType create(UUID id, String name) {
+
+    private static void isValidName(String name) {
         if (name == null) {
             throw new InvalidUserTypeException("Name is required");
         }
+    }
+
+    public static UserType create(
+            UUID id,
+            String name
+    ) {
+        isValidName(name);
 
         UserType userType = new UserType();
         userType.setId(id);
@@ -47,3 +45,4 @@ public class UserType {
         return userType;
     }
 }
+

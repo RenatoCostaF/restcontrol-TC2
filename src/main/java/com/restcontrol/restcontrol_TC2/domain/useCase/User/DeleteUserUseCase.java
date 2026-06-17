@@ -6,13 +6,13 @@ import java.util.UUID;
 
 public class DeleteUserUseCase {
 
-    private final DeleteUserInterface deleteUserInterface;
+    private final DeleteUserInterface deleteUserGateway;
 
-    public DeleteUserUseCase(DeleteUserInterface deleteUserInterface) {
-        this.deleteUserInterface = deleteUserInterface;
+    public DeleteUserUseCase(DeleteUserInterface deleteUserGateway) {
+        this.deleteUserGateway = deleteUserGateway;
     }
 
     public void execute(UUID id) {
-        deleteUserInterface.deleteUser(id);
+        deleteUserGateway.deleteUser(id);
     }
 }
