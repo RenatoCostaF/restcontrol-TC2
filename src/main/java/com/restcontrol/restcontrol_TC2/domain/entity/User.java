@@ -15,12 +15,10 @@ public class User {
     }
 
     public User(
-            UUID id,
             String name,
             String email, String password,
             UserType userType
     ) {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -78,7 +76,7 @@ public class User {
     }
 
     public static User create(
-            UUID id, String name,
+            String name,
             String email,
             String password,
             UserType userType
@@ -96,7 +94,6 @@ public class User {
         }
 
         User user = new User();
-        user.setId(id);
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
@@ -104,4 +101,5 @@ public class User {
 
         return user;
     }
+
 }
