@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_TC2.domain.Adapter.User.Output;
+package com.restcontrol.restcontrol_TC2.domain.adapter.User.Output;
 
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 

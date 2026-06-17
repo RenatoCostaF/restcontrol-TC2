@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input;
+package com.restcontrol.restcontrol_TC2.domain.adapter.User.Input;
 
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 
