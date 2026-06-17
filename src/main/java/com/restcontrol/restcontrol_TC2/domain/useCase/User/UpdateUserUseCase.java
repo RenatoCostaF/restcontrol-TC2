@@ -12,12 +12,10 @@ public class UpdateUserUseCase {
 
     private final UpdateUserInterface updateUserGateway;
     private final GetByIdUserInterface getByIdUserGateway;
-    private final UpdateUserInterface getUpdateUserGateway;
 
-    public UpdateUserUseCase(UpdateUserInterface updateUserGateway, GetByIdUserInterface getByIdUserGateway, UpdateUserInterface getUpdateUserGateway) {
+    public UpdateUserUseCase(UpdateUserInterface updateUserGateway, GetByIdUserInterface getByIdUserGateway) {
         this.updateUserGateway = updateUserGateway;
         this.getByIdUserGateway = getByIdUserGateway;
-        this.getUpdateUserGateway = getUpdateUserGateway;
     }
 
 
@@ -48,6 +46,6 @@ public class UpdateUserUseCase {
                         : currentUser.getUserType()
         );
 
-        return getUpdateUserGateway.updateUser(newUser, id);
+        return updateUserGateway.updateUser(newUser, id);
     }
 }
