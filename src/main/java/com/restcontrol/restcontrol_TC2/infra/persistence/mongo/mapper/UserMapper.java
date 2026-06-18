@@ -5,13 +5,14 @@ import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.entity.UserDocument;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
-@Component
+@Component("mongoUserMapper")
 public class UserMapper {
 
     public UserDocument toDocument(User user) {
         UserDocument document = new UserDocument();
+        if (user.getId() != null) {
+            document.setId(user.getId());
+        }
         document.setName(user.getName());
         document.setEmail(user.getEmail());
         document.setPassword(user.getPassword());

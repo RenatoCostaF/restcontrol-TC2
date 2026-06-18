@@ -7,7 +7,6 @@ import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.repository.UserRe
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class GetByIdUserGateway implements GetByIdUserInterface {
@@ -21,7 +20,7 @@ public class GetByIdUserGateway implements GetByIdUserInterface {
     }
 
     @Override
-    public Optional<User> getById(UUID id) {
+    public Optional<User> getById(String id) {
         return userRepository.findById(id).map(userMapper::toDomain);
     }
 }

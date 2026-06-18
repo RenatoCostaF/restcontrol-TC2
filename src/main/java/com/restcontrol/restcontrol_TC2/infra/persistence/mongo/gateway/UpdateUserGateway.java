@@ -7,8 +7,6 @@ import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.mapper.UserMapper
 import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class UpdateUserGateway implements UpdateUserInterface {
 
@@ -21,7 +19,7 @@ public class UpdateUserGateway implements UpdateUserInterface {
     }
 
     @Override
-    public User updateUser(User user, UUID id) {
+    public User updateUser(User user, String id) {
         UserDocument document = userMapper.toDocument(user);
         document.setId(id);
 

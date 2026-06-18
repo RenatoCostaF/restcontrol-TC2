@@ -11,8 +11,6 @@ import com.restcontrol.restcontrol_TC2.domain.useCase.User.GetByIdUserUseCase;
 import com.restcontrol.restcontrol_TC2.domain.useCase.User.UpdateUserUseCase;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
@@ -44,7 +42,7 @@ public class UserController {
     public UserResponseDTO getById(
             @PathVariable String id
     ) {
-        var user = getByIdUserUseCase.execute(UUID.fromString(id));
+        var user = getByIdUserUseCase.execute(id);
         return userMapper.toUserResponseDTO(user);
     }
 
@@ -54,13 +52,13 @@ public class UserController {
             @RequestBody UpdateUserRequestDTO updateUserRequestDTO
     ) {
         var updateUserInput = userMapper.toUpdateUserInput(updateUserRequestDTO);
-        var user = updateUserUseCase.execute(updateUserInput, UUID.fromString(id));
+        var user = updateUserUseCase.execute(updateUserInput, id);
         return userMapper.toUpdateUserResponseDTO(user);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
-            @PathVariable UUID id
+            @PathVariable String id
     ) {
         deleteUserUseCase.execute(id);
     }

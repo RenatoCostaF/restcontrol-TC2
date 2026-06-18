@@ -6,8 +6,6 @@ import com.restcontrol.restcontrol_TC2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.GetByIdUserInterface;
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.UpdateUserInterface;
 
-import java.util.UUID;
-
 public class UpdateUserUseCase {
 
     private final UpdateUserInterface updateUserGateway;
@@ -19,7 +17,7 @@ public class UpdateUserUseCase {
     }
 
 
-    public User execute(UpdateUserInput updateUserInput, UUID id) {
+    public User execute(UpdateUserInput updateUserInput, String id) {
         var user = getByIdUserGateway.getById(id);
 
         if (user.isEmpty()) {

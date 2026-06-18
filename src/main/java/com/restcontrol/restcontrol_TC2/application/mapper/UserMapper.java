@@ -12,7 +12,7 @@ import com.restcontrol.restcontrol_TC2.domain.entity.User;
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("applicationUserMapper")
 public class UserMapper {
 
     public UserInput toUserInput(UserRequestDTO requestDTO) {

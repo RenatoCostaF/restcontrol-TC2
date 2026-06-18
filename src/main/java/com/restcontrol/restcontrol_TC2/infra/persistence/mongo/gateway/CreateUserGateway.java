@@ -21,8 +21,7 @@ public class CreateUserGateway implements CreateUserInterface {
     @Override
     public User createUser(User user) {
         UserDocument document = userMapper.toDocument(user);
-        userRepository.save(document);
-
-        return userMapper.toDomain(document);
+        UserDocument savedDocument = userRepository.save(document);
+        return userMapper.toDomain(savedDocument);
     }
 }

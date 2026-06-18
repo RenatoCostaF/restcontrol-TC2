@@ -4,8 +4,6 @@ import com.restcontrol.restcontrol_TC2.domain.gateway.User.DeleteUserInterface;
 import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class DeleteUserGateway implements DeleteUserInterface {
 
@@ -16,7 +14,7 @@ public class DeleteUserGateway implements DeleteUserInterface {
     }
 
     @Override
-    public void deleteUser(UUID id) {
+    public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
 }

@@ -3,24 +3,22 @@ package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.UUID;
-
 @Document(collection = "users")
 public class UserDocument {
 
     @Id
-    private UUID id;
+    private String id;
     private String name;
     private String email;
     private String password;
-    private UUID userTypeId;
+    private String userTypeId;
     private String userTypeName;
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,11 +46,11 @@ public class UserDocument {
         this.password = password;
     }
 
-    public UUID getUserTypeId() {
+    public String getUserTypeId() {
         return userTypeId;
     }
 
-    public void setUserTypeId(UUID userTypeId) {
+    public void setUserTypeId(String userTypeId) {
         this.userTypeId = userTypeId;
     }
 
