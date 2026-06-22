@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_TC2.application.controller;
+package com.restcontrol.restcontrol_TC2.application.controller.User;
 
 import com.restcontrol.restcontrol_TC2.application.dto.User.request.UpdateUserRequestDTO;
 import com.restcontrol.restcontrol_TC2.application.dto.User.request.UserRequestDTO;

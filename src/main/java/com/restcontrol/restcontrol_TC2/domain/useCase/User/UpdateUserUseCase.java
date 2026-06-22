@@ -1,6 +1,6 @@
 package com.restcontrol.restcontrol_TC2.domain.useCase.User;
 
-import com.restcontrol.restcontrol_TC2.domain.adapter.User.Input.UpdateUserInput;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input.UpdateUserInput;
 import com.restcontrol.restcontrol_TC2.domain.entity.User;
 import com.restcontrol.restcontrol_TC2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.GetByIdUserInterface;
