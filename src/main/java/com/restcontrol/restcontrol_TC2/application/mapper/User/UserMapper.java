@@ -1,7 +1,7 @@
 package com.restcontrol.restcontrol_TC2.application.mapper.User;
 
-import com.restcontrol.restcontrol_TC2.application.dto.User.request.UpdateUserRequestDTO;
 import com.restcontrol.restcontrol_TC2.application.dto.User.request.UserRequestDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.User.request.UpdateUserRequestDTO;
 import com.restcontrol.restcontrol_TC2.application.dto.UserType.request.UserTypeRequestDTO;
 import com.restcontrol.restcontrol_TC2.application.dto.User.response.UpdateUserResponseDTO;
 import com.restcontrol.restcontrol_TC2.application.dto.User.response.UserResponseDTO;
@@ -50,9 +50,13 @@ public class UserMapper {
     }
 
     private UserType toUserType(UserTypeRequestDTO dto) {
-        return UserType.create(
-                dto.name()
-        );
+        UserType userType = UserType.create(dto.name());
+
+        if (dto.id() != null) {
+            userType.setId(dto.id());
+        }
+
+        return userType;
     }
 
     private UserTypeResponseDTO toUserTypeResponseDTO(UserType userType) {
