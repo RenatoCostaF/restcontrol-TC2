@@ -22,10 +22,11 @@ public class UserMapper {
     }
 
     public User toDomain(UserDocument document) {
-        UserType userType = UserType.create(
-                document.getUserTypeId(),
-                document.getUserTypeName()
-        );
+        UserType userType = UserType.create(document.getUserTypeName());
+
+        if (document.getUserTypeId() != null) {
+            userType.setId(document.getUserTypeId());
+        }
 
         User user = User.create(
                 document.getName(),
