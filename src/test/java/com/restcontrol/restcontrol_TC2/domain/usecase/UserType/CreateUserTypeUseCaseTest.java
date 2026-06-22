@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 import com.restcontrol.restcontrol_TC2.domain.exception.InvalidUserTypeException;
 import com.restcontrol.restcontrol_TC2.domain.gateway.UserType.CreateUserTypeInterface;
 import com.restcontrol.restcontrol_TC2.domain.useCase.UserType.CreateUserTypeUseCase;
-import com.restcontrol.restcontrol_TC2.testsupport.DomainFixtures;
+import com.restcontrol.restcontrol_TC2.testSupport.DomainFixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

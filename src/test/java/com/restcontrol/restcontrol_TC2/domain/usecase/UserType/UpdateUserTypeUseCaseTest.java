@@ -6,7 +6,7 @@ import com.restcontrol.restcontrol_TC2.domain.exception.UserTypeNotFoundExceptio
 import com.restcontrol.restcontrol_TC2.domain.gateway.UserType.GetByIdUserTypeInterface;
 import com.restcontrol.restcontrol_TC2.domain.gateway.UserType.UpdateUserTypeInterface;
 import com.restcontrol.restcontrol_TC2.domain.useCase.UserType.UpdateUserTypeUseCase;
-import com.restcontrol.restcontrol_TC2.testsupport.DomainFixtures;
+import com.restcontrol.restcontrol_TC2.testSupport.DomainFixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

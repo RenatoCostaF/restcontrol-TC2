@@ -3,7 +3,7 @@ package com.restcontrol.restcontrol_TC2.domain.usecase.UserType;
 import com.restcontrol.restcontrol_TC2.domain.exception.UserTypeNotFoundException;
 import com.restcontrol.restcontrol_TC2.domain.gateway.UserType.GetByIdUserTypeInterface;
 import com.restcontrol.restcontrol_TC2.domain.useCase.UserType.GetByIdUserTypeUseCase;
-import com.restcontrol.restcontrol_TC2.testsupport.DomainFixtures;
+import com.restcontrol.restcontrol_TC2.testSupport.DomainFixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
