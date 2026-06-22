@@ -15,10 +15,8 @@ public class UserTest {
         var email = "test@gmail.com";
         var password = "password123";
         var randomUUID = UUID.randomUUID();
-        var userType = UserType.create(
-                randomUUID,
-                "Has full access to the system"
-        );
+        var userType = UserType.create("Has full access to the system");
+        userType.setId(randomUUID.toString());
 
         var user = User.create(
                 name,
