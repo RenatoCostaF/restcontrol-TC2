@@ -1,10 +1,10 @@
 package com.restcontrol.restcontrol_TC2.application.controller;
 
-import com.restcontrol.restcontrol_TC2.application.dto.request.UpdateUserRequestDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.request.UserRequestDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.response.UpdateUserResponseDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.response.UserResponseDTO;
-import com.restcontrol.restcontrol_TC2.application.mapper.UserMapper;
+import com.restcontrol.restcontrol_TC2.application.dto.User.request.UpdateUserRequestDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.User.request.UserRequestDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.User.response.UpdateUserResponseDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.User.response.UserResponseDTO;
+import com.restcontrol.restcontrol_TC2.application.mapper.User.UserMapper;
 import com.restcontrol.restcontrol_TC2.domain.useCase.User.CreateUserUseCase;
 import com.restcontrol.restcontrol_TC2.domain.useCase.User.DeleteUserUseCase;
 import com.restcontrol.restcontrol_TC2.domain.useCase.User.GetByIdUserUseCase;

@@ -1,13 +1,13 @@
-package com.restcontrol.restcontrol_TC2.application.mapper;
+package com.restcontrol.restcontrol_TC2.application.mapper.User;
 
-import com.restcontrol.restcontrol_TC2.application.dto.request.UpdateUserRequestDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.request.UserRequestDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.request.UserTypeRequestDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.response.UpdateUserResponseDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.response.UserResponseDTO;
-import com.restcontrol.restcontrol_TC2.application.dto.response.UserTypeResponseDTO;
-import com.restcontrol.restcontrol_TC2.domain.adapter.User.Input.UpdateUserInput;
-import com.restcontrol.restcontrol_TC2.domain.adapter.User.Input.UserInput;
+import com.restcontrol.restcontrol_TC2.application.dto.User.request.UpdateUserRequestDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.User.request.UserRequestDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.UserType.request.UserTypeRequestDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.User.response.UpdateUserResponseDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.User.response.UserResponseDTO;
+import com.restcontrol.restcontrol_TC2.application.dto.UserType.response.UserTypeResponseDTO;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input.UpdateUserInput;
+import com.restcontrol.restcontrol_TC2.domain.Adapter.User.Input.UserInput;
 import com.restcontrol.restcontrol_TC2.domain.entity.User;
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;
 import org.springframework.stereotype.Component;
@@ -51,7 +51,6 @@ public class UserMapper {
 
     private UserType toUserType(UserTypeRequestDTO dto) {
         return UserType.create(
-                dto.id(),
                 dto.name()
         );
     }
