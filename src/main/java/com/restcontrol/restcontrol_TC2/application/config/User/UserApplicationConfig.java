@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_TC2.application.config;
+package com.restcontrol.restcontrol_TC2.application.config.User;
 
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.CreateUserInterface;
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.DeleteUserInterface;
