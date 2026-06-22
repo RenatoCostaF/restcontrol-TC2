@@ -30,14 +30,10 @@ public class UserType {
         }
     }
 
-    public static UserType create(
-            String id,
-            String name
-    ) {
+    public static UserType create(String name) {
         isValidName(name);
 
         UserType userType = new UserType();
-        userType.setId(id);
         userType.setName(name);
 
         return userType;
