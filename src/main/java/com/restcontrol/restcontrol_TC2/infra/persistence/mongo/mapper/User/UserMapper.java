@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.mapper;
+package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.mapper.User;
 
 import com.restcontrol.restcontrol_TC2.domain.entity.User;
 import com.restcontrol.restcontrol_TC2.domain.entity.UserType;

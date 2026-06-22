@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.gateway;
+package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.gateway.User;
 
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.DeleteUserInterface;
 import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.repository.UserRepository;

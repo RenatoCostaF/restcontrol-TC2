@@ -1,8 +1,8 @@
-package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.gateway;
+package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.gateway.User;
 
 import com.restcontrol.restcontrol_TC2.domain.entity.User;
 import com.restcontrol.restcontrol_TC2.domain.gateway.User.GetByIdUserInterface;
-import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.mapper.UserMapper;
+import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.mapper.User.UserMapper;
 import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
