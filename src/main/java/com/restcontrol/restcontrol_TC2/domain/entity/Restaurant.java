@@ -103,6 +103,9 @@ public class Restaurant {
         return state.length() == 2;
     }
 
+    private static boolean isValidZipCode(String zipcode) {
+        return zipcode.length() == 8;
+    }
     public static Restaurant create(
             String name,
             String city,
