@@ -17,10 +17,6 @@ public class MenuItem {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -97,6 +93,24 @@ public class MenuItem {
         return true;
     }
 
+    private static void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new InvalidMenuItemException("Name is required");
+        }
+    }
+
+    private static void validatePrice(Double price) {
+        if (price == null || price <= 0) {
+            throw new InvalidMenuItemException("Price must be greater than zero");
+        }
+    }
+
+    private static void validateRestaurantId(String restaurantId) {
+        if (restaurantId == null || restaurantId.isBlank()) {
+            throw new InvalidMenuItemException("Restaurant id is required");
+        }
+    }
+
     public static MenuItem create(
             String name,
             String description,
@@ -126,21 +140,4 @@ public class MenuItem {
         return item;
     }
 
-    private static void validateName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new InvalidMenuItemException("Name is required");
-        }
-    }
-
-    private static void validatePrice(Double price) {
-        if (price == null || price <= 0) {
-            throw new InvalidMenuItemException("Price must be greater than zero");
-        }
-    }
-
-    private static void validateRestaurantId(String restaurantId) {
-        if (restaurantId == null || restaurantId.isBlank()) {
-            throw new InvalidMenuItemException("Restaurant id is required");
-        }
-    }
 }

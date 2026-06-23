@@ -2,15 +2,17 @@ package com.restcontrol.restcontrol_TC2.domain.entity;
 
 import com.restcontrol.restcontrol_TC2.domain.exception.InvalidUserTypeException;
 
+import java.util.UUID;
+
 public class UserType {
-    private String id;
+    private UUID id;
     private String name;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -22,7 +24,6 @@ public class UserType {
         isValidName(name);
         this.name = name;
     }
-
 
     private static void isValidName(String name) {
         if (name == null) {

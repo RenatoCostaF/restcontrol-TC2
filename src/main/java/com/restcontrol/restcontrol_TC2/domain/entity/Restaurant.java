@@ -15,31 +15,12 @@ public class Restaurant {
     private String specialty;
     private String ownerId;
 
-    public Restaurant() {
-
-    }
-
-    public Restaurant(
-            UUID id,
-            String name,
-            String city,
-            String zipcode,
-            String street,
-            String state,
-            String specialty,
-            String ownerId
-    ) {
-        this.name = name;
-        this.city = city;
-        this.zipcode = zipcode;
-        this.street = street;
-        this.state = state;
-        this.specialty = specialty;
-        this.ownerId = ownerId;
-    }
-
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -99,13 +80,30 @@ public class Restaurant {
     }
 
 
-    private static boolean isValidState(String state) {
-        return state.length() == 2;
+    private static void isValidName(String name) {
+        if (name == null) {
+            throw new InvalidRestaurantException("Name cannot be null");
+        }
     }
 
-    private static boolean isValidZipCode(String zipcode) {
-        return zipcode.length() == 8;
+    private static void isValidOwnerId(String ownerId) {
+        if (ownerId == null) {
+            throw new InvalidRestaurantException("OwnerId cannot be null");
+        }
     }
+
+    private static void isValidState(String state) {
+        if (state.length() != 2) {
+            throw new InvalidRestaurantException("Review State");
+        }
+    }
+
+    private static void isValidZipCode(String zipcode) {
+        if (zipcode.length() != 8) {
+            throw new InvalidRestaurantException("Review Zipcode");
+        }
+    }
+
     public static Restaurant create(
             String name,
             String city,
@@ -115,17 +113,11 @@ public class Restaurant {
             String specialty,
             String ownerId
     ) {
-        if (name == null || zipcode == null || ownerId == null) {
-            throw new InvalidRestaurantException("Name, zipcode and ownerId are required");
-        }
 
-        if (!isValidZipCode(zipcode)) {
-            throw new InvalidRestaurantException("Review Zipcode");
-        }
-
-        if (!isValidState(state)) {
-            throw new InvalidRestaurantException("Review State");
-        }
+        isValidOwnerId(ownerId);
+        isValidName(name);
+        isValidZipCode(zipcode);
+        isValidState(state);
 
         Restaurant restaurant = new Restaurant();
         restaurant.name = name;

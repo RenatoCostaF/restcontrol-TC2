@@ -2,14 +2,16 @@ package com.restcontrol.restcontrol_TC2.domain.entity;
 
 import com.restcontrol.restcontrol_TC2.domain.exception.InvalidUserException;
 
+import java.util.UUID;
+
 public class User {
-    private String id;
+    private UUID id;
     private String name;
     private String email;
     private String password;
-    private UserType userType;
+    private String userTypeId;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -25,11 +27,11 @@ public class User {
         return password;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public String getUserTypeId() {
+        return userTypeId;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -48,9 +50,9 @@ public class User {
         this.password = password;
     }
 
-    public void setUserType(UserType userType) {
-        isValidUserType(userType);
-        this.userType = userType;
+    public void setUserTypeId(String userTypeId) {
+        isValidUserTypeId(userTypeId);
+        this.userTypeId = userTypeId;
     }
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
@@ -67,8 +69,8 @@ public class User {
         }
     }
 
-    private static void isValidUserType(UserType userType) {
-        if (userType == null) {
+    private static void isValidUserTypeId(String userTypeId) {
+        if (userTypeId == null) {
             throw new InvalidUserException("User type cannot be null");
         }
     }
@@ -83,18 +85,18 @@ public class User {
             String name,
             String email,
             String password,
-            UserType userType
+            String userType
     ) {
         isValidName(name);
         isValidEmail(email);
         isValidPassword(password);
-        isValidUserType(userType);
+        isValidUserTypeId(userType);
 
         User user = new User();
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
-        user.setUserType(userType);
+        user.setUserTypeId(userType);
 
         return user;
     }

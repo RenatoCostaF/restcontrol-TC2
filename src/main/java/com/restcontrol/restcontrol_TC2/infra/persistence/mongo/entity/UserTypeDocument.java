@@ -1,5 +1,6 @@
 package com.restcontrol.restcontrol_TC2.infra.persistence.mongo.entity;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,15 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class UserTypeDocument {
 
     @Id
-    private String id;
+    private ObjectId id;
     private String name;
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
