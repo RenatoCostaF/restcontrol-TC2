@@ -98,14 +98,14 @@ public class Restaurant {
         this.ownerId = ownerId;
     }
 
-    private static boolean isValidZipCode(String zipcode) {
-        return zipcode.length() == 5;
-    }
 
     private static boolean isValidState(String state) {
         return state.length() == 2;
     }
 
+    private static boolean isValidZipCode(String zipcode) {
+        return zipcode.length() == 8;
+    }
     public static Restaurant create(
             String name,
             String city,
