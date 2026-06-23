@@ -15,6 +15,9 @@ public class UserTypeMapper {
 
     public UserTypeDocument toDocument(UserType userType) {
         UserTypeDocument document = new UserTypeDocument();
+        if (userType.getId() != null && !userType.getId().isBlank()) {
+            document.setId(new org.bson.types.ObjectId(userType.getId()));
+        }
         document.setName(userType.getName());
         return document;
     }
@@ -23,6 +26,9 @@ public class UserTypeMapper {
         UserType userType = UserType.create(
                 document.getName()
         );
+        if (document.getId() != null) {
+            userType.setId(document.getId().toHexString());
+        }
         return userType;
     }
 
@@ -36,14 +42,14 @@ public class UserTypeMapper {
 
     public UserTypeResponseDTO toUserTypeResponseDTO(UserType userType) {
         return new UserTypeResponseDTO(
-                userType.getId().toString(),
+                userType.getId(),
                 userType.getName()
         );
     }
 
     public UpdateUserTypeResponseDTO toUpdateUserTypeResponseDTO(UserType userType) {
         return new UpdateUserTypeResponseDTO(
-                userType.getId().toString(),
+                userType.getId(),
                 userType.getName()
         );
     }

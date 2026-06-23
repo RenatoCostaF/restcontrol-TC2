@@ -15,6 +15,9 @@ public class MenuItemMapper {
 
     public MenuItemDocument toDocument(MenuItem menuItem) {
         MenuItemDocument document = new MenuItemDocument();
+        if (menuItem.getId() != null && !menuItem.getId().isBlank()) {
+            document.setId(new org.bson.types.ObjectId(menuItem.getId()));
+        }
         document.setName(menuItem.getName());
         document.setDescription(menuItem.getDescription());
         document.setPrice(menuItem.getPrice());
@@ -35,6 +38,9 @@ public class MenuItemMapper {
                 document.getRestaurantId(),
                 document.getActive()
         );
+        if (document.getId() != null) {
+            menuItem.setId(document.getId().toHexString());
+        }
         return menuItem;
     }
 

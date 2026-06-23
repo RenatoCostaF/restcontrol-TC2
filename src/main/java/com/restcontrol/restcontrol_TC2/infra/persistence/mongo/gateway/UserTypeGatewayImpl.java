@@ -31,6 +31,7 @@ public class UserTypeGatewayImpl implements UserTypeGateway {
     @Override
     public UserType update(UserType userType, String id) {
         UserTypeDocument document = userTypeMapper.toDocument(userType);
+        document.setId(new ObjectId(id));
         UserTypeDocument savedDocument = userTypeRepository.save(document);
         return userTypeMapper.toDomain(savedDocument);
     }

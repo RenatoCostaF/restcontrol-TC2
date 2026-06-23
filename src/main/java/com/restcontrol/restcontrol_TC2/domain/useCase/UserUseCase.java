@@ -20,7 +20,7 @@ public class UserUseCase {
                 userInput.name(),
                 userInput.email(),
                 userInput.password(),
-                userInput.userType()
+                userInput.userTypeId()
         );
 
         return userGateway.create(newUser);
@@ -48,9 +48,9 @@ public class UserUseCase {
                         ? updateUserInput.password()
                         : currentUser.getPassword(),
 
-                updateUserInput.userType() != null
-                        ? updateUserInput.userType()
-                        : currentUser.getUserType()
+                updateUserInput.userTypeId() != null
+                        ? updateUserInput.userTypeId()
+                        : currentUser.getUserTypeId()
         );
 
         return userGateway.update(newUser, id);

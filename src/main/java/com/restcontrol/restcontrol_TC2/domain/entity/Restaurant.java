@@ -2,11 +2,9 @@ package com.restcontrol.restcontrol_TC2.domain.entity;
 
 import com.restcontrol.restcontrol_TC2.domain.exception.InvalidRestaurantException;
 
-import java.util.UUID;
-
 public class Restaurant {
 
-    private UUID id;
+    private String id;
     private String name;
     private String city;
     private String zipcode;
@@ -15,11 +13,11 @@ public class Restaurant {
     private String specialty;
     private String ownerId;
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

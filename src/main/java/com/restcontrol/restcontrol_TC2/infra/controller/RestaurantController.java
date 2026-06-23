@@ -1,13 +1,12 @@
 package com.restcontrol.restcontrol_TC2.infra.controller;
 
 import com.restcontrol.restcontrol_TC2.domain.useCase.RestaurantUseCase;
-import com.restcontrol.restcontrol_TC2.domain.useCase.UserUseCase;
-import com.restcontrol.restcontrol_TC2.infra.dto.request.UpdateUserRequestDTO;
-import com.restcontrol.restcontrol_TC2.infra.dto.request.UserRequestDTO;
-import com.restcontrol.restcontrol_TC2.infra.dto.response.UpdateUserResponseDTO;
-import com.restcontrol.restcontrol_TC2.infra.dto.response.UserResponseDTO;
+import com.restcontrol.restcontrol_TC2.domain.adapter.input.DeleteRestaurantInput;
+import com.restcontrol.restcontrol_TC2.infra.dto.request.RestaurantRequestDTO;
+import com.restcontrol.restcontrol_TC2.infra.dto.request.UpdateRestaurantRequestDTO;
+import com.restcontrol.restcontrol_TC2.infra.dto.response.RestaurantResponseDTO;
+import com.restcontrol.restcontrol_TC2.infra.dto.response.UpdateRestaurantResponseDTO;
 import com.restcontrol.restcontrol_TC2.infra.mapper.RestaurantMapper;
-import com.restcontrol.restcontrol_TC2.infra.mapper.UserMapper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,37 +23,38 @@ public class RestaurantController {
 
 
     @PostMapping
-    public UserResponseDTO create(
-            @RequestBody UserRequestDTO userRequestDTO
+    public RestaurantResponseDTO create(
+            @RequestBody RestaurantRequestDTO restaurantRequestDTO
     ) {
-        var userInput = restaurantMapper.toUserInput(userRequestDTO);
-        var user = restaurantUseCase.create(userInput);
-        return restaurantMapper.toUserResponseDTO(user);
+        var restaurantInput = restaurantMapper.toCreateRestaurantInput(restaurantRequestDTO);
+        var restaurant = restaurantUseCase.create(restaurantInput);
+        return restaurantMapper.toRestaurantResponseDTO(restaurant);
     }
 
     @PutMapping("/{id}")
-    public UpdateUserResponseDTO update(
+    public UpdateRestaurantResponseDTO update(
             @PathVariable String id,
-            @RequestBody UpdateUserRequestDTO updateUserRequestDTO
+            @RequestBody UpdateRestaurantRequestDTO updateRestaurantRequestDTO
     ) {
-        var updateUserInput = restaurantMapper.toUpdateUserInput(updateUserRequestDTO);
-        var user = restaurantUseCase.update(updateUserInput, id);
-        return restaurantMapper.toUpdateUserResponseDTO(user);
+        var updateRestaurantInput = restaurantMapper.toUpdateRestaurantInput(updateRestaurantRequestDTO);
+        var restaurant = restaurantUseCase.update(updateRestaurantInput, id);
+        return restaurantMapper.toUpdateRestaurantResponseDTO(restaurant);
     }
 
     @GetMapping("/{id}")
-    public UserResponseDTO getById(
+    public RestaurantResponseDTO getById(
             @PathVariable String id
     ) {
-        var user = restaurantUseCase.getById(id);
-        return restaurantMapper.toUserResponseDTO(user);
+        var restaurant = restaurantUseCase.getById(id);
+        return restaurantMapper.toRestaurantResponseDTO(restaurant);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
-            @PathVariable String id
+            @PathVariable String id,
+            @RequestParam String runningUserId
     ) {
-        restaurantUseCase.delete(id);
+        restaurantUseCase.delete(new DeleteRestaurantInput(id, runningUserId));
     }
 
 }

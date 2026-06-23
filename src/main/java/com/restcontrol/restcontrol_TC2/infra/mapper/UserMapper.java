@@ -15,6 +15,9 @@ public class UserMapper {
 
     public UserDocument toDocument(User user) {
         UserDocument document = new UserDocument();
+        if (user.getId() != null && !user.getId().isBlank()) {
+            document.setId(new org.bson.types.ObjectId(user.getId()));
+        }
         document.setName(user.getName());
         document.setEmail(user.getEmail());
         document.setPassword(user.getPassword());
@@ -30,6 +33,9 @@ public class UserMapper {
                 document.getPassword(),
                 document.getUserTypeId()
         );
+        if (document.getId() != null) {
+            user.setId(document.getId().toHexString());
+        }
 
         return user;
     }

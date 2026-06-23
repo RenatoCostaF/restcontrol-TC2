@@ -9,8 +9,6 @@ import com.restcontrol.restcontrol_TC2.domain.exception.RestaurantDuplicateIdent
 import com.restcontrol.restcontrol_TC2.domain.exception.RestaurantNotFoundException;
 import com.restcontrol.restcontrol_TC2.domain.gateway.RestaurantGateway;
 
-import java.util.UUID;
-
 public class RestaurantUseCase {
 
     private final RestaurantGateway restaurantGateway;
@@ -41,7 +39,7 @@ public class RestaurantUseCase {
     }
 
     public Restaurant update(UpdateRestaurantInput updateRestaurantInput, String id) {
-        var existing = restaurantGateway.getById(String.valueOf(UUID.fromString(id)));
+        var existing = restaurantGateway.getById(id);
 
         if (existing.isEmpty()) {
             throw new RestaurantNotFoundException("Restaurant not found");
@@ -77,8 +75,9 @@ public class RestaurantUseCase {
                 updateRestaurantInput.ownerId() != null && !updateRestaurantInput.ownerId().isBlank()
                         ? updateRestaurantInput.ownerId()
                         : currentRestaurant.getOwnerId());
+        updated.setId(currentRestaurant.getId());
 
-        return restaurantGateway.update(updated, UUID.fromString(id));
+        return restaurantGateway.update(updated, id);
     }
 
     public Restaurant getByName(String name) {
@@ -91,8 +90,8 @@ public class RestaurantUseCase {
         return restaurant.get();
     }
 
-    public Restaurant getByid(String id) {
-        var restaurant = restaurantGateway.getById(String.valueOf(UUID.fromString(id)));
+    public Restaurant getById(String id) {
+        var restaurant = restaurantGateway.getById(id);
 
         if (restaurant.isEmpty()) {
             throw new RestaurantNotFoundException("Restaurant not found");
@@ -102,7 +101,7 @@ public class RestaurantUseCase {
     }
 
     public void delete(DeleteRestaurantInput restaurantInput) {
-        var existingRestaurant = restaurantGateway.getById(String.valueOf(restaurantInput.restaurantId()));
+        var existingRestaurant = restaurantGateway.getById(restaurantInput.restaurantId());
 
         if (existingRestaurant.isEmpty()) {
             throw new RestaurantNotFoundException("The restaurant you are trying to delete doesn't exist");
@@ -110,6 +109,6 @@ public class RestaurantUseCase {
             throw new ActionNotAllowedForRunningUser("Only the restaurant owner can delete the restaurant!");
         }
 
-        restaurantGateway.delete(String.valueOf(restaurantInput.restaurantId()));
+        restaurantGateway.delete(restaurantInput.restaurantId());
     }
 }

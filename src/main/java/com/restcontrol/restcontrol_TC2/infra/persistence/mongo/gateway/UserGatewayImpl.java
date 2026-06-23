@@ -31,6 +31,7 @@ public class UserGatewayImpl implements UserGateway {
     @Override
     public User update(User user, String id) {
         UserDocument document = userMapper.toDocument(user);
+        document.setId(new ObjectId(id));
         UserDocument savedDocument = userRepository.save(document);
         return userMapper.toDomain(savedDocument);
     }

@@ -6,10 +6,11 @@ import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.entity.Restaurant
 import com.restcontrol.restcontrol_TC2.infra.mapper.RestaurantMapper;
 import com.restcontrol.restcontrol_TC2.infra.persistence.mongo.repository.RestaurantRepository;
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
+@Component
 public class RestaurantGatewayImpl implements RestaurantGateway {
 
     private final RestaurantRepository restaurantRepository;
@@ -28,8 +29,9 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
     }
 
     @Override
-    public Restaurant update(Restaurant restaurant, UUID id) {
+    public Restaurant update(Restaurant restaurant, String id) {
         RestaurantDocument document = restaurantMapper.toDocument(restaurant);
+        document.setId(new ObjectId(id));
         RestaurantDocument savedDocument = restaurantRepository.save(document);
         return restaurantMapper.toDomain(savedDocument);
     }
