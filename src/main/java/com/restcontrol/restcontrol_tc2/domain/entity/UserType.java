@@ -4,6 +4,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.InvalidUserTypeException
 
 public class UserType {
     public static final String RESTAURANT_OWNER_CODE = "RESTAURANT_OWNER";
+    public static final String CUSTOMER_CODE = "CUSTOMER";
 
     private String id;
     private String name;

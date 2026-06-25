@@ -13,7 +13,7 @@ public class UserTypeSeedConfig {
     @Bean
     public CommandLineRunner seedUserTypes(UserTypeRepository userTypeRepository) {
         return args -> {
-            ensureUserType(userTypeRepository, "Cliente", "CUSTOMER");
+            ensureUserType(userTypeRepository, "Cliente", UserType.CUSTOMER_CODE);
             ensureUserType(userTypeRepository, "Dono de Restaurante", UserType.RESTAURANT_OWNER_CODE);
         };
     }
