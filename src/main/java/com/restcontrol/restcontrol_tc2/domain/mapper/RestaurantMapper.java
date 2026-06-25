@@ -10,11 +10,9 @@ public class RestaurantMapper {
         return new Restaurant(
                 input.id(),
                 input.name(),
-                input.city(),
-                input.zipcode(),
-                input.street(),
-                input.state(),
-                input.specialty(),
+                input.address(),
+                input.cuisineType(),
+                input.openingHours(),
                 input.ownerId()
         );
     }
@@ -23,11 +21,9 @@ public class RestaurantMapper {
         return new Restaurant(
                 id,
                 input.name(),
-                input.city(),
-                input.zipcode(),
-                input.street(),
-                input.state(),
-                input.specialty(),
+                input.address(),
+                input.cuisineType(),
+                input.openingHours(),
                 input.ownerId()
         );
     }

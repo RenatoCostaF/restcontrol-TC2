@@ -6,27 +6,24 @@ public class Restaurant {
 
     private String id;
     private String name;
-    private String city;
-    private String zipcode;
-    private String street;
-    private String state;
-    private String specialty;
+    private String address;
+    private String cuisineType;
+    private String openingHours;
     private String ownerId;
 
-    public Restaurant(String id, String name, String city, String zipcode, String street, String state, String specialty, String ownerId) {
+    public Restaurant(String id, String name, String address, String cuisineType, String openingHours, String ownerId) {
 
         isValidName(name);
+        isValidAddress(address);
+        isValidCuisineType(cuisineType);
+        isValidOpeningHours(openingHours);
         isValidOwnerId(ownerId);
-        isValidState(state);
-        isValidZipCode(zipcode);
 
         this.id = id;
         this.name = name;
-        this.city = city;
-        this.zipcode = zipcode;
-        this.street = street;
-        this.state = state;
-        this.specialty = specialty;
+        this.address = address;
+        this.cuisineType = cuisineType;
+        this.openingHours = openingHours;
         this.ownerId = ownerId;
     }
 
@@ -38,24 +35,16 @@ public class Restaurant {
         return name;
     }
 
-    public String getCity() {
-        return city;
+    public String getAddress() {
+        return address;
     }
 
-    public String getZipcode() {
-        return zipcode;
+    public String getCuisineType() {
+        return cuisineType;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getSpecialty() {
-        return specialty;
+    public String getOpeningHours() {
+        return openingHours;
     }
 
     public String getOwnerId() {
@@ -63,28 +52,33 @@ public class Restaurant {
     }
 
     private static void isValidName(String name) {
-        if (name == null) {
+        if (name == null || name.isBlank()) {
             throw new InvalidRestaurantException("Name cannot be null");
         }
     }
 
+    private static void isValidAddress(String address) {
+        if (address == null || address.isBlank()) {
+            throw new InvalidRestaurantException("Address cannot be null");
+        }
+    }
+
+    private static void isValidCuisineType(String cuisineType) {
+        if (cuisineType == null || cuisineType.isBlank()) {
+            throw new InvalidRestaurantException("Cuisine type cannot be null");
+        }
+    }
+
+    private static void isValidOpeningHours(String openingHours) {
+        if (openingHours == null || openingHours.isBlank()) {
+            throw new InvalidRestaurantException("Opening hours cannot be null");
+        }
+    }
+
     private static void isValidOwnerId(String ownerId) {
-        if (ownerId == null) {
+        if (ownerId == null || ownerId.isBlank()) {
             throw new InvalidRestaurantException("OwnerId cannot be null");
         }
     }
-
-    private static void isValidState(String state) {
-        if (state.length() != 2) {
-            throw new InvalidRestaurantException("Review State");
-        }
-    }
-
-    private static void isValidZipCode(String zipcode) {
-        if (zipcode.length() != 8) {
-            throw new InvalidRestaurantException("Review Zipcode");
-        }
-    }
-
 
 }

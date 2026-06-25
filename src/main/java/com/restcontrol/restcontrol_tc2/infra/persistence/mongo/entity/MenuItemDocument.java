@@ -12,7 +12,7 @@ public class MenuItemDocument {
     private String name;
     private String description;
     private Double price;
-    private Boolean availableForDelivery;
+    private Boolean availableOnlyInRestaurant;
     private String imageUrl;
     private String restaurantId;
     private Boolean isActive;
@@ -49,12 +49,12 @@ public class MenuItemDocument {
         this.price = price;
     }
 
-    public Boolean getAvailableForDelivery() {
-        return availableForDelivery;
+    public Boolean getAvailableOnlyInRestaurant() {
+        return availableOnlyInRestaurant;
     }
 
-    public void setAvailableForDelivery(Boolean availableForDelivery) {
-        this.availableForDelivery = availableForDelivery;
+    public void setAvailableOnlyInRestaurant(Boolean availableOnlyInRestaurant) {
+        this.availableOnlyInRestaurant = availableOnlyInRestaurant;
     }
 
     public String getImageUrl() {

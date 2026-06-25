@@ -5,7 +5,7 @@ public record MenuItemResponseDTO(
         String name,
         String description,
         Double price,
-        Boolean availableForDelivery,
+        Boolean availableOnlyInRestaurant,
         String imageUrl,
         String restaurantId,
         Boolean isActive

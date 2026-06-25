@@ -10,11 +10,9 @@ public class RestaurantDocument {
     @Id
     private ObjectId id;
     private String name;
-    private String city;
-    private String zipcode;
-    private String street;
-    private String state;
-    private String specialty;
+    private String address;
+    private String cuisineType;
+    private String openingHours;
     private String ownerId;
 
     public ObjectId getId() {
@@ -34,44 +32,28 @@ public class RestaurantDocument {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getStreet() {
-        return street;
+    public String getCuisineType() {
+        return cuisineType;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setCuisineType(String cuisineType) {
+        this.cuisineType = cuisineType;
     }
 
-    public String getZipcode() {
-        return zipcode;
+    public String getOpeningHours() {
+        return openingHours;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setOpeningHours(String openingHours) {
+        this.openingHours = openingHours;
     }
 
     public String getOwnerId() {

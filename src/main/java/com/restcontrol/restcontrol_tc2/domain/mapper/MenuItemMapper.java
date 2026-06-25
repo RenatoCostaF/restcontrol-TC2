@@ -12,7 +12,7 @@ public class MenuItemMapper {
                 input.name(),
                 input.description(),
                 input.price(),
-                input.availableForDelivery(),
+                input.availableOnlyInRestaurant(),
                 input.imageUrl(),
                 input.restaurantId(),
                 input.isActive()
@@ -25,7 +25,7 @@ public class MenuItemMapper {
                 input.name(),
                 input.description(),
                 input.price(),
-                input.availableForDelivery(),
+                input.availableOnlyInRestaurant(),
                 input.imageUrl(),
                 input.restaurantId(),
                 input.isActive()

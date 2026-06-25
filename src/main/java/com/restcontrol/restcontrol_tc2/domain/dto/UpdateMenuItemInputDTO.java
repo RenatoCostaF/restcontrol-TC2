@@ -4,7 +4,7 @@ public record UpdateMenuItemInputDTO(
         String name,
         String description,
         Double price,
-        Boolean availableForDelivery,
+        Boolean availableOnlyInRestaurant,
         String imageUrl,
         String restaurantId,
         Boolean isActive
