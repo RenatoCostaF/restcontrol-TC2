@@ -67,7 +67,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"{{$randomJobType}}\"\n}"
+              "raw": "{\n  \"name\": \"Dono de Restaurante\",\n  \"code\": \"RESTAURANT_OWNER\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/user-types",
@@ -110,7 +110,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"{{$randomDepartment}}\"\n}"
+              "raw": "{\n  \"name\": \"Cliente\",\n  \"code\": \"CUSTOMER\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/user-types/{{userTypeId}}",

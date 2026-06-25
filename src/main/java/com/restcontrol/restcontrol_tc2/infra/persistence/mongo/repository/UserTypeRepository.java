@@ -4,5 +4,9 @@ import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserTypeDo
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.Optional;
+
 public interface UserTypeRepository extends MongoRepository<UserTypeDocument, ObjectId> {
+
+    Optional<UserTypeDocument> findByCode(String code);
 }

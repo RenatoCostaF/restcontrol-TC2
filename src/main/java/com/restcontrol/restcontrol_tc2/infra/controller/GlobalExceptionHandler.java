@@ -39,6 +39,7 @@ public class GlobalExceptionHandler {
             InvalidUserException.class,
             InvalidUserTypeException.class,
             InvalidRestaurantException.class,
+            InvalidRestaurantOwnerTypeException.class,
             InvalidMenuItemException.class,
             InvalidObjectIdException.class
     })
