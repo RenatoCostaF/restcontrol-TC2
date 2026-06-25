@@ -8,7 +8,7 @@ import com.restcontrol.restcontrol_tc2.infra.mapper.UserTypeMapper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/userstypes")
+@RequestMapping("/v1/user-types")
 public class UserTypeRestController {
 
     private final UserTypeController userTypeController;

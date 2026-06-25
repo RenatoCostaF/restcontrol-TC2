@@ -72,7 +72,7 @@
               ],
               "path": [
                 "v1",
-                "userstypes"
+                "user-types"
               ]
             }
           }
@@ -88,7 +88,7 @@
               ],
               "path": [
                 "v1",
-                "userstypes",
+                "user-types",
                 "{{userTypeId}}"
               ]
             }
@@ -115,7 +115,7 @@
               ],
               "path": [
                 "v1",
-                "userstypes",
+                "user-types",
                 "{{userTypeId}}"
               ]
             }
@@ -132,7 +132,7 @@
               ],
               "path": [
                 "v1",
-                "userstypes",
+                "user-types",
                 "{{userTypeId}}"
               ]
             }
