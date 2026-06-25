@@ -22,19 +22,7 @@ public class MenuItemController {
     }
 
     public MenuItem update(UpdateMenuItemInputDTO input, String id) {
-        MenuItem menuItem = menuItemMapper.toEntity(
-                new CreateMenuItemInputDTO(
-                        id,
-                        input.name(),
-                        input.description(),
-                        input.price(),
-                        input.availableForDelivery(),
-                        input.imageUrl(),
-                        input.restaurantId(),
-                        input.isActive()
-                )
-        );
-
+        MenuItem menuItem = menuItemMapper.toEntity(input, id);
         return menuItemUseCase.update(menuItem);
     }
 

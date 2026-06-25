@@ -22,13 +22,7 @@ public class UserTypeController {
     }
 
     public UserType update(UpdateUserTypeInputDTO input, String id) {
-        UserType userType = userTypeMapper.toEntity(
-                new CreateUserTypeInputDTO(
-                        id,
-                        input.name()
-                )
-        );
-
+        UserType userType = userTypeMapper.toEntity(input, id);
         return userTypeUseCase.update(userType);
     }
 

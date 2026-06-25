@@ -22,16 +22,7 @@ public class UserController {
     }
 
     public User update(UpdateUserInputDTO input, String id) {
-        User user = userMapper.toEntity(
-                new CreateUserInputDTO(
-                        id,
-                        input.name(),
-                        input.email(),
-                        input.password(),
-                        input.userTypeId()
-                )
-        );
-
+        User user = userMapper.toEntity(input, id);
         return userUseCase.update(user);
     }
 

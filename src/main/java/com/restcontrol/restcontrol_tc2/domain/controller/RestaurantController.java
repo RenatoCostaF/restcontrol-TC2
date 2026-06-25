@@ -22,19 +22,7 @@ public class RestaurantController {
     }
 
     public Restaurant update(UpdateRestaurantInputDTO input, String id) {
-        Restaurant restaurant = restaurantMapper.toEntity(
-                new CreateRestaurantInputDTO(
-                        id,
-                        input.name(),
-                        input.city(),
-                        input.zipcode(),
-                        input.street(),
-                        input.state(),
-                        input.specialty(),
-                        input.ownerId()
-                )
-        );
-
+        Restaurant restaurant = restaurantMapper.toEntity(input, id);
         return restaurantUseCase.update(restaurant);
     }
 
