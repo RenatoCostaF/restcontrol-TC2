@@ -7,6 +7,8 @@ import com.restcontrol.restcontrol_tc2.domain.gateway.MenuItemGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.RestaurantGateway;
 import com.restcontrol.restcontrol_tc2.domain.usecase.MenuItemUseCase;
 
+import java.util.List;
+
 public class MenuItemUseCaseImpl implements MenuItemUseCase {
 
     private final MenuItemGateway menuItemGateway;
@@ -28,6 +30,11 @@ public class MenuItemUseCaseImpl implements MenuItemUseCase {
         menuItemGateway.getById(menuItem.getId()).orElseThrow(() -> new MenuItemNotFoundException("Menu item not found"));
         validateRestaurantExists(menuItem.getRestaurantId());
         return menuItemGateway.update(menuItem);
+    }
+
+    @Override
+    public List<MenuItem> listAll() {
+        return menuItemGateway.listAll();
     }
 
     @Override

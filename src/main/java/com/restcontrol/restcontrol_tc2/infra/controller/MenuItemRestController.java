@@ -8,6 +8,8 @@ import com.restcontrol.restcontrol_tc2.infra.mapper.MenuItemMapper;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/menuitems")
 public class MenuItemRestController {
@@ -37,6 +39,14 @@ public class MenuItemRestController {
         var updateMenuItemInput = menuItemMapper.toUpdateMenuItemInput(updateMenuItemRequestDTO);
         var menuItem = menuItemController.update(updateMenuItemInput, id);
         return menuItemMapper.toMenuItemResponseDTO(menuItem);
+    }
+
+    @GetMapping
+    public List<MenuItemResponseDTO> listAll() {
+        return menuItemController.listAll()
+                .stream()
+                .map(menuItemMapper::toMenuItemResponseDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")

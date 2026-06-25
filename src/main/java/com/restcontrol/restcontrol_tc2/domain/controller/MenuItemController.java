@@ -6,6 +6,8 @@ import com.restcontrol.restcontrol_tc2.domain.entity.MenuItem;
 import com.restcontrol.restcontrol_tc2.domain.mapper.MenuItemMapper;
 import com.restcontrol.restcontrol_tc2.domain.usecase.MenuItemUseCase;
 
+import java.util.List;
+
 public class MenuItemController {
 
     private final MenuItemUseCase menuItemUseCase;
@@ -24,6 +26,10 @@ public class MenuItemController {
     public MenuItem update(UpdateMenuItemInputDTO input, String id) {
         MenuItem menuItem = menuItemMapper.toEntity(input, id);
         return menuItemUseCase.update(menuItem);
+    }
+
+    public List<MenuItem> listAll() {
+        return menuItemUseCase.listAll();
     }
 
     public MenuItem getById(String id) {

@@ -470,6 +470,22 @@
           }
         },
         {
+          "name": "List Menu Items",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/v1/menuitems",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "menuitems"
+              ]
+            }
+          }
+        },
+        {
           "name": "Get Menu Item By Id",
           "request": {
             "method": "GET",
