@@ -455,7 +455,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"{{$randomProductName}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"price\": 39.9,\n  \"availableOnlyInRestaurant\": true,\n  \"imageUrl\": \"https://picsum.photos/seed/{{$randomInt}}/400/300\",\n  \"restaurantId\": \"{{restaurantId}}\",\n  \"isActive\": true\n}"
+              "raw": "{\n  \"name\": \"{{$randomProductName}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"price\": 39.9,\n  \"availableOnlyInRestaurant\": true,\n  \"imageUrl\": \"https://picsum.photos/seed/{{$randomInt}}/400/300\",\n  \"restaurantId\": \"{{restaurantId}}\",\n  \"active\": true\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/menuitems",
@@ -514,7 +514,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"{{$randomProductName}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"price\": 49.9,\n  \"availableOnlyInRestaurant\": false,\n  \"imageUrl\": \"https://picsum.photos/seed/{{$randomInt}}/400/300\",\n  \"restaurantId\": \"{{restaurantId}}\",\n  \"isActive\": false\n}"
+              "raw": "{\n  \"name\": \"{{$randomProductName}}\",\n  \"description\": \"{{$randomLoremSentence}}\",\n  \"price\": 49.9,\n  \"availableOnlyInRestaurant\": false,\n  \"imageUrl\": \"https://picsum.photos/seed/{{$randomInt}}/400/300\",\n  \"restaurantId\": \"{{restaurantId}}\",\n  \"active\": false\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/menuitems/{{menuItemId}}",

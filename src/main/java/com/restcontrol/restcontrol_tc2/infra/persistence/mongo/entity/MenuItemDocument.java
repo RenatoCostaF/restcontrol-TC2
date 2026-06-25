@@ -15,7 +15,7 @@ public class MenuItemDocument {
     private Boolean availableOnlyInRestaurant;
     private String imageUrl;
     private String restaurantId;
-    private Boolean isActive;
+    private Boolean active;
 
     public ObjectId getId() {
         return id;
@@ -74,10 +74,10 @@ public class MenuItemDocument {
     }
 
     public Boolean getActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(Boolean active) {
-        isActive = active;
+        this.active = active;
     }
 }

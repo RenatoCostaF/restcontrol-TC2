@@ -15,7 +15,7 @@ public class MenuItemMapper {
                 input.availableOnlyInRestaurant(),
                 input.imageUrl(),
                 input.restaurantId(),
-                input.isActive()
+                input.active()
         );
     }
 
@@ -28,7 +28,7 @@ public class MenuItemMapper {
                 input.availableOnlyInRestaurant(),
                 input.imageUrl(),
                 input.restaurantId(),
-                input.isActive()
+                input.active()
         );
     }
 }

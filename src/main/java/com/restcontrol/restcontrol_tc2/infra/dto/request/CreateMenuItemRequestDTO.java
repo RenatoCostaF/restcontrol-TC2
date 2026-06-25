@@ -11,6 +11,6 @@ public record CreateMenuItemRequestDTO(
         @NotNull Boolean availableOnlyInRestaurant,
         @NotBlank String imageUrl,
         @NotBlank String restaurantId,
-        @NotNull Boolean isActive
+        @NotNull Boolean active
 ) {
 }

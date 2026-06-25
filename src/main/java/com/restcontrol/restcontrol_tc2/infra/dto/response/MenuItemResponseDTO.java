@@ -8,6 +8,6 @@ public record MenuItemResponseDTO(
         Boolean availableOnlyInRestaurant,
         String imageUrl,
         String restaurantId,
-        Boolean isActive
+        Boolean active
 ) {
 }

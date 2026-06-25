@@ -8,6 +8,6 @@ public record CreateMenuItemInputDTO(
         Boolean availableOnlyInRestaurant,
         String imageUrl,
         String restaurantId,
-        Boolean isActive
+        Boolean active
 ) {
 }

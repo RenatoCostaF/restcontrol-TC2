@@ -11,9 +11,9 @@ public class MenuItem {
     private Boolean availableOnlyInRestaurant;
     private String imageUrl;
     private String restaurantId;
-    private Boolean isActive;
+    private Boolean active;
 
-    public MenuItem(String id, String name, String description, Double price, Boolean availableOnlyInRestaurant, String imageUrl, String restaurantId, Boolean isActive) {
+    public MenuItem(String id, String name, String description, Double price, Boolean availableOnlyInRestaurant, String imageUrl, String restaurantId, Boolean active) {
 
         isValidateName(name);
         isValidateDescription(description);
@@ -21,7 +21,7 @@ public class MenuItem {
         isValidateRestaurantId(restaurantId);
         isValidateImageUrl(imageUrl);
         isValidateAvailability(availableOnlyInRestaurant);
-        isValidateActive(isActive);
+        isValidateActive(active);
 
         this.id = id;
         this.name = name;
@@ -30,11 +30,11 @@ public class MenuItem {
         this.availableOnlyInRestaurant = availableOnlyInRestaurant;
         this.imageUrl = imageUrl;
         this.restaurantId = restaurantId;
-        this.isActive = isActive;
+        this.active = active;
     }
 
     public Boolean getActive() {
-        return isActive;
+        return active;
     }
 
     public String getRestaurantId() {
@@ -102,8 +102,8 @@ public class MenuItem {
         }
     }
 
-    private static void isValidateActive(Boolean isActive) {
-        if (isActive == null) {
+    private static void isValidateActive(Boolean active) {
+        if (active == null) {
             throw new InvalidMenuItemException("Active status is required");
         }
     }
