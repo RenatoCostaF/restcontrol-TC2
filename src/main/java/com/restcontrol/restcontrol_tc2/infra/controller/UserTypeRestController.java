@@ -5,6 +5,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserTypeRequestDT
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserTypeRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UserTypeResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.UserTypeMapper;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class UserTypeRestController {
 
     @PostMapping
     public UserTypeResponseDTO create(
-            @RequestBody CreateUserTypeRequestDTO createUserTypeRequestDTO
+            @Valid @RequestBody CreateUserTypeRequestDTO createUserTypeRequestDTO
     ) {
         var userTypeInput = userTypeMapper.toUserTypeInput(createUserTypeRequestDTO);
         var userType = userTypeController.create(userTypeInput);
@@ -31,7 +32,7 @@ public class UserTypeRestController {
     @PutMapping("/{id}")
     public UserTypeResponseDTO update(
             @PathVariable String id,
-            @RequestBody UpdateUserTypeRequestDTO updateUserTypeRequestDTO
+            @Valid @RequestBody UpdateUserTypeRequestDTO updateUserTypeRequestDTO
     ) {
         var updateUserTypeInput = userTypeMapper.toUpdateUserTypeInput(updateUserTypeRequestDTO);
         var userType = userTypeController.update(updateUserTypeInput, id);

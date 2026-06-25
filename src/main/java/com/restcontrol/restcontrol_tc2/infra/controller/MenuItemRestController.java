@@ -5,6 +5,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateMenuItemRequestDT
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateMenuItemRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.MenuItemResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.MenuItemMapper;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class MenuItemRestController {
 
     @PostMapping
     public MenuItemResponseDTO create(
-            @RequestBody CreateMenuItemRequestDTO createMenuItemRequestDTO
+            @Valid @RequestBody CreateMenuItemRequestDTO createMenuItemRequestDTO
     ) {
         var menuItemInput = menuItemMapper.toMenuItemInput(createMenuItemRequestDTO);
         var menuItem = menuItemController.create(menuItemInput);
@@ -31,7 +32,7 @@ public class MenuItemRestController {
     @PutMapping("/{id}")
     public MenuItemResponseDTO update(
             @PathVariable String id,
-            @RequestBody UpdateMenuItemRequestDTO updateMenuItemRequestDTO
+            @Valid @RequestBody UpdateMenuItemRequestDTO updateMenuItemRequestDTO
     ) {
         var updateMenuItemInput = menuItemMapper.toUpdateMenuItemInput(updateMenuItemRequestDTO);
         var menuItem = menuItemController.update(updateMenuItemInput, id);

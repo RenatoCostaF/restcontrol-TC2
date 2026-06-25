@@ -5,6 +5,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.RestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateRestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.RestaurantResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.RestaurantMapper;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class RestaurantRestController {
 
     @PostMapping
     public RestaurantResponseDTO create(
-            @RequestBody RestaurantRequestDTO restaurantRequestDTO
+            @Valid @RequestBody RestaurantRequestDTO restaurantRequestDTO
     ) {
         var restaurantInput = restaurantMapper.toCreateRestaurantInput(restaurantRequestDTO);
         var restaurant = restaurantController.create(restaurantInput);
@@ -31,7 +32,7 @@ public class RestaurantRestController {
     @PutMapping("/{id}")
     public RestaurantResponseDTO update(
             @PathVariable String id,
-            @RequestBody UpdateRestaurantRequestDTO updateRestaurantRequestDTO
+            @Valid @RequestBody UpdateRestaurantRequestDTO updateRestaurantRequestDTO
     ) {
         var updateRestaurantInput = restaurantMapper.toUpdateRestaurantInput(updateRestaurantRequestDTO);
         var restaurant = restaurantController.update(updateRestaurantInput, id);

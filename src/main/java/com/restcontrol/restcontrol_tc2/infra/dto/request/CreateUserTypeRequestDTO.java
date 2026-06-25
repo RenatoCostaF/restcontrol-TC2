@@ -1,6 +1,8 @@
 package com.restcontrol.restcontrol_tc2.infra.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record CreateUserTypeRequestDTO(
-        String name
+        @NotBlank String name
 ) {
 }
