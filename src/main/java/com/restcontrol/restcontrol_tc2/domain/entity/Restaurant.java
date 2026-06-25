@@ -1,5 +1,6 @@
 package com.restcontrol.restcontrol_tc2.domain.entity;
 
+import com.restcontrol.restcontrol_tc2.domain.exception.ActionNotAllowedForRunningUser;
 import com.restcontrol.restcontrol_tc2.domain.exception.InvalidRestaurantException;
 
 public class Restaurant {
@@ -49,6 +50,12 @@ public class Restaurant {
 
     public String getOwnerId() {
         return ownerId;
+    }
+
+    public void ensureOwnedBy(String userId) {
+        if (!ownerId.equals(userId)) {
+            throw new ActionNotAllowedForRunningUser("Only the restaurant owner can delete the restaurant!");
+        }
     }
 
     private static void isValidName(String name) {
