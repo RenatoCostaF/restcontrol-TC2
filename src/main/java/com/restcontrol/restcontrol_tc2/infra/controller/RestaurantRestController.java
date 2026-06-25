@@ -8,6 +8,8 @@ import com.restcontrol.restcontrol_tc2.infra.mapper.RestaurantMapper;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/restaurants")
 public class RestaurantRestController {
@@ -39,7 +41,15 @@ public class RestaurantRestController {
         return restaurantMapper.toRestaurantResponseDTO(restaurant);
     }
 
-    @GetMapping
+    @GetMapping(params = "!name")
+    public List<RestaurantResponseDTO> listAll() {
+        return restaurantController.listAll()
+                .stream()
+                .map(restaurantMapper::toRestaurantResponseDTO)
+                .toList();
+    }
+
+    @GetMapping(params = "name")
     public RestaurantResponseDTO getByName(
             @RequestParam String name
     ) {

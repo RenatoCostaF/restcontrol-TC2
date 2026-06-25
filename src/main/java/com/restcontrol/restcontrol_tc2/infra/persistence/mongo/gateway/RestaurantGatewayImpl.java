@@ -9,6 +9,7 @@ import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.Restau
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -34,6 +35,14 @@ public class RestaurantGatewayImpl implements RestaurantGateway {
         RestaurantDocument document = restaurantMapper.toDocument(restaurant);
         RestaurantDocument savedDocument = restaurantRepository.save(document);
         return restaurantMapper.toDomain(savedDocument);
+    }
+
+    @Override
+    public List<Restaurant> listAll() {
+        return restaurantRepository.findAll()
+                .stream()
+                .map(restaurantMapper::toDomain)
+                .toList();
     }
 
     @Override

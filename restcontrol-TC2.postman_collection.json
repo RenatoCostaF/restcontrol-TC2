@@ -318,6 +318,22 @@
           }
         },
         {
+          "name": "List Restaurants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/v1/restaurants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "restaurants"
+              ]
+            }
+          }
+        },
+        {
           "name": "Get Restaurant By Id",
           "request": {
             "method": "GET",

@@ -13,6 +13,8 @@ import com.restcontrol.restcontrol_tc2.domain.gateway.UserGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserTypeGateway;
 import com.restcontrol.restcontrol_tc2.domain.usecase.RestaurantUseCase;
 
+import java.util.List;
+
 public class RestaurantUseCaseImpl implements RestaurantUseCase {
     private final RestaurantGateway restaurantGateway;
     private final UserGateway userGateway;
@@ -41,10 +43,17 @@ public class RestaurantUseCaseImpl implements RestaurantUseCase {
         return restaurantGateway.update(restaurant);
     }
 
+    @Override
+    public List<Restaurant> listAll() {
+        return restaurantGateway.listAll();
+    }
+
+    @Override
     public Restaurant getByName(String name) {
         return restaurantGateway.getByName(name).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found"));
     }
 
+    @Override
     public Restaurant getById(String id) {
         return restaurantGateway.getById(id).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found"));
     }

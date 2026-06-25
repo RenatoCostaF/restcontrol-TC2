@@ -6,6 +6,8 @@ import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
 import com.restcontrol.restcontrol_tc2.domain.mapper.RestaurantMapper;
 import com.restcontrol.restcontrol_tc2.domain.usecase.RestaurantUseCase;
 
+import java.util.List;
+
 public class RestaurantController {
 
     private final RestaurantUseCase restaurantUseCase;
@@ -24,6 +26,10 @@ public class RestaurantController {
     public Restaurant update(UpdateRestaurantInputDTO input, String id) {
         Restaurant restaurant = restaurantMapper.toEntity(input, id);
         return restaurantUseCase.update(restaurant);
+    }
+
+    public List<Restaurant> listAll() {
+        return restaurantUseCase.listAll();
     }
 
     public Restaurant getByName(String name) {
