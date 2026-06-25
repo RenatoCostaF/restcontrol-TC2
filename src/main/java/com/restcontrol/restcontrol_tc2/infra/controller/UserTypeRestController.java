@@ -8,6 +8,8 @@ import com.restcontrol.restcontrol_tc2.infra.mapper.UserTypeMapper;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/user-types")
 public class UserTypeRestController {
@@ -37,6 +39,14 @@ public class UserTypeRestController {
         var updateUserTypeInput = userTypeMapper.toUpdateUserTypeInput(updateUserTypeRequestDTO);
         var userType = userTypeController.update(updateUserTypeInput, id);
         return userTypeMapper.toUserTypeResponseDTO(userType);
+    }
+
+    @GetMapping
+    public List<UserTypeResponseDTO> listAll() {
+        return userTypeController.listAll()
+                .stream()
+                .map(userTypeMapper::toUserTypeResponseDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")

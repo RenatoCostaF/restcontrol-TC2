@@ -82,6 +82,22 @@
           }
         },
         {
+          "name": "List User Types",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/v1/user-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "user-types"
+              ]
+            }
+          }
+        },
+        {
           "name": "Get User Type By Id",
           "request": {
             "method": "GET",

@@ -9,6 +9,7 @@ import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserTy
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -34,6 +35,14 @@ public class UserTypeGatewayImpl implements UserTypeGateway {
         UserTypeDocument document = userTypeMapper.toDocument(userType);
         UserTypeDocument savedDocument = userTypeRepository.save(document);
         return userTypeMapper.toDomain(savedDocument);
+    }
+
+    @Override
+    public List<UserType> listAll() {
+        return userTypeRepository.findAll()
+                .stream()
+                .map(userTypeMapper::toDomain)
+                .toList();
     }
 
     @Override
