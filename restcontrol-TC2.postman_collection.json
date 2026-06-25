@@ -3,7 +3,7 @@
     "_postman_id": "e2d20fb8-0b4d-4a94-bbcc-4aef0d3c81a6",
     "name": "restcontrol-TC2",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Collection para a API restcontrol-TC2 com exemplos de payload usando variaveis dinamicas do Postman. Ajuste `baseUrl` e, para os endpoints de User por ID, preencha manualmente `userId` porque a API atual nao retorna o id do usuario no create/get."
+    "description": "Collection para a API restcontrol-TC2 com exemplos de payload usando variaveis dinamicas do Postman. Ajuste `baseUrl` e execute os requests de criacao para popular automaticamente os ids da colecao."
   },
   "variable": [
     {
@@ -16,14 +16,18 @@
     },
     {
       "key": "userId",
-      "value": "507f1f77bcf86cd799439011"
+      "value": ""
     },
     {
       "key": "ownerId",
-      "value": "507f1f77bcf86cd799439012"
+      "value": ""
     },
     {
       "key": "restaurantId",
+      "value": ""
+    },
+    {
+      "key": "restaurantName",
       "value": ""
     },
     {
@@ -66,7 +70,7 @@
               "raw": "{\n  \"name\": \"{{$randomJobType}}\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/v1/userstypes",
+              "raw": "{{baseUrl}}/v1/user-types",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -82,7 +86,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/v1/userstypes/{{userTypeId}}",
+              "raw": "{{baseUrl}}/v1/user-types/{{userTypeId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -109,7 +113,7 @@
               "raw": "{\n  \"name\": \"{{$randomDepartment}}\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/v1/userstypes/{{userTypeId}}",
+              "raw": "{{baseUrl}}/v1/user-types/{{userTypeId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -126,7 +130,7 @@
           "request": {
             "method": "DELETE",
             "url": {
-              "raw": "{{baseUrl}}/v1/userstypes/{{userTypeId}}",
+              "raw": "{{baseUrl}}/v1/user-types/{{userTypeId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -145,6 +149,23 @@
       "item": [
         {
           "name": "Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  if (data.id) {",
+                  "    pm.collectionVariables.set('userId', data.id);",
+                  "    pm.collectionVariables.set('ownerId', data.id);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -166,8 +187,7 @@
                 "v1",
                 "users"
               ]
-            },
-            "description": "A API atual nao retorna o id do usuario no response. Se voce precisar usar os endpoints por id abaixo, preencha manualmente a variavel `userId` com um ObjectId existente no banco."
+            }
           }
         },
         {
@@ -249,6 +269,9 @@
                   "  if (data.id) {",
                   "    pm.collectionVariables.set('restaurantId', data.id);",
                   "  }",
+                  "  if (data.name) {",
+                  "    pm.collectionVariables.set('restaurantName', data.name);",
+                  "  }",
                   "}"
                 ]
               }
@@ -291,6 +314,28 @@
                 "v1",
                 "restaurants",
                 "{{restaurantId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Restaurant By Name",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/v1/restaurants?name={{restaurantName}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "restaurants"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "{{restaurantName}}"
+                }
               ]
             }
           }
