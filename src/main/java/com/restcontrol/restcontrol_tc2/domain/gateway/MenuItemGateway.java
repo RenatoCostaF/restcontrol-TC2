@@ -1,14 +1,16 @@
-package com.restcontrol.restcontrol_tc2.domain.usecase;
+package com.restcontrol.restcontrol_tc2.domain.gateway;
 
 import com.restcontrol.restcontrol_tc2.domain.entity.MenuItem;
 
-public interface MenuItemUseCase {
+import java.util.Optional;
+
+public interface MenuItemGateway {
 
     MenuItem create(MenuItem menuItem);
 
     MenuItem update(MenuItem menuItem);
 
-    MenuItem getById(String id);
+    Optional<MenuItem> getById(String id);
 
     void delete(String id);
 }

@@ -6,6 +6,14 @@ public class UserType {
     private String id;
     private String name;
 
+    public UserType(String id, String name) {
+
+        isValidName(name);
+
+        this.id = id;
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }
@@ -14,14 +22,6 @@ public class UserType {
         return name;
     }
 
-    private void setId(String id) {
-        this.id = id;
-    }
-
-    private void setName(String name) {
-        isValidName(name);
-        this.name = name;
-    }
 
     private static void isValidName(String name) {
         if (name == null) {
@@ -29,23 +29,5 @@ public class UserType {
         }
     }
 
-    public static UserType create(String name) {
-        isValidName(name);
-
-        UserType userType = new UserType();
-        userType.setName(name);
-
-        return userType;
-    }
-
-    public static UserType restore(String id, String name) {
-        UserType userType = create(name);
-        userType.setId(id);
-        return userType;
-    }
-
-    public void rename(String name) {
-        setName(name);
-    }
 }
 

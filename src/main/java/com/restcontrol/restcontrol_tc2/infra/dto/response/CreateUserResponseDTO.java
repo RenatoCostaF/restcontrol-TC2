@@ -1,6 +1,6 @@
 package com.restcontrol.restcontrol_tc2.infra.dto.response;
 
-public record UpdateUserResponseDTO(
+public record CreateUserResponseDTO(
         String name,
         String email
 ) {

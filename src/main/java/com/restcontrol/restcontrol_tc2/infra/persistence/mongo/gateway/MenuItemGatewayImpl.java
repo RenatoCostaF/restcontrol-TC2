@@ -1,9 +1,10 @@
 package com.restcontrol.restcontrol_tc2.infra.persistence.mongo.gateway;
 
 import com.restcontrol.restcontrol_tc2.domain.entity.MenuItem;
-import com.restcontrol.restcontrol_tc2.domain.port.output.MenuItemOutputPort;
-import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.MenuItemDocument;
+import com.restcontrol.restcontrol_tc2.domain.exception.InvalidObjectIdException;
+import com.restcontrol.restcontrol_tc2.domain.gateway.MenuItemGateway;
 import com.restcontrol.restcontrol_tc2.infra.mapper.MenuItemMapper;
+import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.MenuItemDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.MenuItemRepository;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class MenuItemGatewayImpl implements MenuItemOutputPort {
+public class MenuItemGatewayImpl implements MenuItemGateway {
 
     private final MenuItemRepository menuItemRepository;
     private final MenuItemMapper menuItemMapper;
@@ -29,20 +30,27 @@ public class MenuItemGatewayImpl implements MenuItemOutputPort {
     }
 
     @Override
-    public MenuItem update(MenuItem menuItem, String id) {
+    public MenuItem update(MenuItem menuItem) {
         MenuItemDocument document = menuItemMapper.toDocument(menuItem);
-        document.setId(new ObjectId(id));
         MenuItemDocument savedDocument = menuItemRepository.save(document);
         return menuItemMapper.toDomain(savedDocument);
     }
 
     @Override
     public Optional<MenuItem> getById(String id) {
-        return menuItemRepository.findById(new ObjectId(id)).map(menuItemMapper::toDomain);
+        return menuItemRepository.findById(toObjectId(id)).map(menuItemMapper::toDomain);
     }
 
     @Override
     public void delete(String id) {
-        menuItemRepository.deleteById(new ObjectId(id));
+        menuItemRepository.deleteById(toObjectId(id));
+    }
+
+    private ObjectId toObjectId(String id) {
+        if (id == null || id.isBlank() || !ObjectId.isValid(id)) {
+            throw new InvalidObjectIdException("Invalid id: " + id);
+        }
+
+        return new ObjectId(id);
     }
 }

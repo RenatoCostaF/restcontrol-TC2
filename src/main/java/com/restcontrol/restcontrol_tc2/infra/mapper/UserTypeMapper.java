@@ -1,53 +1,44 @@
 package com.restcontrol.restcontrol_tc2.infra.mapper;
 
-import com.restcontrol.restcontrol_tc2.domain.usecase.input.UpdateUserTypeInput;
-import com.restcontrol.restcontrol_tc2.domain.usecase.input.UserTypeInput;
+import com.restcontrol.restcontrol_tc2.domain.dto.CreateUserTypeInputDTO;
+import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserTypeInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
+import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserTypeRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserTypeRequestDTO;
-import com.restcontrol.restcontrol_tc2.infra.dto.request.UserTypeRequestDTO;
+import com.restcontrol.restcontrol_tc2.infra.dto.response.CreateUserTypeResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UpdateUserTypeResponseDTO;
-import com.restcontrol.restcontrol_tc2.infra.dto.response.UserTypeResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserTypeDocument;
-import org.springframework.stereotype.Component;
+import org.bson.types.ObjectId;
+import org.mapstruct.Mapper;
 
-@Component
-public class UserTypeMapper {
+@Mapper(componentModel = "spring")
+public abstract class UserTypeMapper {
 
-    public UserTypeDocument toDocument(UserType userType) {
-        UserTypeDocument document = new UserTypeDocument();
-        if (userType.getId() != null && !userType.getId().isBlank()) {
-            document.setId(new org.bson.types.ObjectId(userType.getId()));
+    public abstract UserTypeDocument toDocument(UserType userType);
+
+    public abstract UserType toDomain(UserTypeDocument document);
+
+    public abstract CreateUserTypeInputDTO toUserTypeInput(CreateUserTypeRequestDTO createUserTypeRequestDTO);
+
+    public abstract CreateUserTypeResponseDTO toUserTypeResponseDTO(UserType userType);
+
+    public abstract UpdateUserTypeInputDTO toUpdateUserTypeInput(UpdateUserTypeRequestDTO updateUserTypeRequestDTO);
+
+    public abstract UpdateUserTypeResponseDTO toUpdateUserTypeResponseDTO(UserType userType);
+
+    protected ObjectId map(String id) {
+        if (id == null || id.isBlank()) {
+            return null;
         }
-        document.setName(userType.getName());
-        return document;
+
+        return new ObjectId(id);
     }
 
-    public UserType toDomain(UserTypeDocument document) {
-        return UserType.restore(
-                document.getId() != null ? document.getId().toHexString() : null,
-                document.getName()
-        );
-    }
+    protected String map(ObjectId id) {
+        if (id == null) {
+            return null;
+        }
 
-    public UserTypeInput toUserTypeInput(UserTypeRequestDTO requestDTO) {
-        return new UserTypeInput(requestDTO.name());
-    }
-
-    public UpdateUserTypeInput toUpdateUserTypeInput(UpdateUserTypeRequestDTO requestDTO) {
-        return new UpdateUserTypeInput(requestDTO.name());
-    }
-
-    public UserTypeResponseDTO toUserTypeResponseDTO(UserType userType) {
-        return new UserTypeResponseDTO(
-                userType.getId(),
-                userType.getName()
-        );
-    }
-
-    public UpdateUserTypeResponseDTO toUpdateUserTypeResponseDTO(UserType userType) {
-        return new UpdateUserTypeResponseDTO(
-                userType.getId(),
-                userType.getName()
-        );
+        return id.toHexString();
     }
 }

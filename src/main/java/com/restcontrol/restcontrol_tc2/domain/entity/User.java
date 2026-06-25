@@ -9,6 +9,20 @@ public class User {
     private String password;
     private String userTypeId;
 
+    public User(String id, String name, String email, String password, String userTypeId) {
+
+        isValidName(name);
+        isValidEmail(email);
+        isValidPassword(password);
+        isValidUserTypeId(userTypeId);
+
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.userTypeId = userTypeId;
+    }
+
     public String getId() {
         return id;
     }
@@ -27,30 +41,6 @@ public class User {
 
     public String getUserTypeId() {
         return userTypeId;
-    }
-
-    private void setId(String id) {
-        this.id = id;
-    }
-
-    private void setName(String name) {
-        isValidName(name);
-        this.name = name;
-    }
-
-    private void setEmail(String email) {
-        isValidEmail(email);
-        this.email = email;
-    }
-
-    private void setPassword(String password) {
-        isValidPassword(password);
-        this.password = password;
-    }
-
-    private void setUserTypeId(String userTypeId) {
-        isValidUserTypeId(userTypeId);
-        this.userTypeId = userTypeId;
     }
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
@@ -78,54 +68,5 @@ public class User {
             throw new InvalidUserException("The password must contain at least 8 characters");
         }
     }
-
-    public static User create(
-            String name,
-            String email,
-            String password,
-            String userType
-    ) {
-        isValidName(name);
-        isValidEmail(email);
-        isValidPassword(password);
-        isValidUserTypeId(userType);
-
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setUserTypeId(userType);
-
-        return user;
-    }
-
-    public static User restore(
-            String id,
-            String name,
-            String email,
-            String password,
-            String userTypeId
-    ) {
-        User user = create(name, email, password, userTypeId);
-        user.setId(id);
-        return user;
-    }
-
-    public void rename(String name) {
-        setName(name);
-    }
-
-    public void changeEmail(String email) {
-        setEmail(email);
-    }
-
-    public void changePassword(String password) {
-        setPassword(password);
-    }
-
-    public void changeUserType(String userTypeId) {
-        setUserTypeId(userTypeId);
-    }
-
 
 }

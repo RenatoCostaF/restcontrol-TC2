@@ -1,14 +1,17 @@
-package com.restcontrol.restcontrol_tc2.domain.usecase;
+package com.restcontrol.restcontrol_tc2.domain.gateway;
 
 import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
 
-public interface UserTypeUseCase {
+import java.util.Optional;
+
+public interface UserTypeGateway {
 
     UserType create(UserType userType);
 
     UserType update(UserType userType);
 
-    UserType getById(String id);
+    Optional<UserType> getById(String id);
 
     void delete(String id);
+
 }

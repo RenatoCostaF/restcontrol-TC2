@@ -1,9 +1,10 @@
 package com.restcontrol.restcontrol_tc2.infra.persistence.mongo.gateway;
 
 import com.restcontrol.restcontrol_tc2.domain.entity.User;
-import com.restcontrol.restcontrol_tc2.domain.port.output.UserOutputPort;
-import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocument;
+import com.restcontrol.restcontrol_tc2.domain.exception.InvalidObjectIdException;
+import com.restcontrol.restcontrol_tc2.domain.gateway.UserGateway;
 import com.restcontrol.restcontrol_tc2.infra.mapper.UserMapper;
+import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class UserGatewayImpl implements UserOutputPort {
+public class UserGatewayImpl implements UserGateway {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -29,20 +30,27 @@ public class UserGatewayImpl implements UserOutputPort {
     }
 
     @Override
-    public User update(User user, String id) {
+    public User update(User user) {
         UserDocument document = userMapper.toDocument(user);
-        document.setId(new ObjectId(id));
         UserDocument savedDocument = userRepository.save(document);
         return userMapper.toDomain(savedDocument);
     }
 
     @Override
     public Optional<User> getById(String id) {
-        return userRepository.findById(new ObjectId(id)).map(userMapper::toDomain);
+        return userRepository.findById(toObjectId(id)).map(userMapper::toDomain);
     }
 
     @Override
     public void delete(String id) {
-        userRepository.deleteById(new ObjectId(id));
+        userRepository.deleteById(toObjectId(id));
+    }
+
+    private ObjectId toObjectId(String id) {
+        if (id == null || id.isBlank() || !ObjectId.isValid(id)) {
+            throw new InvalidObjectIdException("Invalid id: " + id);
+        }
+
+        return new ObjectId(id);
     }
 }

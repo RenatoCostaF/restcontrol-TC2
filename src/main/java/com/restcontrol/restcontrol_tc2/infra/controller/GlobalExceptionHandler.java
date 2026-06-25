@@ -1,15 +1,6 @@
 package com.restcontrol.restcontrol_tc2.infra.controller;
 
-import com.restcontrol.restcontrol_tc2.domain.exception.ActionNotAllowedForRunningUser;
-import com.restcontrol.restcontrol_tc2.domain.exception.InvalidMenuItemException;
-import com.restcontrol.restcontrol_tc2.domain.exception.InvalidRestaurantException;
-import com.restcontrol.restcontrol_tc2.domain.exception.InvalidUserException;
-import com.restcontrol.restcontrol_tc2.domain.exception.InvalidUserTypeException;
-import com.restcontrol.restcontrol_tc2.domain.exception.MenuItemNotFoundException;
-import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantDuplicateIdentified;
-import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantNotFoundException;
-import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
-import com.restcontrol.restcontrol_tc2.domain.exception.UserTypeNotFoundException;
+import com.restcontrol.restcontrol_tc2.domain.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -25,7 +16,8 @@ public class GlobalExceptionHandler {
             InvalidUserException.class,
             InvalidUserTypeException.class,
             InvalidRestaurantException.class,
-            InvalidMenuItemException.class
+            InvalidMenuItemException.class,
+            InvalidObjectIdException.class
     })
     public ProblemDetail handleBadRequest(RuntimeException exception, HttpServletRequest request) {
         return buildResponse(HttpStatus.BAD_REQUEST, exception, request);

@@ -1,72 +1,44 @@
 package com.restcontrol.restcontrol_tc2.infra.mapper;
 
-import com.restcontrol.restcontrol_tc2.domain.usecase.input.UpdateUserInput;
-import com.restcontrol.restcontrol_tc2.domain.usecase.input.UserInput;
+import com.restcontrol.restcontrol_tc2.domain.dto.CreateUserInputDTO;
+import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.entity.User;
+import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserRequestDTO;
-import com.restcontrol.restcontrol_tc2.infra.dto.request.UserRequestDTO;
+import com.restcontrol.restcontrol_tc2.infra.dto.response.CreateUserResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UpdateUserResponseDTO;
-import com.restcontrol.restcontrol_tc2.infra.dto.response.UserResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocument;
-import org.springframework.stereotype.Component;
+import org.bson.types.ObjectId;
+import org.mapstruct.Mapper;
 
-@Component
-public class UserMapper {
+@Mapper(componentModel = "spring")
+public abstract class UserMapper {
 
-    public UserDocument toDocument(User user) {
-        UserDocument document = new UserDocument();
-        if (user.getId() != null && !user.getId().isBlank()) {
-            document.setId(new org.bson.types.ObjectId(user.getId()));
+    public abstract UserDocument toDocument(User user);
+
+    public abstract User toDomain(UserDocument document);
+
+    public abstract CreateUserInputDTO toUserInput(CreateUserRequestDTO createUserRequestDTO);
+
+    public abstract CreateUserResponseDTO toUserResponseDTO(User user);
+
+    public abstract UpdateUserInputDTO toUpdateUserInput(UpdateUserRequestDTO updateUserRequestDTO);
+
+    public abstract UpdateUserResponseDTO toUpdateUserResponseDTO(User user);
+
+    protected ObjectId map(String id) {
+        if (id == null || id.isBlank()) {
+            return null;
         }
-        document.setName(user.getName());
-        document.setEmail(user.getEmail());
-        document.setPassword(user.getPassword());
-        document.setUserTypeId(user.getUserTypeId());
 
-        return document;
+        return new ObjectId(id);
     }
 
-    public User toDomain(UserDocument document) {
-        return User.restore(
-                document.getId() != null ? document.getId().toHexString() : null,
-                document.getName(),
-                document.getEmail(),
-                document.getPassword(),
-                document.getUserTypeId()
-        );
-    }
+    protected String map(ObjectId id) {
+        if (id == null) {
+            return null;
+        }
 
-    public UserInput toUserInput(UserRequestDTO requestDTO) {
-        return new UserInput(
-                requestDTO.name(),
-                requestDTO.email(),
-                requestDTO.password(),
-                requestDTO.userTypeId()
-        );
-    }
-
-    public UpdateUserInput toUpdateUserInput(UpdateUserRequestDTO requestDTO) {
-        return new UpdateUserInput(
-                requestDTO.name(),
-                requestDTO.email(),
-                requestDTO.password(),
-                requestDTO.userTypeId()
-        );
-    }
-
-    public UserResponseDTO toUserResponseDTO(User user) {
-        return new UserResponseDTO(
-                user.getName(),
-                user.getEmail(),
-                user.getUserTypeId()
-        );
-    }
-
-    public UpdateUserResponseDTO toUpdateUserResponseDTO(User user) {
-        return new UpdateUserResponseDTO(
-                user.getName(),
-                user.getEmail(),
-                user.getUserTypeId()
-        );
+        return id.toHexString();
     }
 }
