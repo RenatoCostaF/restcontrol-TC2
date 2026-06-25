@@ -21,12 +21,14 @@ public class RestaurantUseCaseImpl implements RestaurantUseCase {
 
     @Override
     public Restaurant create(Restaurant restaurant) {
+        validateOwnerExists(restaurant.getOwnerId());
         return restaurantGateway.create(restaurant);
     }
 
     @Override
     public Restaurant update(Restaurant restaurant) {
         restaurantGateway.getById(restaurant.getId()).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found"));
+        validateOwnerExists(restaurant.getOwnerId());
         return restaurantGateway.update(restaurant);
     }
 
@@ -49,6 +51,11 @@ public class RestaurantUseCaseImpl implements RestaurantUseCase {
         }
 
         restaurantGateway.delete(id);
+    }
+
+    private void validateOwnerExists(String ownerId) {
+        userGateway.getById(ownerId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
 }
