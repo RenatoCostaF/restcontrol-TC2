@@ -4,7 +4,6 @@ import com.restcontrol.restcontrol_tc2.domain.controller.RestaurantController;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.RestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateRestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.RestaurantResponseDTO;
-import com.restcontrol.restcontrol_tc2.infra.dto.response.UpdateRestaurantResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.RestaurantMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,13 +29,13 @@ public class RestaurantRestController {
     }
 
     @PutMapping("/{id}")
-    public UpdateRestaurantResponseDTO update(
+    public RestaurantResponseDTO update(
             @PathVariable String id,
             @RequestBody UpdateRestaurantRequestDTO updateRestaurantRequestDTO
     ) {
         var updateRestaurantInput = restaurantMapper.toUpdateRestaurantInput(updateRestaurantRequestDTO);
         var restaurant = restaurantController.update(updateRestaurantInput, id);
-        return restaurantMapper.toUpdateRestaurantResponseDTO(restaurant);
+        return restaurantMapper.toRestaurantResponseDTO(restaurant);
     }
 
     @GetMapping

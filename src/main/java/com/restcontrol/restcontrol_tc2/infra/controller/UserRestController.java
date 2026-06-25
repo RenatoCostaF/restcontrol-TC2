@@ -3,8 +3,7 @@ package com.restcontrol.restcontrol_tc2.infra.controller;
 import com.restcontrol.restcontrol_tc2.domain.controller.UserController;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserRequestDTO;
-import com.restcontrol.restcontrol_tc2.infra.dto.response.CreateUserResponseDTO;
-import com.restcontrol.restcontrol_tc2.infra.dto.response.UpdateUserResponseDTO;
+import com.restcontrol.restcontrol_tc2.infra.dto.response.UserResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.UserMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,7 @@ public class UserRestController {
     }
 
     @PostMapping
-    public CreateUserResponseDTO create(
+    public UserResponseDTO create(
             @RequestBody CreateUserRequestDTO createUserRequestDTO
     ) {
         var userInput = userMapper.toUserInput(createUserRequestDTO);
@@ -30,17 +29,17 @@ public class UserRestController {
     }
 
     @PutMapping("/{id}")
-    public UpdateUserResponseDTO update(
+    public UserResponseDTO update(
             @PathVariable String id,
             @RequestBody UpdateUserRequestDTO updateUserRequestDTO
     ) {
         var updateUserInput = userMapper.toUpdateUserInput(updateUserRequestDTO);
         var user = userController.update(updateUserInput, id);
-        return userMapper.toUpdateUserResponseDTO(user);
+        return userMapper.toUserResponseDTO(user);
     }
 
     @GetMapping("/{id}")
-    public CreateUserResponseDTO getById(
+    public UserResponseDTO getById(
             @PathVariable String id
     ) {
         var user = userController.getById(id);
