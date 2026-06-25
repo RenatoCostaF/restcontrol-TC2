@@ -2,6 +2,7 @@ package com.restcontrol.restcontrol_tc2.infra.config;
 
 import com.restcontrol.restcontrol_tc2.domain.controller.UserController;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserGateway;
+import com.restcontrol.restcontrol_tc2.domain.gateway.UserTypeGateway;
 import com.restcontrol.restcontrol_tc2.domain.mapper.UserMapper;
 import com.restcontrol.restcontrol_tc2.domain.usecase.UserUseCase;
 import com.restcontrol.restcontrol_tc2.domain.usecase.impl.UserUseCaseImpl;
@@ -17,8 +18,8 @@ public class UserBeanConfig {
     }
 
     @Bean
-    public UserUseCase userUseCase(UserGateway userGateway) {
-        return new UserUseCaseImpl(userGateway);
+    public UserUseCase userUseCase(UserGateway userGateway, UserTypeGateway userTypeGateway) {
+        return new UserUseCaseImpl(userGateway, userTypeGateway);
     }
 
     @Bean
