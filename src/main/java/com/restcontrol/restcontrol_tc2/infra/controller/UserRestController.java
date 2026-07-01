@@ -18,8 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
-
 @RestController
 @RequestMapping("/v1/users")
 @Tag(name = "Users", description = "Controller para CRUD de usuários (camada infra)")
