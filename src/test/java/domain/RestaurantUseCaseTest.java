@@ -229,18 +229,13 @@ public class RestaurantUseCaseTest {
         verify(restaurantGateway, times(1)).delete(RestaurantHelper.RESTAURANT_ID);
     }
 
+    @Test
+    void getByIdInvalidTest() {
+        // Arrange
+        when(restaurantGateway.getById(RestaurantHelper.RESTAURANT_ID)).thenReturn(Optional.empty());
 
-    /*
-    * Restaurant create(Restaurant restaurant);
-
-    Restaurant update(Restaurant restaurant);
-
-    List<Restaurant> listAll();
-
-    Restaurant getByName(String name);
-
-    Restaurant getById(String id);
-
-    void delete(String id, String userId);
-    * */
+        // Act & Assert
+        assertThrows(RestaurantNotFoundException.class, () -> restaurantUseCase.getById(RestaurantHelper.RESTAURANT_ID));
+        verify(restaurantGateway, times(1)).getById(RestaurantHelper.RESTAURANT_ID);
+    }
 }
