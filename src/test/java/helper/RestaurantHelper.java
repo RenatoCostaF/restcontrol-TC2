@@ -6,7 +6,7 @@ import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
 
 public class RestaurantHelper {
 
-    public static final String RESTAURANT_ID = "fb7a149c-95b8-4bc2-841d-d55711db18b5";
+    public static final String RESTAURANT_ID = "507f1f77bcf86cd799439011";
     public static final String OWNER_ID = "db5e4d27-2c97-4b71-9df7-7041f6f1c713";
     public static final String USERTYPE_ID = "123e4567-e89b-12d3-a456-426614174000";
     public static final String CUSTOMER_USERTYPE_ID = "223e4567-e89b-12d3-a456-426614174001";
