@@ -1,6 +1,8 @@
 package com.restcontrol.restcontrol_tc2.infra.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restcontrol.restcontrol_tc2.domain.controller.UserController;
+import com.restcontrol.restcontrol_tc2.domain.dto.CreateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO;
@@ -8,6 +10,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UserResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.UserMapper;
 import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -28,13 +31,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(UserRestController.class)
 @Import(GlobalExceptionHandler.class)
+@DisplayName("RestController - User")
 class UserRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private tools.jackson.databind.ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @MockitoBean
     private UserController userController;
@@ -43,6 +47,7 @@ class UserRestControllerTest {
     private UserMapper userMapper;
 
     @Test
+    @DisplayName("POST /v1/users deve criar usuário com sucesso")
     void shouldCreateUser() throws Exception {
         var request = new CreateUserRequestDTO(
                 UserTestFixtures.VALID_NAME,
@@ -74,6 +79,7 @@ class UserRestControllerTest {
     }
 
     @Test
+    @DisplayName("POST /v1/users deve retornar 400 quando o payload for inválido")
     void shouldReturnBadRequestWhenCreateUserPayloadIsInvalid() throws Exception {
         var request = new CreateUserRequestDTO("", "invalid-email", "short", "");
 
@@ -85,6 +91,7 @@ class UserRestControllerTest {
     }
 
     @Test
+    @DisplayName("PUT /v1/users/{id} deve atualizar usuário com sucesso")
     void shouldUpdateUser() throws Exception {
         var request = new UpdateUserRequestDTO(
                 "Jane Doe",
@@ -119,6 +126,19 @@ class UserRestControllerTest {
     }
 
     @Test
+    @DisplayName("PUT /v1/users/{id} deve retornar 400 quando o payload for inválido")
+    void shouldReturnBadRequestWhenUpdateUserPayloadIsInvalid() throws Exception {
+        var request = new UpdateUserRequestDTO("", "invalid-email", "short", "");
+
+        mockMvc.perform(put("/v1/users/{id}", UserTestFixtures.VALID_USER_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.detail").value("Request validation failed"));
+    }
+
+    @Test
+    @DisplayName("GET /v1/users/{id} deve retornar usuário encontrado")
     void shouldGetUserById() throws Exception {
         var user = UserTestFixtures.validUser();
         var response = new UserResponseDTO(
@@ -137,6 +157,7 @@ class UserRestControllerTest {
     }
 
     @Test
+    @DisplayName("GET /v1/users/{id} deve retornar 404 quando usuário não existir")
     void shouldReturnNotFoundWhenUserDoesNotExist() throws Exception {
         var userId = UserTestFixtures.VALID_USER_ID;
         when(userController.getById(userId)).thenThrow(new UserNotFoundException("User not found"));
@@ -147,6 +168,7 @@ class UserRestControllerTest {
     }
 
     @Test
+    @DisplayName("DELETE /v1/users/{id} deve remover usuário com sucesso")
     void shouldDeleteUser() throws Exception {
         var userId = UserTestFixtures.VALID_USER_ID;
 
@@ -157,6 +179,7 @@ class UserRestControllerTest {
     }
 
     @Test
+    @DisplayName("DELETE /v1/users/{id} deve retornar 404 quando usuário não existir")
     void shouldReturnNotFoundWhenDeletingNonExistentUser() throws Exception {
         var userId = UserTestFixtures.VALID_USER_ID;
         doThrow(new UserNotFoundException("User not found")).when(userController).delete(userId);
