@@ -2,7 +2,6 @@ package com.restcontrol.restcontrol_tc2.infra.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restcontrol.restcontrol_tc2.domain.controller.UserController;
-import com.restcontrol.restcontrol_tc2.domain.dto.CreateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO;
