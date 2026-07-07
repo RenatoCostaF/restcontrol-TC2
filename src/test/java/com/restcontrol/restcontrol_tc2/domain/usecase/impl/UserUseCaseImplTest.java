@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Use case - User")
 class UserUseCaseImplTest {
 
     @Mock
@@ -42,7 +43,7 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should create user when user type exists")
+    @DisplayName("Deve criar usuário quando o tipo de usuário existir")
     void shouldCreateUserWhenUserTypeExists() {
         when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.of(UserTestFixtures.validUserType()));
         when(userGateway.create(user)).thenReturn(user);
@@ -55,7 +56,7 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should throw an exception when trying to create a user with invalid user type")
+    @DisplayName("Deve lançar exceção ao criar usuário com tipo de usuário inexistente")
     void shouldThrowWhenCreatingUserWithInvalidUserType() {
         when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.empty());
 
@@ -65,7 +66,7 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should update an user when user and user type exist")
+    @DisplayName("Deve atualizar usuário quando usuário e tipo de usuário existirem")
     void shouldUpdateUserWhenUserAndUserTypeExist() {
         when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
         when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.of(UserTestFixtures.validUserType()));
@@ -80,7 +81,7 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should throw an exception when trying to update a non existent user")
+    @DisplayName("Deve lançar exceção ao atualizar usuário inexistente")
     void shouldThrowWhenUpdatingNonExistentUser() {
         when(userGateway.getById(user.getId())).thenReturn(Optional.empty());
 
@@ -90,7 +91,18 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should get user by ID")
+    @DisplayName("Deve lançar exceção ao atualizar usuário com tipo de usuário inexistente")
+    void shouldThrowWhenUpdatingUserWithInvalidUserType() {
+        when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
+        when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.empty());
+
+        assertThrows(UserTypeNotFoundException.class, () -> userUseCase.update(user));
+
+        verify(userGateway, never()).update(user);
+    }
+
+    @Test
+    @DisplayName("Deve buscar usuário por ID")
     void shouldGetUserById() {
         when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
 
@@ -100,7 +112,7 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should throw an exception when getting a non existent user")
+    @DisplayName("Deve lançar exceção ao buscar usuário inexistente")
     void shouldThrowWhenGettingNonExistentUser() {
         when(userGateway.getById(user.getId())).thenReturn(Optional.empty());
 
@@ -108,7 +120,7 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should delete user when user exists")
+    @DisplayName("Deve remover usuário quando existir")
     void shouldDeleteUserWhenExists() {
         when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
 
@@ -119,7 +131,7 @@ class UserUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Should throw an exception when trying to delete a non existent user")
+    @DisplayName("Deve lançar exceção ao remover usuário inexistente")
     void shouldThrowWhenDeletingNonExistentUser() {
         when(userGateway.getById(user.getId())).thenReturn(Optional.empty());
 
