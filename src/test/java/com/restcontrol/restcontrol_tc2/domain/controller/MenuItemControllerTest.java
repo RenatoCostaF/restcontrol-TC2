@@ -7,6 +7,7 @@ import com.restcontrol.restcontrol_tc2.domain.mapper.MenuItemMapper;
 import com.restcontrol.restcontrol_tc2.domain.usecase.MenuItemUseCase;
 import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Controller de domínio - MenuItem")
 class MenuItemControllerTest {
 
     @Mock
@@ -43,6 +45,7 @@ class MenuItemControllerTest {
     }
 
     @Test
+    @DisplayName("Deve criar item de cardápio delegando ao use case")
     void shouldCreateMenuItem() {
         when(menuItemMapper.toEntity(createInput)).thenReturn(menuItem);
         when(menuItemUseCase.create(menuItem)).thenReturn(menuItem);
@@ -55,6 +58,7 @@ class MenuItemControllerTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar item de cardápio delegando ao use case")
     void shouldUpdateMenuItem() {
         when(menuItemMapper.toEntity(updateInput, menuItem.getId())).thenReturn(menuItem);
         when(menuItemUseCase.update(menuItem)).thenReturn(menuItem);
@@ -67,6 +71,7 @@ class MenuItemControllerTest {
     }
 
     @Test
+    @DisplayName("Deve listar todos os itens de cardápio")
     void shouldListAllMenuItems() {
         List<MenuItem> menuItems = List.of(menuItem);
         when(menuItemUseCase.listAll()).thenReturn(menuItems);
@@ -78,6 +83,7 @@ class MenuItemControllerTest {
     }
 
     @Test
+    @DisplayName("Deve buscar item de cardápio por ID")
     void shouldGetMenuItemById() {
         when(menuItemUseCase.getById(menuItem.getId())).thenReturn(menuItem);
 
@@ -88,6 +94,7 @@ class MenuItemControllerTest {
     }
 
     @Test
+    @DisplayName("Deve remover item de cardápio por ID")
     void shouldDeleteMenuItem() {
         menuItemController.delete(menuItem.getId());
 

@@ -8,6 +8,7 @@ import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.MenuIt
 import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Gateway de persistência - MenuItem")
 class MenuItemGatewayImplTest {
 
     @Mock
@@ -55,6 +57,7 @@ class MenuItemGatewayImplTest {
     }
 
     @Test
+    @DisplayName("Deve criar item de cardápio no repositório")
     void shouldCreateMenuItem() {
         when(menuItemMapper.toDocument(menuItem)).thenReturn(document);
         when(menuItemRepository.save(document)).thenReturn(document);
@@ -69,6 +72,7 @@ class MenuItemGatewayImplTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar item de cardápio no repositório")
     void shouldUpdateMenuItem() {
         when(menuItemMapper.toDocument(menuItem)).thenReturn(document);
         when(menuItemRepository.save(document)).thenReturn(document);
@@ -81,6 +85,7 @@ class MenuItemGatewayImplTest {
     }
 
     @Test
+    @DisplayName("Deve listar todos os itens de cardápio")
     void shouldListAllMenuItems() {
         when(menuItemRepository.findAll()).thenReturn(List.of(document));
         when(menuItemMapper.toDomain(document)).thenReturn(menuItem);
@@ -92,6 +97,7 @@ class MenuItemGatewayImplTest {
     }
 
     @Test
+    @DisplayName("Deve buscar item de cardápio por ID")
     void shouldGetMenuItemById() {
         when(menuItemRepository.findById(objectId)).thenReturn(Optional.of(document));
         when(menuItemMapper.toDomain(document)).thenReturn(menuItem);
@@ -103,6 +109,7 @@ class MenuItemGatewayImplTest {
     }
 
     @Test
+    @DisplayName("Deve retornar vazio quando item não for encontrado")
     void shouldReturnEmptyWhenMenuItemNotFound() {
         when(menuItemRepository.findById(objectId)).thenReturn(Optional.empty());
 
@@ -112,6 +119,7 @@ class MenuItemGatewayImplTest {
     }
 
     @Test
+    @DisplayName("Deve remover item de cardápio por ID")
     void shouldDeleteMenuItem() {
         menuItemGateway.delete(menuItem.getId());
 
@@ -119,8 +127,10 @@ class MenuItemGatewayImplTest {
     }
 
     @Test
+    @DisplayName("Deve lançar exceção quando o ID for inválido")
     void shouldThrowWhenIdIsInvalid() {
         assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.getById("invalid-id"));
-        assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.delete(null));
+        assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.delete(""));
+        assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.delete("invalid-id"));
     }
 }

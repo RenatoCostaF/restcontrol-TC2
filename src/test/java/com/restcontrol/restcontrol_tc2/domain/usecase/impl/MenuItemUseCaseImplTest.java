@@ -7,6 +7,7 @@ import com.restcontrol.restcontrol_tc2.domain.gateway.MenuItemGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.RestaurantGateway;
 import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Use case - MenuItem")
 class MenuItemUseCaseImplTest {
 
     @Mock
@@ -42,6 +44,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve criar item de cardápio quando o restaurante existir")
     void shouldCreateMenuItemWhenRestaurantExists() {
         when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.of(MenuItemTestFixtures.validRestaurant()));
         when(menuItemGateway.create(menuItem)).thenReturn(menuItem);
@@ -54,6 +57,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve lançar exceção ao criar item com restaurante inexistente")
     void shouldThrowWhenCreatingMenuItemWithInvalidRestaurant() {
         when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.empty());
 
@@ -63,6 +67,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar item quando item e restaurante existirem")
     void shouldUpdateMenuItemWhenMenuItemAndRestaurantExist() {
         when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.of(menuItem));
         when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.of(MenuItemTestFixtures.validRestaurant()));
@@ -77,6 +82,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve lançar exceção ao atualizar item inexistente")
     void shouldThrowWhenUpdatingNonExistentMenuItem() {
         when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.empty());
 
@@ -86,6 +92,18 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve lançar exceção ao atualizar item com restaurante inexistente")
+    void shouldThrowWhenUpdatingMenuItemWithInvalidRestaurant() {
+        when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.of(menuItem));
+        when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.empty());
+
+        assertThrows(RestaurantNotFoundException.class, () -> menuItemUseCase.update(menuItem));
+
+        verify(menuItemGateway, never()).update(menuItem);
+    }
+
+    @Test
+    @DisplayName("Deve listar todos os itens de cardápio")
     void shouldListAllMenuItems() {
         List<MenuItem> menuItems = List.of(menuItem);
         when(menuItemGateway.listAll()).thenReturn(menuItems);
@@ -96,6 +114,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve buscar item de cardápio por ID")
     void shouldGetMenuItemById() {
         when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.of(menuItem));
 
@@ -105,6 +124,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve lançar exceção ao buscar item inexistente")
     void shouldThrowWhenGettingNonExistentMenuItem() {
         when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.empty());
 
@@ -112,6 +132,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve remover item de cardápio quando existir")
     void shouldDeleteMenuItemWhenExists() {
         when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.of(menuItem));
 
@@ -122,6 +143,7 @@ class MenuItemUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("Deve lançar exceção ao remover item inexistente")
     void shouldThrowWhenDeletingNonExistentMenuItem() {
         when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.empty());
 

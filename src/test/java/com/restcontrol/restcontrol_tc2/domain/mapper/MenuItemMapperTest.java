@@ -6,10 +6,12 @@ import com.restcontrol.restcontrol_tc2.domain.entity.MenuItem;
 import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("Mapper de domínio - MenuItem")
 class MenuItemMapperTest {
 
     private MenuItemMapper menuItemMapper;
@@ -20,6 +22,7 @@ class MenuItemMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear CreateMenuItemInputDTO para entidade MenuItem")
     void shouldMapCreateMenuItemInputToEntity() {
         CreateMenuItemInputDTO input = MenuItemTestFixtures.createMenuItemInput();
 
@@ -36,6 +39,7 @@ class MenuItemMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear UpdateMenuItemInputDTO para entidade MenuItem com ID informado")
     void shouldMapUpdateMenuItemInputToEntity() {
         String id = new ObjectId().toHexString();
         UpdateMenuItemInputDTO input = MenuItemTestFixtures.updateMenuItemInput();

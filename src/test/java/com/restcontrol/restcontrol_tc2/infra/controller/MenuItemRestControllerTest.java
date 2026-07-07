@@ -1,6 +1,7 @@
 package com.restcontrol.restcontrol_tc2.infra.controller;
 
 import com.restcontrol.restcontrol_tc2.domain.controller.MenuItemController;
+import com.restcontrol.restcontrol_tc2.domain.dto.CreateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.exception.MenuItemNotFoundException;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateMenuItemRequestDTO;
@@ -8,6 +9,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateMenuItemRequestDT
 import com.restcontrol.restcontrol_tc2.infra.dto.response.MenuItemResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.MenuItemMapper;
 import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -31,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(MenuItemRestController.class)
 @Import(GlobalExceptionHandler.class)
+@DisplayName("RestController - MenuItem")
 class MenuItemRestControllerTest {
 
     @Autowired
@@ -45,6 +48,7 @@ class MenuItemRestControllerTest {
     private MenuItemMapper menuItemMapper;
 
     @Test
+    @DisplayName("POST /v1/menuitems deve criar item de cardápio com sucesso")
     void shouldCreateMenuItem() throws Exception {
         var request = new CreateMenuItemRequestDTO(
                 MenuItemTestFixtures.VALID_NAME,
@@ -82,6 +86,7 @@ class MenuItemRestControllerTest {
     }
 
     @Test
+    @DisplayName("POST /v1/menuitems deve retornar 400 quando o payload for inválido")
     void shouldReturnBadRequestWhenCreateMenuItemPayloadIsInvalid() throws Exception {
         var request = new CreateMenuItemRequestDTO("", "", -1.0, null, "", "", null);
 
@@ -93,6 +98,7 @@ class MenuItemRestControllerTest {
     }
 
     @Test
+    @DisplayName("PUT /v1/menuitems/{id} deve atualizar item de cardápio com sucesso")
     void shouldUpdateMenuItem() throws Exception {
         var request = new UpdateMenuItemRequestDTO(
                 "Pepperoni Pizza",
@@ -137,6 +143,19 @@ class MenuItemRestControllerTest {
     }
 
     @Test
+    @DisplayName("PUT /v1/menuitems/{id} deve retornar 400 quando o payload for inválido")
+    void shouldReturnBadRequestWhenUpdateMenuItemPayloadIsInvalid() throws Exception {
+        var request = new UpdateMenuItemRequestDTO("", "", -1.0, null, "", "", null);
+
+        mockMvc.perform(put("/v1/menuitems/{id}", MenuItemTestFixtures.VALID_MENU_ITEM_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.detail").value("Request validation failed"));
+    }
+
+    @Test
+    @DisplayName("GET /v1/menuitems deve listar todos os itens de cardápio")
     void shouldListAllMenuItems() throws Exception {
         var menuItem = MenuItemTestFixtures.validMenuItem();
         var response = new MenuItemResponseDTO(
@@ -160,6 +179,7 @@ class MenuItemRestControllerTest {
     }
 
     @Test
+    @DisplayName("GET /v1/menuitems/{id} deve retornar item encontrado")
     void shouldGetMenuItemById() throws Exception {
         var menuItem = MenuItemTestFixtures.validMenuItem();
         var response = new MenuItemResponseDTO(
@@ -182,6 +202,7 @@ class MenuItemRestControllerTest {
     }
 
     @Test
+    @DisplayName("GET /v1/menuitems/{id} deve retornar 404 quando item não existir")
     void shouldReturnNotFoundWhenMenuItemDoesNotExist() throws Exception {
         var menuItemId = MenuItemTestFixtures.VALID_MENU_ITEM_ID;
         when(menuItemController.getById(menuItemId))
@@ -193,6 +214,7 @@ class MenuItemRestControllerTest {
     }
 
     @Test
+    @DisplayName("DELETE /v1/menuitems/{id} deve remover item com sucesso")
     void shouldDeleteMenuItem() throws Exception {
         var menuItemId = MenuItemTestFixtures.VALID_MENU_ITEM_ID;
 
@@ -203,6 +225,7 @@ class MenuItemRestControllerTest {
     }
 
     @Test
+    @DisplayName("DELETE /v1/menuitems/{id} deve retornar 404 quando item não existir")
     void shouldReturnNotFoundWhenDeletingNonExistentMenuItem() throws Exception {
         var menuItemId = MenuItemTestFixtures.VALID_MENU_ITEM_ID;
         doThrow(new MenuItemNotFoundException("Menu item not found"))
