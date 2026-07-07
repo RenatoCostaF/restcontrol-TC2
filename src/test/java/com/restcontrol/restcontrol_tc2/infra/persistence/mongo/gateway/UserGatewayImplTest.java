@@ -24,6 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Gateway de persistência - User")
 class UserGatewayImplTest {
 
     @Mock
@@ -52,7 +53,7 @@ class UserGatewayImplTest {
     }
 
     @Test
-    @DisplayName("Should create an user")
+    @DisplayName("Deve criar usuário no repositório")
     void shouldCreateUser() {
         when(userMapper.toDocument(user)).thenReturn(document);
         when(userRepository.save(document)).thenReturn(document);
@@ -67,7 +68,7 @@ class UserGatewayImplTest {
     }
 
     @Test
-    @DisplayName("Should update an user")
+    @DisplayName("Deve atualizar usuário no repositório")
     void shouldUpdateUser() {
         when(userMapper.toDocument(user)).thenReturn(document);
         when(userRepository.save(document)).thenReturn(document);
@@ -80,7 +81,7 @@ class UserGatewayImplTest {
     }
 
     @Test
-    @DisplayName("Should get an user by the ID")
+    @DisplayName("Deve buscar usuário por ID")
     void shouldGetUserById() {
         when(userRepository.findById(objectId)).thenReturn(Optional.of(document));
         when(userMapper.toDomain(document)).thenReturn(user);
@@ -92,7 +93,7 @@ class UserGatewayImplTest {
     }
 
     @Test
-    @DisplayName("Should return empty when user not found")
+    @DisplayName("Deve retornar vazio quando usuário não for encontrado")
     void shouldReturnEmptyWhenUserNotFound() {
         when(userRepository.findById(objectId)).thenReturn(Optional.empty());
 
@@ -102,7 +103,7 @@ class UserGatewayImplTest {
     }
 
     @Test
-    @DisplayName("Should delete an user")
+    @DisplayName("Deve remover usuário por ID")
     void shouldDeleteUser() {
         userGateway.delete(user.getId());
 
@@ -110,9 +111,10 @@ class UserGatewayImplTest {
     }
 
     @Test
-    @DisplayName("Should throw an exception when ID is invalid")
+    @DisplayName("Deve lançar exceção quando o ID for inválido")
     void shouldThrowWhenIdIsInvalid() {
         assertThrows(InvalidObjectIdException.class, () -> userGateway.getById("invalid-id"));
         assertThrows(InvalidObjectIdException.class, () -> userGateway.delete(""));
+        assertThrows(InvalidObjectIdException.class, () -> userGateway.delete(null));
     }
 }
