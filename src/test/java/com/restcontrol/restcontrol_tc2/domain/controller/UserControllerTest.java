@@ -19,6 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Controller de domínio - User")
 class UserControllerTest {
 
     @Mock
@@ -42,7 +43,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Should create an user")
+    @DisplayName("Deve criar usuário delegando ao use case")
     void shouldCreateUser() {
         when(userMapper.toEntity(createInput)).thenReturn(user);
         when(userUseCase.create(user)).thenReturn(user);
@@ -55,7 +56,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Should update an user")
+    @DisplayName("Deve atualizar usuário delegando ao use case")
     void shouldUpdateUser() {
         when(userMapper.toEntity(updateInput, user.getId())).thenReturn(user);
         when(userUseCase.update(user)).thenReturn(user);
@@ -68,7 +69,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Should get an user by the ID")
+    @DisplayName("Deve buscar usuário por ID")
     void shouldGetUserById() {
         when(userUseCase.getById(user.getId())).thenReturn(user);
 
@@ -79,7 +80,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Should delete an user")
+    @DisplayName("Deve remover usuário por ID")
     void shouldDeleteUser() {
         userController.delete(user.getId());
 

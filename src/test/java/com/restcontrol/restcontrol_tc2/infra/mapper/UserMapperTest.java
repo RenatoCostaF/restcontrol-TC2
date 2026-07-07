@@ -10,11 +10,13 @@ import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocume
 import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+@DisplayName("Mapper de infra - User")
 class UserMapperTest {
 
     private UserMapper userMapper;
@@ -25,6 +27,7 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear User para UserDocument")
     void shouldMapUserToDocument() {
         User user = UserTestFixtures.validUser();
 
@@ -38,6 +41,7 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear User para UserDocument com ID nulo")
     void shouldMapUserToDocumentWithNullId() {
         User user = new User(null, UserTestFixtures.VALID_NAME, UserTestFixtures.VALID_EMAIL,
                 UserTestFixtures.VALID_PASSWORD, UserTestFixtures.VALID_USER_TYPE_ID);
@@ -49,6 +53,7 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear UserDocument para User")
     void shouldMapDocumentToDomain() {
         ObjectId objectId = new ObjectId();
         UserDocument document = new UserDocument();
@@ -68,6 +73,7 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear UserDocument para User com ID nulo")
     void shouldMapDocumentToDomainWithNullId() {
         UserDocument document = new UserDocument();
         document.setName(UserTestFixtures.VALID_NAME);
@@ -81,6 +87,7 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear CreateUserRequestDTO para CreateUserInputDTO")
     void shouldMapCreateUserRequestToInput() {
         CreateUserRequestDTO request = new CreateUserRequestDTO(
                 UserTestFixtures.VALID_NAME,
@@ -99,6 +106,7 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear UpdateUserRequestDTO para UpdateUserInputDTO")
     void shouldMapUpdateUserRequestToInput() {
         UpdateUserRequestDTO request = new UpdateUserRequestDTO(
                 "Jane Doe",
@@ -116,6 +124,7 @@ class UserMapperTest {
     }
 
     @Test
+    @DisplayName("Deve mapear User para UserResponseDTO")
     void shouldMapUserToResponseDto() {
         User user = UserTestFixtures.validUser();
 
