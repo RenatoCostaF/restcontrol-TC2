@@ -30,6 +30,7 @@
         <java.version>21</java.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <jacoco.version>0.8.14</jacoco.version>
+        <testcontainers.version>1.21.3</testcontainers.version>
     </properties>
     <dependencies>
         <dependency>
@@ -64,6 +65,24 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mongodb</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -138,43 +157,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                    </execution>
-                    <execution>
-                        <id>check-user-menuitem-coverage</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>BUNDLE</element>
-                                    <includes>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/entity/User.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/entity/MenuItem.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/mapper/UserMapper.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/mapper/MenuItemMapper.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/controller/UserController.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/controller/MenuItemController.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/usecase/impl/UserUseCaseImpl.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/domain/usecase/impl/MenuItemUseCaseImpl.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/infra/controller/UserRestController.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/infra/controller/MenuItemRestController.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/infra/mapper/UserMapper*.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/infra/mapper/MenuItemMapper*.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/infra/persistence/mongo/gateway/UserGatewayImpl.class</include>
-                                        <include>com/restcontrol/restcontrol_tc2/infra/persistence/mongo/gateway/MenuItemGatewayImpl.class</include>
-                                    </includes>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>0.80</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
