@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
@@ -35,8 +36,7 @@ class MenuItemRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private tools.jackson.databind.ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @MockitoBean
     private MenuItemController menuItemController;
