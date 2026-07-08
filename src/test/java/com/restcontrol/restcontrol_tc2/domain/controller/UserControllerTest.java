@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.entity.User;
 import com.restcontrol.restcontrol_tc2.domain.mapper.UserMapper;
 import com.restcontrol.restcontrol_tc2.domain.usecase.UserUseCase;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,9 +37,9 @@ class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        user = UserTestFixtures.validUser();
-        createInput = UserTestFixtures.createUserInput();
-        updateInput = UserTestFixtures.updateUserInput();
+        user = UserTestHelper.validUser();
+        createInput = UserTestHelper.createUserInput();
+        updateInput = UserTestHelper.updateUserInput();
     }
 
     @Test

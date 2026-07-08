@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.InvalidObjectIdException
 import com.restcontrol.restcontrol_tc2.infra.mapper.RestaurantMapper;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.RestaurantDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.RestaurantRepository;
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -139,10 +139,14 @@ class RestaurantGatewayImplTest {
     @Test
     void shouldThrowWhenGetByIdReceivesInvalidId() {
         assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.getById("invalid-id"));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.getById(null));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.getById(""));
     }
 
     @Test
-    void shouldThrowWhenDeleteReceivesNullId() {
+    void shouldThrowWhenDeleteReceivesInvalidId() {
         assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.delete(null));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.delete(""));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.delete("invalid-id"));
     }
 }

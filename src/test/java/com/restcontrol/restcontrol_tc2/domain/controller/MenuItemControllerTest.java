@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.dto.UpdateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.entity.MenuItem;
 import com.restcontrol.restcontrol_tc2.domain.mapper.MenuItemMapper;
 import com.restcontrol.restcontrol_tc2.domain.usecase.MenuItemUseCase;
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,9 +39,9 @@ class MenuItemControllerTest {
 
     @BeforeEach
     void setUp() {
-        menuItem = MenuItemTestFixtures.validMenuItem();
-        createInput = MenuItemTestFixtures.createMenuItemInput();
-        updateInput = MenuItemTestFixtures.updateMenuItemInput();
+        menuItem = MenuItemTestHelper.validMenuItem();
+        createInput = MenuItemTestHelper.createMenuItemInput();
+        updateInput = MenuItemTestHelper.updateMenuItemInput();
     }
 
     @Test

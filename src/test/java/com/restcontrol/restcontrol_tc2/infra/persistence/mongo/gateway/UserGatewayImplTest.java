@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.InvalidObjectIdException
 import com.restcontrol.restcontrol_tc2.infra.mapper.UserMapper;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserRepository;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +42,7 @@ class UserGatewayImplTest {
 
     @BeforeEach
     void setUp() {
-        user = UserTestFixtures.validUser();
+        user = UserTestHelper.validUser();
         objectId = new ObjectId(user.getId());
         document = new UserDocument();
         document.setId(objectId);
@@ -114,6 +114,9 @@ class UserGatewayImplTest {
     @DisplayName("Deve lançar exceção quando o ID for inválido")
     void shouldThrowWhenIdIsInvalid() {
         assertThrows(InvalidObjectIdException.class, () -> userGateway.getById("invalid-id"));
+        assertThrows(InvalidObjectIdException.class, () -> userGateway.getById(null));
+        assertThrows(InvalidObjectIdException.class, () -> userGateway.getById(""));
+        assertThrows(InvalidObjectIdException.class, () -> userGateway.delete("invalid-id"));
         assertThrows(InvalidObjectIdException.class, () -> userGateway.delete(""));
         assertThrows(InvalidObjectIdException.class, () -> userGateway.delete(null));
     }

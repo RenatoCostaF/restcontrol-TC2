@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserTypeNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserTypeGateway;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,13 +39,13 @@ class UserUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        user = UserTestFixtures.validUser();
+        user = UserTestHelper.validUser();
     }
 
     @Test
     @DisplayName("Deve criar usuário quando o tipo de usuário existir")
     void shouldCreateUserWhenUserTypeExists() {
-        when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.of(UserTestFixtures.validUserType()));
+        when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.of(UserTestHelper.validUserType()));
         when(userGateway.create(user)).thenReturn(user);
 
         User result = userUseCase.create(user);
@@ -69,7 +69,7 @@ class UserUseCaseImplTest {
     @DisplayName("Deve atualizar usuário quando usuário e tipo de usuário existirem")
     void shouldUpdateUserWhenUserAndUserTypeExist() {
         when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
-        when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.of(UserTestFixtures.validUserType()));
+        when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.of(UserTestHelper.validUserType()));
         when(userGateway.update(user)).thenReturn(user);
 
         User result = userUseCase.update(user);

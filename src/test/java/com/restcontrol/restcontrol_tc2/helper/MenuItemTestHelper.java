@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_tc2.support;
+package com.restcontrol.restcontrol_tc2.helper;
 
 import com.restcontrol.restcontrol_tc2.domain.dto.CreateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateMenuItemInputDTO;
@@ -6,7 +6,7 @@ import com.restcontrol.restcontrol_tc2.domain.entity.MenuItem;
 import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
 import org.bson.types.ObjectId;
 
-public final class MenuItemTestFixtures {
+public final class MenuItemTestHelper {
 
     public static final String VALID_MENU_ITEM_ID = new ObjectId().toHexString();
     public static final String VALID_RESTAURANT_ID = new ObjectId().toHexString();
@@ -16,7 +16,7 @@ public final class MenuItemTestFixtures {
     public static final Double VALID_PRICE = 29.90;
     public static final String VALID_IMAGE_URL = "https://example.com/pizza.jpg";
 
-    private MenuItemTestFixtures() {
+    private MenuItemTestHelper() {
     }
 
     public static MenuItem validMenuItem() {

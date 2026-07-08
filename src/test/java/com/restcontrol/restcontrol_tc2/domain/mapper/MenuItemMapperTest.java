@@ -3,7 +3,7 @@ package com.restcontrol.restcontrol_tc2.domain.mapper;
 import com.restcontrol.restcontrol_tc2.domain.dto.CreateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.entity.MenuItem;
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ class MenuItemMapperTest {
     @Test
     @DisplayName("Deve mapear CreateMenuItemInputDTO para entidade MenuItem")
     void shouldMapCreateMenuItemInputToEntity() {
-        CreateMenuItemInputDTO input = MenuItemTestFixtures.createMenuItemInput();
+        CreateMenuItemInputDTO input = MenuItemTestHelper.createMenuItemInput();
 
         MenuItem menuItem = menuItemMapper.toEntity(input);
 
@@ -42,7 +42,7 @@ class MenuItemMapperTest {
     @DisplayName("Deve mapear UpdateMenuItemInputDTO para entidade MenuItem com ID informado")
     void shouldMapUpdateMenuItemInputToEntity() {
         String id = new ObjectId().toHexString();
-        UpdateMenuItemInputDTO input = MenuItemTestFixtures.updateMenuItemInput();
+        UpdateMenuItemInputDTO input = MenuItemTestHelper.updateMenuItemInput();
 
         MenuItem menuItem = menuItemMapper.toEntity(input, id);
 

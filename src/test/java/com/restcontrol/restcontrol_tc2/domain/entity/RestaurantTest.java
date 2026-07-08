@@ -2,12 +2,11 @@ package com.restcontrol.restcontrol_tc2.domain.entity;
 
 import com.restcontrol.restcontrol_tc2.domain.exception.ActionNotAllowedForRunningUser;
 import com.restcontrol.restcontrol_tc2.domain.exception.InvalidRestaurantException;
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -91,6 +90,14 @@ class RestaurantTest {
         );
 
         assertEquals("OwnerId cannot be null", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Deve permitir ação quando usuário é o dono do restaurante")
+    void shouldAllowActionWhenUserIsOwner() {
+        Restaurant restaurant = RestaurantHelper.createRestaurant();
+
+        restaurant.ensureOwnedBy(RestaurantHelper.OWNER_ID);
     }
 
     @Test

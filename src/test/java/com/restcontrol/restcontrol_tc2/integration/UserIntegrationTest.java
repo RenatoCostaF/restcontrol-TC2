@@ -1,6 +1,6 @@
 package com.restcontrol.restcontrol_tc2.integration;
 
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Integração - User")
-class UserRestControllerIntegrationTest extends AbstractMongoIntegrationTest {
+class UserIntegrationTest extends AbstractMongoIntegrationTest {
 
     @Autowired
     private IntegrationTestDataFactory testDataFactory;
@@ -27,9 +27,9 @@ class UserRestControllerIntegrationTest extends AbstractMongoIntegrationTest {
     void shouldCreateUserWithSeededUserType() throws Exception {
         var userTypeId = testDataFactory.getCustomerUserTypeId();
         var request = new com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO(
-                UserTestFixtures.VALID_NAME,
+                UserTestHelper.VALID_NAME,
                 "integration-user@example.com",
-                UserTestFixtures.VALID_PASSWORD,
+                UserTestHelper.VALID_PASSWORD,
                 userTypeId
         );
 
@@ -38,7 +38,7 @@ class UserRestControllerIntegrationTest extends AbstractMongoIntegrationTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.name").value(UserTestFixtures.VALID_NAME))
+                .andExpect(jsonPath("$.name").value(UserTestHelper.VALID_NAME))
                 .andExpect(jsonPath("$.email").value("integration-user@example.com"))
                 .andExpect(jsonPath("$.userTypeId").value(userTypeId))
                 .andExpect(jsonPath("$.password").doesNotExist());
@@ -48,9 +48,9 @@ class UserRestControllerIntegrationTest extends AbstractMongoIntegrationTest {
     @DisplayName("Deve retornar 404 ao criar usuário com tipo de usuário inexistente")
     void shouldReturnNotFoundWhenUserTypeDoesNotExist() throws Exception {
         var request = new com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO(
-                UserTestFixtures.VALID_NAME,
+                UserTestHelper.VALID_NAME,
                 "missing-type@example.com",
-                UserTestFixtures.VALID_PASSWORD,
+                UserTestHelper.VALID_PASSWORD,
                 new ObjectId().toHexString()
         );
 

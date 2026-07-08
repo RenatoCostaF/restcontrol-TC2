@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.MenuItemNotFoundExceptio
 import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.gateway.MenuItemGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.RestaurantGateway;
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,13 +40,13 @@ class MenuItemUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        menuItem = MenuItemTestFixtures.validMenuItem();
+        menuItem = MenuItemTestHelper.validMenuItem();
     }
 
     @Test
     @DisplayName("Deve criar item de cardápio quando o restaurante existir")
     void shouldCreateMenuItemWhenRestaurantExists() {
-        when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.of(MenuItemTestFixtures.validRestaurant()));
+        when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.of(MenuItemTestHelper.validRestaurant()));
         when(menuItemGateway.create(menuItem)).thenReturn(menuItem);
 
         MenuItem result = menuItemUseCase.create(menuItem);
@@ -70,7 +70,7 @@ class MenuItemUseCaseImplTest {
     @DisplayName("Deve atualizar item quando item e restaurante existirem")
     void shouldUpdateMenuItemWhenMenuItemAndRestaurantExist() {
         when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.of(menuItem));
-        when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.of(MenuItemTestFixtures.validRestaurant()));
+        when(restaurantGateway.getById(menuItem.getRestaurantId())).thenReturn(Optional.of(MenuItemTestHelper.validRestaurant()));
         when(menuItemGateway.update(menuItem)).thenReturn(menuItem);
 
         MenuItem result = menuItemUseCase.update(menuItem);

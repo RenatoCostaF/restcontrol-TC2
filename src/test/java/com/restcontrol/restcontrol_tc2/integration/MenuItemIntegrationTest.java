@@ -1,6 +1,6 @@
 package com.restcontrol.restcontrol_tc2.integration;
 
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Integração - MenuItem")
-class MenuItemRestControllerIntegrationTest extends AbstractMongoIntegrationTest {
+class MenuItemIntegrationTest extends AbstractMongoIntegrationTest {
 
     @Autowired
     private IntegrationTestDataFactory testDataFactory;
@@ -26,11 +26,11 @@ class MenuItemRestControllerIntegrationTest extends AbstractMongoIntegrationTest
     void shouldCreateMenuItemWhenRestaurantExists() throws Exception {
         var context = testDataFactory.createRestaurantContext();
         var request = new com.restcontrol.restcontrol_tc2.infra.dto.request.CreateMenuItemRequestDTO(
-                MenuItemTestFixtures.VALID_NAME,
-                MenuItemTestFixtures.VALID_DESCRIPTION,
-                MenuItemTestFixtures.VALID_PRICE,
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
                 false,
-                MenuItemTestFixtures.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_IMAGE_URL,
                 context.restaurant().id(),
                 true
         );
@@ -40,20 +40,20 @@ class MenuItemRestControllerIntegrationTest extends AbstractMongoIntegrationTest
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.name").value(MenuItemTestFixtures.VALID_NAME))
+                .andExpect(jsonPath("$.name").value(MenuItemTestHelper.VALID_NAME))
                 .andExpect(jsonPath("$.restaurantId").value(context.restaurant().id()))
-                .andExpect(jsonPath("$.price").value(MenuItemTestFixtures.VALID_PRICE));
+                .andExpect(jsonPath("$.price").value(MenuItemTestHelper.VALID_PRICE));
     }
 
     @Test
     @DisplayName("Deve retornar 404 ao criar item com restaurante inexistente")
     void shouldReturnNotFoundWhenRestaurantDoesNotExist() throws Exception {
         var request = new com.restcontrol.restcontrol_tc2.infra.dto.request.CreateMenuItemRequestDTO(
-                MenuItemTestFixtures.VALID_NAME,
-                MenuItemTestFixtures.VALID_DESCRIPTION,
-                MenuItemTestFixtures.VALID_PRICE,
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
                 false,
-                MenuItemTestFixtures.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_IMAGE_URL,
                 new ObjectId().toHexString(),
                 true
         );
@@ -90,7 +90,7 @@ class MenuItemRestControllerIntegrationTest extends AbstractMongoIntegrationTest
 
         mockMvc.perform(get("/v1/menuitems/{id}", createdItem.id()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(MenuItemTestFixtures.VALID_NAME));
+                .andExpect(jsonPath("$.name").value(MenuItemTestHelper.VALID_NAME));
 
         mockMvc.perform(put("/v1/menuitems/{id}", createdItem.id())
                         .contentType(MediaType.APPLICATION_JSON)

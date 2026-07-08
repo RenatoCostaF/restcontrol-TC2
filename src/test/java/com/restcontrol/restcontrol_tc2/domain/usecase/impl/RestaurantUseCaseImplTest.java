@@ -1,6 +1,6 @@
-package domain;
+package com.restcontrol.restcontrol_tc2.domain.usecase.impl;
 
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,14 +8,15 @@ import org.mockito.Mock;
 import com.restcontrol.restcontrol_tc2.domain.gateway.RestaurantGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserTypeGateway;
-import com.restcontrol.restcontrol_tc2.domain.usecase.impl.RestaurantUseCaseImpl;
 import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
 import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
+import com.restcontrol.restcontrol_tc2.domain.exception.ActionNotAllowedForRunningUser;
 import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserTypeNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.exception.InvalidRestaurantOwnerTypeException;
 import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantDuplicateIdentified;
+import com.restcontrol.restcontrol_tc2.domain.entity.User;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class RestaurantUseCaseTest {
+public class RestaurantUseCaseImplTest {
 
     @Mock
     private RestaurantGateway restaurantGateway;
@@ -150,6 +151,41 @@ public class RestaurantUseCaseTest {
     }
 
     @Test
+    void updateWithOwnerNotFoundTest() {
+        var restaurant = RestaurantHelper.createRestaurant();
+        when(restaurantGateway.getById(restaurant.getId())).thenReturn(Optional.of(restaurant));
+        when(userGateway.getById(restaurant.getOwnerId())).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> restaurantUseCase.update(restaurant));
+        verify(restaurantGateway, never()).update(any(Restaurant.class));
+    }
+
+    @Test
+    void updateWithUserTypeNotFoundTest() {
+        var user = RestaurantHelper.createRestaurantOwner();
+        var restaurant = RestaurantHelper.createRestaurant();
+        when(restaurantGateway.getById(restaurant.getId())).thenReturn(Optional.of(restaurant));
+        when(userGateway.getById(restaurant.getOwnerId())).thenReturn(Optional.of(user));
+        when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.empty());
+
+        assertThrows(UserTypeNotFoundException.class, () -> restaurantUseCase.update(restaurant));
+        verify(restaurantGateway, never()).update(any(Restaurant.class));
+    }
+
+    @Test
+    void updateWithInvalidOwnerTypeTest() {
+        var user = RestaurantHelper.createRestaurantOwner();
+        var customerType = RestaurantHelper.createCustomerType();
+        var restaurant = RestaurantHelper.createRestaurant();
+        when(restaurantGateway.getById(restaurant.getId())).thenReturn(Optional.of(restaurant));
+        when(userGateway.getById(restaurant.getOwnerId())).thenReturn(Optional.of(user));
+        when(userTypeGateway.getById(user.getUserTypeId())).thenReturn(Optional.of(customerType));
+
+        assertThrows(InvalidRestaurantOwnerTypeException.class, () -> restaurantUseCase.update(restaurant));
+        verify(restaurantGateway, never()).update(any(Restaurant.class));
+    }
+
+    @Test
     void listAllTest(){
         // Arrange
         var restaurant = RestaurantHelper.createRestaurant();
@@ -259,6 +295,24 @@ public class RestaurantUseCaseTest {
 
         // Act + Assert
         assertThrows(UserNotFoundException.class, () -> restaurantUseCase.delete(RestaurantHelper.RESTAURANT_ID, RestaurantHelper.OWNER_ID));
+        verify(restaurantGateway, never()).delete(any());
+    }
+
+    @Test
+    void deleteWithUnauthorizedUserTest() {
+        var restaurant = RestaurantHelper.createRestaurant();
+        var runningUser = new User(
+                "other-user-id",
+                "Other User",
+                "other@example.com",
+                "password1!",
+                RestaurantHelper.USERTYPE_ID
+        );
+        when(restaurantGateway.getById(RestaurantHelper.RESTAURANT_ID)).thenReturn(Optional.of(restaurant));
+        when(userGateway.getById("other-user-id")).thenReturn(Optional.of(runningUser));
+
+        assertThrows(ActionNotAllowedForRunningUser.class,
+                () -> restaurantUseCase.delete(RestaurantHelper.RESTAURANT_ID, "other-user-id"));
         verify(restaurantGateway, never()).delete(any());
     }
 

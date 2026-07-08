@@ -1,10 +1,9 @@
 package com.restcontrol.restcontrol_tc2.domain.mapper;
 
 import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
-import com.restcontrol.restcontrol_tc2.domain.mapper.RestaurantMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.restcontrol.restcontrol_tc2.domain.dto.CreateRestaurantInputDTO;

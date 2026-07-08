@@ -10,8 +10,8 @@ import com.restcontrol.restcontrol_tc2.infra.dto.response.MenuItemResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.RestaurantResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UserResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserTypeRepository;
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
@@ -54,18 +54,18 @@ public class IntegrationTestDataFactory {
 
     public UserResponseDTO createCustomerUser(String email) throws Exception {
         return createUser(
-                UserTestFixtures.VALID_NAME,
+                UserTestHelper.VALID_NAME,
                 email,
-                UserTestFixtures.VALID_PASSWORD,
+                UserTestHelper.VALID_PASSWORD,
                 getCustomerUserTypeId()
         );
     }
 
     public UserResponseDTO createRestaurantOwnerUser(String email) throws Exception {
         return createUser(
-                UserTestFixtures.VALID_NAME,
+                UserTestHelper.VALID_NAME,
                 email,
-                UserTestFixtures.VALID_PASSWORD,
+                UserTestHelper.VALID_PASSWORD,
                 getRestaurantOwnerUserTypeId()
         );
     }
@@ -86,10 +86,10 @@ public class IntegrationTestDataFactory {
 
     public RestaurantResponseDTO createRestaurant(String ownerId) throws Exception {
         var request = new RestaurantRequestDTO(
-                MenuItemTestFixtures.validRestaurant().getName(),
-                MenuItemTestFixtures.validRestaurant().getAddress(),
-                MenuItemTestFixtures.validRestaurant().getCuisineType(),
-                MenuItemTestFixtures.validRestaurant().getOpeningHours(),
+                MenuItemTestHelper.validRestaurant().getName(),
+                MenuItemTestHelper.validRestaurant().getAddress(),
+                MenuItemTestHelper.validRestaurant().getCuisineType(),
+                MenuItemTestHelper.validRestaurant().getOpeningHours(),
                 ownerId
         );
 
@@ -112,11 +112,11 @@ public class IntegrationTestDataFactory {
 
     public MenuItemResponseDTO createMenuItem(String restaurantId) throws Exception {
         var request = new CreateMenuItemRequestDTO(
-                MenuItemTestFixtures.VALID_NAME,
-                MenuItemTestFixtures.VALID_DESCRIPTION,
-                MenuItemTestFixtures.VALID_PRICE,
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
                 false,
-                MenuItemTestFixtures.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_IMAGE_URL,
                 restaurantId,
                 true
         );
