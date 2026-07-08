@@ -3,7 +3,7 @@ package com.restcontrol.restcontrol_tc2.domain.mapper;
 import com.restcontrol.restcontrol_tc2.domain.dto.CreateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.entity.User;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ class UserMapperTest {
     @Test
     @DisplayName("Deve mapear CreateUserInputDTO para entidade User")
     void shouldMapCreateUserInputToEntity() {
-        CreateUserInputDTO input = UserTestFixtures.createUserInput();
+        CreateUserInputDTO input = UserTestHelper.createUserInput();
 
         User user = userMapper.toEntity(input);
 
@@ -39,7 +39,7 @@ class UserMapperTest {
     @DisplayName("Deve mapear UpdateUserInputDTO para entidade User com ID informado")
     void shouldMapUpdateUserInputToEntity() {
         String id = new ObjectId().toHexString();
-        UpdateUserInputDTO input = UserTestFixtures.updateUserInput();
+        UpdateUserInputDTO input = UserTestHelper.updateUserInput();
 
         User user = userMapper.toEntity(input, id);
 

@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.InvalidObjectIdException
 import com.restcontrol.restcontrol_tc2.infra.mapper.RestaurantMapper;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.RestaurantDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.RestaurantRepository;
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

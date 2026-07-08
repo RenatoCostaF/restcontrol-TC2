@@ -1,14 +1,13 @@
 package com.restcontrol.restcontrol_tc2.infra.controller;
 
 import com.restcontrol.restcontrol_tc2.domain.controller.UserController;
-import com.restcontrol.restcontrol_tc2.domain.dto.CreateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UserResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.UserMapper;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +48,13 @@ class UserRestControllerTest {
     @DisplayName("POST /v1/users deve criar usuário com sucesso")
     void shouldCreateUser() throws Exception {
         var request = new CreateUserRequestDTO(
-                UserTestFixtures.VALID_NAME,
-                UserTestFixtures.VALID_EMAIL,
-                UserTestFixtures.VALID_PASSWORD,
-                UserTestFixtures.VALID_USER_TYPE_ID
+                UserTestHelper.VALID_NAME,
+                UserTestHelper.VALID_EMAIL,
+                UserTestHelper.VALID_PASSWORD,
+                UserTestHelper.VALID_USER_TYPE_ID
         );
-        var input = UserTestFixtures.createUserInput();
-        var user = UserTestFixtures.validUser();
+        var input = UserTestHelper.createUserInput();
+        var user = UserTestHelper.validUser();
         var response = new UserResponseDTO(
                 user.getId(),
                 user.getName(),
@@ -96,7 +95,7 @@ class UserRestControllerTest {
                 "Jane Doe",
                 "jane@example.com",
                 "newpassword1",
-                UserTestFixtures.VALID_USER_TYPE_ID
+                UserTestHelper.VALID_USER_TYPE_ID
         );
         var input = new UpdateUserInputDTO(
                 request.name(),
@@ -104,7 +103,7 @@ class UserRestControllerTest {
                 request.password(),
                 request.userTypeId()
         );
-        var user = UserTestFixtures.validUser();
+        var user = UserTestHelper.validUser();
         var response = new UserResponseDTO(
                 user.getId(),
                 request.name(),
@@ -129,7 +128,7 @@ class UserRestControllerTest {
     void shouldReturnBadRequestWhenUpdateUserPayloadIsInvalid() throws Exception {
         var request = new UpdateUserRequestDTO("", "invalid-email", "short", "");
 
-        mockMvc.perform(put("/v1/users/{id}", UserTestFixtures.VALID_USER_ID)
+        mockMvc.perform(put("/v1/users/{id}", UserTestHelper.VALID_USER_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
@@ -139,7 +138,7 @@ class UserRestControllerTest {
     @Test
     @DisplayName("GET /v1/users/{id} deve retornar usuário encontrado")
     void shouldGetUserById() throws Exception {
-        var user = UserTestFixtures.validUser();
+        var user = UserTestHelper.validUser();
         var response = new UserResponseDTO(
                 user.getId(),
                 user.getName(),
@@ -158,7 +157,7 @@ class UserRestControllerTest {
     @Test
     @DisplayName("GET /v1/users/{id} deve retornar 404 quando usuário não existir")
     void shouldReturnNotFoundWhenUserDoesNotExist() throws Exception {
-        var userId = UserTestFixtures.VALID_USER_ID;
+        var userId = UserTestHelper.VALID_USER_ID;
         when(userController.getById(userId)).thenThrow(new UserNotFoundException("User not found"));
 
         mockMvc.perform(get("/v1/users/{id}", userId))
@@ -169,7 +168,7 @@ class UserRestControllerTest {
     @Test
     @DisplayName("DELETE /v1/users/{id} deve remover usuário com sucesso")
     void shouldDeleteUser() throws Exception {
-        var userId = UserTestFixtures.VALID_USER_ID;
+        var userId = UserTestHelper.VALID_USER_ID;
 
         mockMvc.perform(delete("/v1/users/{id}", userId))
                 .andExpect(status().isOk());
@@ -180,7 +179,7 @@ class UserRestControllerTest {
     @Test
     @DisplayName("DELETE /v1/users/{id} deve retornar 404 quando usuário não existir")
     void shouldReturnNotFoundWhenDeletingNonExistentUser() throws Exception {
-        var userId = UserTestFixtures.VALID_USER_ID;
+        var userId = UserTestHelper.VALID_USER_ID;
         doThrow(new UserNotFoundException("User not found")).when(userController).delete(userId);
 
         mockMvc.perform(delete("/v1/users/{id}", userId))

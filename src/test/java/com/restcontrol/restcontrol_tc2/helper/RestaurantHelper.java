@@ -1,4 +1,4 @@
-package helper;
+package com.restcontrol.restcontrol_tc2.helper;
 
 import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
 import com.restcontrol.restcontrol_tc2.domain.entity.User;

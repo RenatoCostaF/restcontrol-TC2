@@ -1,4 +1,4 @@
-package com.restcontrol.restcontrol_tc2.support;
+package com.restcontrol.restcontrol_tc2.helper;
 
 import com.restcontrol.restcontrol_tc2.domain.dto.CreateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
@@ -6,7 +6,7 @@ import com.restcontrol.restcontrol_tc2.domain.entity.User;
 import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
 import org.bson.types.ObjectId;
 
-public final class UserTestFixtures {
+public final class UserTestHelper {
 
     public static final String VALID_USER_ID = new ObjectId().toHexString();
     public static final String VALID_USER_TYPE_ID = new ObjectId().toHexString();
@@ -14,7 +14,7 @@ public final class UserTestFixtures {
     public static final String VALID_PASSWORD = "password123";
     public static final String VALID_NAME = "João Silva";
 
-    private UserTestFixtures() {
+    private UserTestHelper() {
 
     }
 

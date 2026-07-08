@@ -1,7 +1,7 @@
 package com.restcontrol.restcontrol_tc2.domain.entity;
 
 import com.restcontrol.restcontrol_tc2.domain.exception.InvalidUserException;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,20 +17,20 @@ class UserTest {
     @Test
     @DisplayName("Deve criar usuário com dados válidos")
     void shouldCreateUserWithValidData() {
-        User user = UserTestFixtures.validUser();
+        User user = UserTestHelper.validUser();
 
-        assertEquals(UserTestFixtures.VALID_USER_ID, user.getId());
-        assertEquals(UserTestFixtures.VALID_NAME, user.getName());
-        assertEquals(UserTestFixtures.VALID_EMAIL, user.getEmail());
-        assertEquals(UserTestFixtures.VALID_PASSWORD, user.getPassword());
-        assertEquals(UserTestFixtures.VALID_USER_TYPE_ID, user.getUserTypeId());
+        assertEquals(UserTestHelper.VALID_USER_ID, user.getId());
+        assertEquals(UserTestHelper.VALID_NAME, user.getName());
+        assertEquals(UserTestHelper.VALID_EMAIL, user.getEmail());
+        assertEquals(UserTestHelper.VALID_PASSWORD, user.getPassword());
+        assertEquals(UserTestHelper.VALID_USER_TYPE_ID, user.getUserTypeId());
     }
 
     @Test
     @DisplayName("Deve lançar exceção quando o nome for nulo")
     void shouldThrowWhenNameIsNull() {
         InvalidUserException exception = assertThrows(InvalidUserException.class, () ->
-                new User(null, null, UserTestFixtures.VALID_EMAIL, UserTestFixtures.VALID_PASSWORD, UserTestFixtures.VALID_USER_TYPE_ID)
+                new User(null, null, UserTestHelper.VALID_EMAIL, UserTestHelper.VALID_PASSWORD, UserTestHelper.VALID_USER_TYPE_ID)
         );
 
         assertEquals("Name cannot be null", exception.getMessage());
@@ -42,7 +42,7 @@ class UserTest {
     @DisplayName("Deve lançar exceção quando o e-mail for inválido: {0}")
     void shouldThrowWhenEmailIsInvalid(String email) {
         InvalidUserException exception = assertThrows(InvalidUserException.class, () ->
-                new User(null, UserTestFixtures.VALID_NAME, email, UserTestFixtures.VALID_PASSWORD, UserTestFixtures.VALID_USER_TYPE_ID)
+                new User(null, UserTestHelper.VALID_NAME, email, UserTestHelper.VALID_PASSWORD, UserTestHelper.VALID_USER_TYPE_ID)
         );
 
         assertEquals("Invalid email format", exception.getMessage());
@@ -52,7 +52,7 @@ class UserTest {
     @DisplayName("Deve lançar exceção quando a senha for nula")
     void shouldThrowWhenPasswordIsNull() {
         InvalidUserException exception = assertThrows(InvalidUserException.class, () ->
-                new User(null, UserTestFixtures.VALID_NAME, UserTestFixtures.VALID_EMAIL, null, UserTestFixtures.VALID_USER_TYPE_ID)
+                new User(null, UserTestHelper.VALID_NAME, UserTestHelper.VALID_EMAIL, null, UserTestHelper.VALID_USER_TYPE_ID)
         );
 
         assertEquals("The password must contain at least 8 characters", exception.getMessage());
@@ -62,7 +62,7 @@ class UserTest {
     @DisplayName("Deve lançar exceção quando a senha tiver menos de 8 caracteres")
     void shouldThrowWhenPasswordIsTooShort() {
         InvalidUserException exception = assertThrows(InvalidUserException.class, () ->
-                new User(null, UserTestFixtures.VALID_NAME, UserTestFixtures.VALID_EMAIL, "short", UserTestFixtures.VALID_USER_TYPE_ID)
+                new User(null, UserTestHelper.VALID_NAME, UserTestHelper.VALID_EMAIL, "short", UserTestHelper.VALID_USER_TYPE_ID)
         );
 
         assertEquals("The password must contain at least 8 characters", exception.getMessage());
@@ -72,7 +72,7 @@ class UserTest {
     @DisplayName("Deve lançar exceção quando o tipo de usuário for nulo")
     void shouldThrowWhenUserTypeIdIsNull() {
         InvalidUserException exception = assertThrows(InvalidUserException.class, () ->
-                new User(null, UserTestFixtures.VALID_NAME, UserTestFixtures.VALID_EMAIL, UserTestFixtures.VALID_PASSWORD, null)
+                new User(null, UserTestHelper.VALID_NAME, UserTestHelper.VALID_EMAIL, UserTestHelper.VALID_PASSWORD, null)
         );
 
         assertEquals("User type cannot be null", exception.getMessage());

@@ -7,7 +7,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.RestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateRestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.RestaurantResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.RestaurantDocument;
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

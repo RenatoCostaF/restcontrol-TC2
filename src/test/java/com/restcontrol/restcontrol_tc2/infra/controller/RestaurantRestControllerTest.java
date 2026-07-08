@@ -9,7 +9,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.RestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateRestaurantRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.RestaurantResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.RestaurantMapper;
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -17,8 +17,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import com.restcontrol.restcontrol_tc2.infra.controller.RestaurantRestController;
-import com.restcontrol.restcontrol_tc2.infra.controller.GlobalExceptionHandler;
 
 import java.util.List;
 

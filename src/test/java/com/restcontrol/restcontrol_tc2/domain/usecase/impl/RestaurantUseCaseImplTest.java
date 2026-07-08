@@ -1,6 +1,6 @@
-package domain;
+package com.restcontrol.restcontrol_tc2.domain.usecase.impl;
 
-import helper.RestaurantHelper;
+import com.restcontrol.restcontrol_tc2.helper.RestaurantHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import com.restcontrol.restcontrol_tc2.domain.gateway.RestaurantGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserTypeGateway;
-import com.restcontrol.restcontrol_tc2.domain.usecase.impl.RestaurantUseCaseImpl;
 import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
 import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
 import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantNotFoundException;
@@ -25,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class RestaurantUseCaseTest {
+public class RestaurantUseCaseImplTest {
 
     @Mock
     private RestaurantGateway restaurantGateway;

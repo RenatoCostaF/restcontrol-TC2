@@ -7,7 +7,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UserResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocument;
-import com.restcontrol.restcontrol_tc2.support.UserTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.UserTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ class UserMapperTest {
     @Test
     @DisplayName("Deve mapear User para UserDocument")
     void shouldMapUserToDocument() {
-        User user = UserTestFixtures.validUser();
+        User user = UserTestHelper.validUser();
 
         UserDocument document = userMapper.toDocument(user);
 
@@ -43,8 +43,8 @@ class UserMapperTest {
     @Test
     @DisplayName("Deve mapear User para UserDocument com ID nulo")
     void shouldMapUserToDocumentWithNullId() {
-        User user = new User(null, UserTestFixtures.VALID_NAME, UserTestFixtures.VALID_EMAIL,
-                UserTestFixtures.VALID_PASSWORD, UserTestFixtures.VALID_USER_TYPE_ID);
+        User user = new User(null, UserTestHelper.VALID_NAME, UserTestHelper.VALID_EMAIL,
+                UserTestHelper.VALID_PASSWORD, UserTestHelper.VALID_USER_TYPE_ID);
 
         UserDocument document = userMapper.toDocument(user);
 
@@ -58,10 +58,10 @@ class UserMapperTest {
         ObjectId objectId = new ObjectId();
         UserDocument document = new UserDocument();
         document.setId(objectId);
-        document.setName(UserTestFixtures.VALID_NAME);
-        document.setEmail(UserTestFixtures.VALID_EMAIL);
-        document.setPassword(UserTestFixtures.VALID_PASSWORD);
-        document.setUserTypeId(UserTestFixtures.VALID_USER_TYPE_ID);
+        document.setName(UserTestHelper.VALID_NAME);
+        document.setEmail(UserTestHelper.VALID_EMAIL);
+        document.setPassword(UserTestHelper.VALID_PASSWORD);
+        document.setUserTypeId(UserTestHelper.VALID_USER_TYPE_ID);
 
         User user = userMapper.toDomain(document);
 
@@ -76,10 +76,10 @@ class UserMapperTest {
     @DisplayName("Deve mapear UserDocument para User com ID nulo")
     void shouldMapDocumentToDomainWithNullId() {
         UserDocument document = new UserDocument();
-        document.setName(UserTestFixtures.VALID_NAME);
-        document.setEmail(UserTestFixtures.VALID_EMAIL);
-        document.setPassword(UserTestFixtures.VALID_PASSWORD);
-        document.setUserTypeId(UserTestFixtures.VALID_USER_TYPE_ID);
+        document.setName(UserTestHelper.VALID_NAME);
+        document.setEmail(UserTestHelper.VALID_EMAIL);
+        document.setPassword(UserTestHelper.VALID_PASSWORD);
+        document.setUserTypeId(UserTestHelper.VALID_USER_TYPE_ID);
 
         User user = userMapper.toDomain(document);
 
@@ -90,10 +90,10 @@ class UserMapperTest {
     @DisplayName("Deve mapear CreateUserRequestDTO para CreateUserInputDTO")
     void shouldMapCreateUserRequestToInput() {
         CreateUserRequestDTO request = new CreateUserRequestDTO(
-                UserTestFixtures.VALID_NAME,
-                UserTestFixtures.VALID_EMAIL,
-                UserTestFixtures.VALID_PASSWORD,
-                UserTestFixtures.VALID_USER_TYPE_ID
+                UserTestHelper.VALID_NAME,
+                UserTestHelper.VALID_EMAIL,
+                UserTestHelper.VALID_PASSWORD,
+                UserTestHelper.VALID_USER_TYPE_ID
         );
 
         CreateUserInputDTO input = userMapper.toUserInput(request);
@@ -112,7 +112,7 @@ class UserMapperTest {
                 "Jane Doe",
                 "jane@example.com",
                 "newpassword1",
-                UserTestFixtures.VALID_USER_TYPE_ID
+                UserTestHelper.VALID_USER_TYPE_ID
         );
 
         UpdateUserInputDTO input = userMapper.toUpdateUserInput(request);
@@ -126,7 +126,7 @@ class UserMapperTest {
     @Test
     @DisplayName("Deve mapear User para UserResponseDTO")
     void shouldMapUserToResponseDto() {
-        User user = UserTestFixtures.validUser();
+        User user = UserTestHelper.validUser();
 
         UserResponseDTO response = userMapper.toUserResponseDTO(user);
 

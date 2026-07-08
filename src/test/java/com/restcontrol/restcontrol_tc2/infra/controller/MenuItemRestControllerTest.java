@@ -1,14 +1,13 @@
 package com.restcontrol.restcontrol_tc2.infra.controller;
 
 import com.restcontrol.restcontrol_tc2.domain.controller.MenuItemController;
-import com.restcontrol.restcontrol_tc2.domain.dto.CreateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.exception.MenuItemNotFoundException;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateMenuItemRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateMenuItemRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.MenuItemResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.mapper.MenuItemMapper;
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +50,16 @@ class MenuItemRestControllerTest {
     @DisplayName("POST /v1/menuitems deve criar item de cardápio com sucesso")
     void shouldCreateMenuItem() throws Exception {
         var request = new CreateMenuItemRequestDTO(
-                MenuItemTestFixtures.VALID_NAME,
-                MenuItemTestFixtures.VALID_DESCRIPTION,
-                MenuItemTestFixtures.VALID_PRICE,
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
                 false,
-                MenuItemTestFixtures.VALID_IMAGE_URL,
-                MenuItemTestFixtures.VALID_RESTAURANT_ID,
+                MenuItemTestHelper.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
                 true
         );
-        var input = MenuItemTestFixtures.createMenuItemInput();
-        var menuItem = MenuItemTestFixtures.validMenuItem();
+        var input = MenuItemTestHelper.createMenuItemInput();
+        var menuItem = MenuItemTestHelper.validMenuItem();
         var response = new MenuItemResponseDTO(
                 menuItem.getId(),
                 menuItem.getName(),
@@ -106,7 +105,7 @@ class MenuItemRestControllerTest {
                 34.90,
                 true,
                 "https://example.com/pepperoni.jpg",
-                MenuItemTestFixtures.VALID_RESTAURANT_ID,
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
                 false
         );
         var input = new UpdateMenuItemInputDTO(
@@ -118,7 +117,7 @@ class MenuItemRestControllerTest {
                 request.restaurantId(),
                 request.active()
         );
-        var menuItem = MenuItemTestFixtures.validMenuItem();
+        var menuItem = MenuItemTestHelper.validMenuItem();
         var response = new MenuItemResponseDTO(
                 menuItem.getId(),
                 request.name(),
@@ -147,7 +146,7 @@ class MenuItemRestControllerTest {
     void shouldReturnBadRequestWhenUpdateMenuItemPayloadIsInvalid() throws Exception {
         var request = new UpdateMenuItemRequestDTO("", "", -1.0, null, "", "", null);
 
-        mockMvc.perform(put("/v1/menuitems/{id}", MenuItemTestFixtures.VALID_MENU_ITEM_ID)
+        mockMvc.perform(put("/v1/menuitems/{id}", MenuItemTestHelper.VALID_MENU_ITEM_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
@@ -157,7 +156,7 @@ class MenuItemRestControllerTest {
     @Test
     @DisplayName("GET /v1/menuitems deve listar todos os itens de cardápio")
     void shouldListAllMenuItems() throws Exception {
-        var menuItem = MenuItemTestFixtures.validMenuItem();
+        var menuItem = MenuItemTestHelper.validMenuItem();
         var response = new MenuItemResponseDTO(
                 menuItem.getId(),
                 menuItem.getName(),
@@ -181,7 +180,7 @@ class MenuItemRestControllerTest {
     @Test
     @DisplayName("GET /v1/menuitems/{id} deve retornar item encontrado")
     void shouldGetMenuItemById() throws Exception {
-        var menuItem = MenuItemTestFixtures.validMenuItem();
+        var menuItem = MenuItemTestHelper.validMenuItem();
         var response = new MenuItemResponseDTO(
                 menuItem.getId(),
                 menuItem.getName(),
@@ -204,7 +203,7 @@ class MenuItemRestControllerTest {
     @Test
     @DisplayName("GET /v1/menuitems/{id} deve retornar 404 quando item não existir")
     void shouldReturnNotFoundWhenMenuItemDoesNotExist() throws Exception {
-        var menuItemId = MenuItemTestFixtures.VALID_MENU_ITEM_ID;
+        var menuItemId = MenuItemTestHelper.VALID_MENU_ITEM_ID;
         when(menuItemController.getById(menuItemId))
                 .thenThrow(new MenuItemNotFoundException("Menu item not found"));
 
@@ -216,7 +215,7 @@ class MenuItemRestControllerTest {
     @Test
     @DisplayName("DELETE /v1/menuitems/{id} deve remover item com sucesso")
     void shouldDeleteMenuItem() throws Exception {
-        var menuItemId = MenuItemTestFixtures.VALID_MENU_ITEM_ID;
+        var menuItemId = MenuItemTestHelper.VALID_MENU_ITEM_ID;
 
         mockMvc.perform(delete("/v1/menuitems/{id}", menuItemId))
                 .andExpect(status().isOk());
@@ -227,7 +226,7 @@ class MenuItemRestControllerTest {
     @Test
     @DisplayName("DELETE /v1/menuitems/{id} deve retornar 404 quando item não existir")
     void shouldReturnNotFoundWhenDeletingNonExistentMenuItem() throws Exception {
-        var menuItemId = MenuItemTestFixtures.VALID_MENU_ITEM_ID;
+        var menuItemId = MenuItemTestHelper.VALID_MENU_ITEM_ID;
         doThrow(new MenuItemNotFoundException("Menu item not found"))
                 .when(menuItemController).delete(menuItemId);
 

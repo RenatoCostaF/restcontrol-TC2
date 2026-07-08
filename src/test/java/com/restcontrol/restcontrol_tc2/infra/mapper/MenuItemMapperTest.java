@@ -7,7 +7,7 @@ import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateMenuItemRequestDT
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateMenuItemRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.MenuItemResponseDTO;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.MenuItemDocument;
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ class MenuItemMapperTest {
     @Test
     @DisplayName("Deve mapear MenuItem para MenuItemDocument")
     void shouldMapMenuItemToDocument() {
-        MenuItem menuItem = MenuItemTestFixtures.validMenuItem();
+        MenuItem menuItem = MenuItemTestHelper.validMenuItem();
 
         MenuItemDocument document = menuItemMapper.toDocument(menuItem);
 
@@ -48,12 +48,12 @@ class MenuItemMapperTest {
     void shouldMapMenuItemToDocumentWithNullId() {
         MenuItem menuItem = new MenuItem(
                 null,
-                MenuItemTestFixtures.VALID_NAME,
-                MenuItemTestFixtures.VALID_DESCRIPTION,
-                MenuItemTestFixtures.VALID_PRICE,
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
                 false,
-                MenuItemTestFixtures.VALID_IMAGE_URL,
-                MenuItemTestFixtures.VALID_RESTAURANT_ID,
+                MenuItemTestHelper.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
                 true
         );
 
@@ -69,12 +69,12 @@ class MenuItemMapperTest {
         ObjectId objectId = new ObjectId();
         MenuItemDocument document = new MenuItemDocument();
         document.setId(objectId);
-        document.setName(MenuItemTestFixtures.VALID_NAME);
-        document.setDescription(MenuItemTestFixtures.VALID_DESCRIPTION);
-        document.setPrice(MenuItemTestFixtures.VALID_PRICE);
+        document.setName(MenuItemTestHelper.VALID_NAME);
+        document.setDescription(MenuItemTestHelper.VALID_DESCRIPTION);
+        document.setPrice(MenuItemTestHelper.VALID_PRICE);
         document.setAvailableOnlyInRestaurant(false);
-        document.setImageUrl(MenuItemTestFixtures.VALID_IMAGE_URL);
-        document.setRestaurantId(MenuItemTestFixtures.VALID_RESTAURANT_ID);
+        document.setImageUrl(MenuItemTestHelper.VALID_IMAGE_URL);
+        document.setRestaurantId(MenuItemTestHelper.VALID_RESTAURANT_ID);
         document.setActive(true);
 
         MenuItem menuItem = menuItemMapper.toDomain(document);
@@ -93,12 +93,12 @@ class MenuItemMapperTest {
     @DisplayName("Deve mapear MenuItemDocument para MenuItem com ID nulo")
     void shouldMapDocumentToDomainWithNullId() {
         MenuItemDocument document = new MenuItemDocument();
-        document.setName(MenuItemTestFixtures.VALID_NAME);
-        document.setDescription(MenuItemTestFixtures.VALID_DESCRIPTION);
-        document.setPrice(MenuItemTestFixtures.VALID_PRICE);
+        document.setName(MenuItemTestHelper.VALID_NAME);
+        document.setDescription(MenuItemTestHelper.VALID_DESCRIPTION);
+        document.setPrice(MenuItemTestHelper.VALID_PRICE);
         document.setAvailableOnlyInRestaurant(false);
-        document.setImageUrl(MenuItemTestFixtures.VALID_IMAGE_URL);
-        document.setRestaurantId(MenuItemTestFixtures.VALID_RESTAURANT_ID);
+        document.setImageUrl(MenuItemTestHelper.VALID_IMAGE_URL);
+        document.setRestaurantId(MenuItemTestHelper.VALID_RESTAURANT_ID);
         document.setActive(true);
 
         MenuItem menuItem = menuItemMapper.toDomain(document);
@@ -110,12 +110,12 @@ class MenuItemMapperTest {
     @DisplayName("Deve mapear CreateMenuItemRequestDTO para CreateMenuItemInputDTO")
     void shouldMapCreateMenuItemRequestToInput() {
         CreateMenuItemRequestDTO request = new CreateMenuItemRequestDTO(
-                MenuItemTestFixtures.VALID_NAME,
-                MenuItemTestFixtures.VALID_DESCRIPTION,
-                MenuItemTestFixtures.VALID_PRICE,
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
                 false,
-                MenuItemTestFixtures.VALID_IMAGE_URL,
-                MenuItemTestFixtures.VALID_RESTAURANT_ID,
+                MenuItemTestHelper.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
                 true
         );
 
@@ -140,7 +140,7 @@ class MenuItemMapperTest {
                 34.90,
                 true,
                 "https://example.com/pepperoni.jpg",
-                MenuItemTestFixtures.VALID_RESTAURANT_ID,
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
                 false
         );
 
@@ -158,7 +158,7 @@ class MenuItemMapperTest {
     @Test
     @DisplayName("Deve mapear MenuItem para MenuItemResponseDTO")
     void shouldMapMenuItemToResponseDto() {
-        MenuItem menuItem = MenuItemTestFixtures.validMenuItem();
+        MenuItem menuItem = MenuItemTestHelper.validMenuItem();
 
         MenuItemResponseDTO response = menuItemMapper.toMenuItemResponseDTO(menuItem);
 

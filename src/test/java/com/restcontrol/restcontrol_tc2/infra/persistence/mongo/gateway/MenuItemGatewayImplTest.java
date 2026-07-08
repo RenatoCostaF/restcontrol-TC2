@@ -5,7 +5,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.InvalidObjectIdException
 import com.restcontrol.restcontrol_tc2.infra.mapper.MenuItemMapper;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.MenuItemDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.MenuItemRepository;
-import com.restcontrol.restcontrol_tc2.support.MenuItemTestFixtures;
+import com.restcontrol.restcontrol_tc2.helper.MenuItemTestHelper;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +43,7 @@ class MenuItemGatewayImplTest {
 
     @BeforeEach
     void setUp() {
-        menuItem = MenuItemTestFixtures.validMenuItem();
+        menuItem = MenuItemTestHelper.validMenuItem();
         objectId = new ObjectId(menuItem.getId());
         document = new MenuItemDocument();
         document.setId(objectId);
