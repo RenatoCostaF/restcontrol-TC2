@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +23,7 @@ class RestaurantMapperTest {
 
     @BeforeEach
     void setUp() {
-        restaurantMapper = new RestaurantMapperImpl();
+        restaurantMapper = Mappers.getMapper(RestaurantMapper.class);
     }
 
     @Test
@@ -133,6 +134,24 @@ class RestaurantMapperTest {
         assertEquals(request.cuisineType(), input.cuisineType());
         assertEquals(request.openingHours(), input.openingHours());
         assertEquals(request.ownerId(), input.ownerId());
+    }
+
+    @Test
+    @DisplayName("Deve mapear Restaurant para RestaurantDocument com ID em branco")
+    void shouldMapRestaurantToDocumentWithBlankId() {
+        Restaurant restaurant = new Restaurant(
+                "",
+                RestaurantHelper.RESTAURANT_NAME,
+                RestaurantHelper.RESTAURANT_ADDRESS,
+                RestaurantHelper.RESTAURANT_CUISINE_TYPE,
+                RestaurantHelper.RESTAURANT_OPENING_HOURS,
+                RestaurantHelper.OWNER_ID
+        );
+
+        RestaurantDocument document = restaurantMapper.toDocument(restaurant);
+
+        assertNull(document.getId());
+        assertEquals(restaurant.getName(), document.getName());
     }
 
     @Test

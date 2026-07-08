@@ -114,6 +114,9 @@ class UserGatewayImplTest {
     @DisplayName("Deve lançar exceção quando o ID for inválido")
     void shouldThrowWhenIdIsInvalid() {
         assertThrows(InvalidObjectIdException.class, () -> userGateway.getById("invalid-id"));
+        assertThrows(InvalidObjectIdException.class, () -> userGateway.getById(null));
+        assertThrows(InvalidObjectIdException.class, () -> userGateway.getById(""));
+        assertThrows(InvalidObjectIdException.class, () -> userGateway.delete("invalid-id"));
         assertThrows(InvalidObjectIdException.class, () -> userGateway.delete(""));
         assertThrows(InvalidObjectIdException.class, () -> userGateway.delete(null));
     }

@@ -93,6 +93,14 @@ class RestaurantTest {
     }
 
     @Test
+    @DisplayName("Deve permitir ação quando usuário é o dono do restaurante")
+    void shouldAllowActionWhenUserIsOwner() {
+        Restaurant restaurant = RestaurantHelper.createRestaurant();
+
+        restaurant.ensureOwnedBy(RestaurantHelper.OWNER_ID);
+    }
+
+    @Test
     @DisplayName("Deve lançar exceção quando usuário não é o dono do restaurante")
     void shouldThrowWhenUserIsNotOwner() {
         Restaurant restaurant = RestaurantHelper.createRestaurant();

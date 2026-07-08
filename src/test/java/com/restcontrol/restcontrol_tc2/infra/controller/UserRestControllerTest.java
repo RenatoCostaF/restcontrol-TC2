@@ -3,6 +3,7 @@ package com.restcontrol.restcontrol_tc2.infra.controller;
 import com.restcontrol.restcontrol_tc2.domain.controller.UserController;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateUserInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
+import com.restcontrol.restcontrol_tc2.domain.exception.UserTypeNotFoundException;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateUserRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.UserResponseDTO;
@@ -133,6 +134,81 @@ class UserRestControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.detail").value("Request validation failed"));
+    }
+
+    @Test
+    @DisplayName("PUT /v1/users/{id} deve retornar 404 quando usuário não existir")
+    void shouldReturnNotFoundWhenUpdatingNonExistentUser() throws Exception {
+        var request = new UpdateUserRequestDTO(
+                "Jane Doe",
+                "jane@example.com",
+                "newpassword1",
+                UserTestHelper.VALID_USER_TYPE_ID
+        );
+        var input = new UpdateUserInputDTO(
+                request.name(),
+                request.email(),
+                request.password(),
+                request.userTypeId()
+        );
+
+        when(userMapper.toUpdateUserInput(request)).thenReturn(input);
+        when(userController.update(input, UserTestHelper.VALID_USER_ID))
+                .thenThrow(new UserNotFoundException("User not found"));
+
+        mockMvc.perform(put("/v1/users/{id}", UserTestHelper.VALID_USER_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("User not found"));
+    }
+
+    @Test
+    @DisplayName("PUT /v1/users/{id} deve retornar 404 quando tipo de usuário não existir")
+    void shouldReturnNotFoundWhenUpdatingUserWithMissingUserType() throws Exception {
+        var request = new UpdateUserRequestDTO(
+                "Jane Doe",
+                "jane@example.com",
+                "newpassword1",
+                UserTestHelper.VALID_USER_TYPE_ID
+        );
+        var input = new UpdateUserInputDTO(
+                request.name(),
+                request.email(),
+                request.password(),
+                request.userTypeId()
+        );
+
+        when(userMapper.toUpdateUserInput(request)).thenReturn(input);
+        when(userController.update(input, UserTestHelper.VALID_USER_ID))
+                .thenThrow(new UserTypeNotFoundException("UserType not found"));
+
+        mockMvc.perform(put("/v1/users/{id}", UserTestHelper.VALID_USER_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("UserType not found"));
+    }
+
+    @Test
+    @DisplayName("POST /v1/users deve retornar 404 quando tipo de usuário não existir")
+    void shouldReturnNotFoundWhenCreatingUserWithMissingUserType() throws Exception {
+        var request = new CreateUserRequestDTO(
+                UserTestHelper.VALID_NAME,
+                UserTestHelper.VALID_EMAIL,
+                UserTestHelper.VALID_PASSWORD,
+                UserTestHelper.VALID_USER_TYPE_ID
+        );
+        var input = UserTestHelper.createUserInput();
+
+        when(userMapper.toUserInput(request)).thenReturn(input);
+        when(userController.create(input)).thenThrow(new UserTypeNotFoundException("UserType not found"));
+
+        mockMvc.perform(post("/v1/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("UserType not found"));
     }
 
     @Test

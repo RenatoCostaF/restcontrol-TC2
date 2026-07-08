@@ -3,6 +3,7 @@ package com.restcontrol.restcontrol_tc2.infra.controller;
 import com.restcontrol.restcontrol_tc2.domain.controller.MenuItemController;
 import com.restcontrol.restcontrol_tc2.domain.dto.UpdateMenuItemInputDTO;
 import com.restcontrol.restcontrol_tc2.domain.exception.MenuItemNotFoundException;
+import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantNotFoundException;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.CreateMenuItemRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.request.UpdateMenuItemRequestDTO;
 import com.restcontrol.restcontrol_tc2.infra.dto.response.MenuItemResponseDTO;
@@ -151,6 +152,96 @@ class MenuItemRestControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.detail").value("Request validation failed"));
+    }
+
+    @Test
+    @DisplayName("PUT /v1/menuitems/{id} deve retornar 404 quando item não existir")
+    void shouldReturnNotFoundWhenUpdatingNonExistentMenuItem() throws Exception {
+        var request = new UpdateMenuItemRequestDTO(
+                "Pepperoni Pizza",
+                "Pizza with pepperoni",
+                34.90,
+                true,
+                "https://example.com/pepperoni.jpg",
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
+                false
+        );
+        var input = new UpdateMenuItemInputDTO(
+                request.name(),
+                request.description(),
+                request.price(),
+                request.availableOnlyInRestaurant(),
+                request.imageUrl(),
+                request.restaurantId(),
+                request.active()
+        );
+
+        when(menuItemMapper.toUpdateMenuItemInput(request)).thenReturn(input);
+        when(menuItemController.update(input, MenuItemTestHelper.VALID_MENU_ITEM_ID))
+                .thenThrow(new MenuItemNotFoundException("Menu item not found"));
+
+        mockMvc.perform(put("/v1/menuitems/{id}", MenuItemTestHelper.VALID_MENU_ITEM_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("Menu item not found"));
+    }
+
+    @Test
+    @DisplayName("PUT /v1/menuitems/{id} deve retornar 404 quando restaurante não existir")
+    void shouldReturnNotFoundWhenUpdatingMenuItemWithMissingRestaurant() throws Exception {
+        var request = new UpdateMenuItemRequestDTO(
+                "Pepperoni Pizza",
+                "Pizza with pepperoni",
+                34.90,
+                true,
+                "https://example.com/pepperoni.jpg",
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
+                false
+        );
+        var input = new UpdateMenuItemInputDTO(
+                request.name(),
+                request.description(),
+                request.price(),
+                request.availableOnlyInRestaurant(),
+                request.imageUrl(),
+                request.restaurantId(),
+                request.active()
+        );
+
+        when(menuItemMapper.toUpdateMenuItemInput(request)).thenReturn(input);
+        when(menuItemController.update(input, MenuItemTestHelper.VALID_MENU_ITEM_ID))
+                .thenThrow(new RestaurantNotFoundException("Restaurant not found"));
+
+        mockMvc.perform(put("/v1/menuitems/{id}", MenuItemTestHelper.VALID_MENU_ITEM_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("Restaurant not found"));
+    }
+
+    @Test
+    @DisplayName("POST /v1/menuitems deve retornar 404 quando restaurante não existir")
+    void shouldReturnNotFoundWhenCreatingMenuItemWithMissingRestaurant() throws Exception {
+        var request = new CreateMenuItemRequestDTO(
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
+                false,
+                MenuItemTestHelper.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
+                true
+        );
+        var input = MenuItemTestHelper.createMenuItemInput();
+
+        when(menuItemMapper.toMenuItemInput(request)).thenReturn(input);
+        when(menuItemController.create(input)).thenThrow(new RestaurantNotFoundException("Restaurant not found"));
+
+        mockMvc.perform(post("/v1/menuitems")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("Restaurant not found"));
     }
 
     @Test

@@ -1,5 +1,8 @@
 package com.restcontrol.restcontrol_tc2.integration;
 
+import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
+import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserTypeDocument;
+import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,10 +39,27 @@ public abstract class AbstractMongoIntegrationTest {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private UserTypeRepository userTypeRepository;
+
     @BeforeEach
     void cleanDatabase() {
         mongoTemplate.dropCollection("users");
         mongoTemplate.dropCollection("restaurants");
         mongoTemplate.dropCollection("menu_items");
+        mongoTemplate.dropCollection("user_types");
+        seedUserTypes();
+    }
+
+    private void seedUserTypes() {
+        saveUserType("Cliente", UserType.CUSTOMER_CODE);
+        saveUserType("Dono de Restaurante", UserType.RESTAURANT_OWNER_CODE);
+    }
+
+    private void saveUserType(String name, String code) {
+        UserTypeDocument document = new UserTypeDocument();
+        document.setName(name);
+        document.setCode(code);
+        userTypeRepository.save(document);
     }
 }

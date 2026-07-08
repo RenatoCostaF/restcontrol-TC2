@@ -1,8 +1,8 @@
 package com.restcontrol.restcontrol_tc2.integration;
 
+import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.RestaurantDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocument;
-import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserTypeDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.RestaurantRepository;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserRepository;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserTypeRepository;
@@ -27,14 +27,9 @@ class RestaurantIntegrationTest extends AbstractMongoIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        userTypeRepository.deleteAll();
-
-        UserTypeDocument userType = new UserTypeDocument();
-        userType.setId(new ObjectId());
-        userType.setName("Restaurant Owner");
-        userType.setCode("RESTAURANT_OWNER");
-        userTypeRepository.save(userType);
-        userTypeId = userType.getId();
+        userTypeId = userTypeRepository.findByCode(UserType.RESTAURANT_OWNER_CODE)
+                .orElseThrow()
+                .getId();
 
         UserDocument user = new UserDocument();
         user.setId(new ObjectId());
@@ -129,5 +124,101 @@ class RestaurantIntegrationTest extends AbstractMongoIntegrationTest {
     void mustReturn404WhenRestaurantNotFound() throws Exception {
         mockMvc.perform(get("/v1/restaurants/" + new ObjectId().toHexString()))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void mustReturn404WhenGettingRestaurantByUnknownName() throws Exception {
+        mockMvc.perform(get("/v1/restaurants").param("name", "Unknown Restaurant"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("Restaurant not found"));
+    }
+
+    @Test
+    void mustReturn404WhenCreatingRestaurantWithMissingOwner() throws Exception {
+        var body = """
+                {
+                    "name": "New Restaurant",
+                    "address": "456 Oak Ave",
+                    "cuisineType": "Japanese",
+                    "openingHours": "10:00-23:00",
+                    "ownerId": "%s"
+                }
+                """.formatted(new ObjectId().toHexString());
+
+        mockMvc.perform(post("/v1/restaurants")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("User not found"));
+    }
+
+    @Test
+    void mustReturn400WhenCreatingRestaurantWithInvalidOwnerType() throws Exception {
+        var customerTypeId = userTypeRepository.findByCode(UserType.CUSTOMER_CODE)
+                .orElseThrow()
+                .getId();
+
+        UserDocument customer = new UserDocument();
+        customer.setId(new ObjectId());
+        customer.setName("Customer User");
+        customer.setEmail("customer@email.com");
+        customer.setPassword("password");
+        customer.setUserTypeId(customerTypeId.toHexString());
+        userRepository.save(customer);
+
+        var body = """
+                {
+                    "name": "New Restaurant",
+                    "address": "456 Oak Ave",
+                    "cuisineType": "Japanese",
+                    "openingHours": "10:00-23:00",
+                    "ownerId": "%s"
+                }
+                """.formatted(customer.getId().toHexString());
+
+        mockMvc.perform(post("/v1/restaurants")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.detail").value("Only users with type code 'RESTAURANT_OWNER' can own restaurants"));
+    }
+
+    @Test
+    void mustReturn400WhenUpdatePayloadIsInvalid() throws Exception {
+        var body = """
+                {
+                    "name": "",
+                    "address": "",
+                    "cuisineType": "",
+                    "openingHours": "",
+                    "ownerId": ""
+                }
+                """;
+
+        mockMvc.perform(put("/v1/restaurants/" + restaurantId.toHexString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.detail").value("Request validation failed"));
+    }
+
+    @Test
+    void mustReturn403WhenDeletingRestaurantAsNonOwner() throws Exception {
+        var customerTypeId = userTypeRepository.findByCode(UserType.CUSTOMER_CODE)
+                .orElseThrow()
+                .getId();
+
+        UserDocument customer = new UserDocument();
+        customer.setId(new ObjectId());
+        customer.setName("Customer User");
+        customer.setEmail("customer@email.com");
+        customer.setPassword("password");
+        customer.setUserTypeId(customerTypeId.toHexString());
+        userRepository.save(customer);
+
+        mockMvc.perform(delete("/v1/restaurants/" + restaurantId.toHexString())
+                        .param("runningUserId", customer.getId().toHexString()))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.detail").value("Only the restaurant owner can delete the restaurant!"));
     }
 }

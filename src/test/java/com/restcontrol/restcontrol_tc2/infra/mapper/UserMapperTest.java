@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -23,7 +24,7 @@ class UserMapperTest {
 
     @BeforeEach
     void setUp() {
-        userMapper = new UserMapperImpl();
+        userMapper = Mappers.getMapper(UserMapper.class);
     }
 
     @Test
@@ -121,6 +122,18 @@ class UserMapperTest {
         assertEquals(request.email(), input.email());
         assertEquals(request.password(), input.password());
         assertEquals(request.userTypeId(), input.userTypeId());
+    }
+
+    @Test
+    @DisplayName("Deve mapear User para UserDocument com ID em branco")
+    void shouldMapUserToDocumentWithBlankId() {
+        User user = new User("", UserTestHelper.VALID_NAME, UserTestHelper.VALID_EMAIL,
+                UserTestHelper.VALID_PASSWORD, UserTestHelper.VALID_USER_TYPE_ID);
+
+        UserDocument document = userMapper.toDocument(user);
+
+        assertNull(document.getId());
+        assertEquals(user.getName(), document.getName());
     }
 
     @Test

@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -23,7 +24,7 @@ class MenuItemMapperTest {
 
     @BeforeEach
     void setUp() {
-        menuItemMapper = new MenuItemMapperImpl();
+        menuItemMapper = Mappers.getMapper(MenuItemMapper.class);
     }
 
     @Test
@@ -153,6 +154,26 @@ class MenuItemMapperTest {
         assertEquals(request.imageUrl(), input.imageUrl());
         assertEquals(request.restaurantId(), input.restaurantId());
         assertEquals(request.active(), input.active());
+    }
+
+    @Test
+    @DisplayName("Deve mapear MenuItem para MenuItemDocument com ID em branco")
+    void shouldMapMenuItemToDocumentWithBlankId() {
+        MenuItem menuItem = new MenuItem(
+                "",
+                MenuItemTestHelper.VALID_NAME,
+                MenuItemTestHelper.VALID_DESCRIPTION,
+                MenuItemTestHelper.VALID_PRICE,
+                false,
+                MenuItemTestHelper.VALID_IMAGE_URL,
+                MenuItemTestHelper.VALID_RESTAURANT_ID,
+                true
+        );
+
+        MenuItemDocument document = menuItemMapper.toDocument(menuItem);
+
+        assertNull(document.getId());
+        assertEquals(menuItem.getName(), document.getName());
     }
 
     @Test

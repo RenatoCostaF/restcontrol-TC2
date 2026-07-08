@@ -139,10 +139,14 @@ class RestaurantGatewayImplTest {
     @Test
     void shouldThrowWhenGetByIdReceivesInvalidId() {
         assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.getById("invalid-id"));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.getById(null));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.getById(""));
     }
 
     @Test
-    void shouldThrowWhenDeleteReceivesNullId() {
+    void shouldThrowWhenDeleteReceivesInvalidId() {
         assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.delete(null));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.delete(""));
+        assertThrows(InvalidObjectIdException.class, () -> restaurantGateway.delete("invalid-id"));
     }
 }

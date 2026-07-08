@@ -130,7 +130,10 @@ class MenuItemGatewayImplTest {
     @DisplayName("Deve lançar exceção quando o ID for inválido")
     void shouldThrowWhenIdIsInvalid() {
         assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.getById("invalid-id"));
+        assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.getById(null));
+        assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.getById(""));
         assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.delete(""));
         assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.delete("invalid-id"));
+        assertThrows(InvalidObjectIdException.class, () -> menuItemGateway.delete(null));
     }
 }
