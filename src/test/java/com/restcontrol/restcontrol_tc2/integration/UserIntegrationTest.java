@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Integração - User")
-class UserRestControllerIntegrationTest extends AbstractMongoIntegrationTest {
+class UserIntegrationTest extends AbstractMongoIntegrationTest {
 
     @Autowired
     private IntegrationTestDataFactory testDataFactory;

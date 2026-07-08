@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Integração - MenuItem")
-class MenuItemRestControllerIntegrationTest extends AbstractMongoIntegrationTest {
+class MenuItemIntegrationTest extends AbstractMongoIntegrationTest {
 
     @Autowired
     private IntegrationTestDataFactory testDataFactory;
