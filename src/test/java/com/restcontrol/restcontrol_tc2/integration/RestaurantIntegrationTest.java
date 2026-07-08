@@ -7,7 +7,6 @@ import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.Restau
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserRepository;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.repository.UserTypeRepository;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,8 @@ class RestaurantIntegrationTest extends AbstractMongoIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        userTypeRepository.deleteAll();
+
         UserTypeDocument userType = new UserTypeDocument();
         userType.setId(new ObjectId());
         userType.setName("Restaurant Owner");
@@ -53,13 +54,6 @@ class RestaurantIntegrationTest extends AbstractMongoIntegrationTest {
         restaurant.setOwnerId(userId.toHexString());
         restaurantRepository.save(restaurant);
         restaurantId = restaurant.getId();
-    }
-
-    @AfterEach
-    void tearDown() {
-        restaurantRepository.deleteAll();
-        userRepository.deleteAll();
-        userTypeRepository.deleteAll();
     }
 
     @Test
@@ -133,9 +127,7 @@ class RestaurantIntegrationTest extends AbstractMongoIntegrationTest {
 
     @Test
     void mustReturn404WhenRestaurantNotFound() throws Exception {
-        var unknownId = new ObjectId().toHexString();
-
-        mockMvc.perform(get("/v1/restaurants/" + unknownId))
+        mockMvc.perform(get("/v1/restaurants/" + new ObjectId().toHexString()))
                 .andExpect(status().isNotFound());
     }
 }
