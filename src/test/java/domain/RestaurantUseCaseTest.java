@@ -15,6 +15,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantNotFoundExcept
 import com.restcontrol.restcontrol_tc2.domain.exception.UserNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.exception.UserTypeNotFoundException;
 import com.restcontrol.restcontrol_tc2.domain.exception.InvalidRestaurantOwnerTypeException;
+import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantDuplicateIdentified;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
@@ -237,5 +238,34 @@ public class RestaurantUseCaseTest {
         // Act & Assert
         assertThrows(RestaurantNotFoundException.class, () -> restaurantUseCase.getById(RestaurantHelper.RESTAURANT_ID));
         verify(restaurantGateway, times(1)).getById(RestaurantHelper.RESTAURANT_ID);
+    }
+
+    @Test
+    void deleteRestaurantNotFoundTest() {
+        // Arrange
+        when(restaurantGateway.getById(RestaurantHelper.RESTAURANT_ID)).thenReturn(Optional.empty());
+
+        // Act + Assert
+        assertThrows(RestaurantNotFoundException.class, () -> restaurantUseCase.delete(RestaurantHelper.RESTAURANT_ID, RestaurantHelper.OWNER_ID));
+        verify(restaurantGateway, never()).delete(any());
+    }
+
+    @Test
+    void deleteUserNotFoundTest() {
+        // Arrange
+        var restaurant = RestaurantHelper.createRestaurant();
+        when(restaurantGateway.getById(RestaurantHelper.RESTAURANT_ID)).thenReturn(Optional.of(restaurant));
+        when(userGateway.getById(RestaurantHelper.OWNER_ID)).thenReturn(Optional.empty());
+
+        // Act + Assert
+        assertThrows(UserNotFoundException.class, () -> restaurantUseCase.delete(RestaurantHelper.RESTAURANT_ID, RestaurantHelper.OWNER_ID));
+        verify(restaurantGateway, never()).delete(any());
+    }
+
+    @Test
+    void shouldThrowRestaurantDuplicateIdentifiedWithMessage() {
+        var message = "Restaurant already exists";
+        var exception = new RestaurantDuplicateIdentified(message);
+        assertEquals(message, exception.getMessage());
     }
 }
