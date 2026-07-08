@@ -1,6 +1,5 @@
 package com.restcontrol.restcontrol_tc2.integration;
 
-import com.restcontrol.restcontrol_tc2.RestcontrolTc2Application;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.RestaurantDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserDocument;
 import com.restcontrol.restcontrol_tc2.infra.persistence.mongo.entity.UserTypeDocument;
@@ -12,32 +11,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest(classes = RestcontrolTc2Application.class, webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-class RestaurantIntegrationTest {
+class RestaurantIntegrationTest extends AbstractMongoIntegrationTest {
 
-    @Autowired WebApplicationContext context;
     @Autowired RestaurantRepository restaurantRepository;
     @Autowired UserRepository userRepository;
     @Autowired UserTypeRepository userTypeRepository;
 
-    private MockMvc mockMvc;
     private ObjectId userTypeId;
     private ObjectId userId;
     private ObjectId restaurantId;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-
         UserTypeDocument userType = new UserTypeDocument();
         userType.setId(new ObjectId());
         userType.setName("Restaurant Owner");
