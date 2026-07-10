@@ -1,10 +1,6 @@
-# RestControl-TC2
+# Tech Challenge - Fase 2
 
 Backend para gestão compartilhada de restaurantes, desenvolvido para o Tech Challenge — Fase 2 (Pós-Tech Arquitetura e Desenvolvimento Java).
-
-Permite cadastrar usuários (clientes e donos de restaurante), restaurantes e itens de cardápio através de uma API REST em Spring Boot, com persistência em MongoDB.
-
-**Equipe:** Gabriel Reis Santos (RM374090) · Rafael Bompadre Lima (RM372049) · Renato da Costa Furtado (RM372171)
 
 ## Sumário
 - [Arquitetura](#arquitetura)
