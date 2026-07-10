@@ -111,7 +111,7 @@ class RestaurantRestControllerTest {
         when(restaurantController.getByName("Unknown Restaurant"))
                 .thenThrow(new RestaurantNotFoundException("Restaurant not found"));
 
-        mockMvc.perform(get("/v1/restaurants").param("name", "Unknown Restaurant"))
+        mockMvc.perform(get("/v1/restaurants/search").param("name", "Unknown Restaurant"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.detail").value("Restaurant not found"));
     }
@@ -223,7 +223,7 @@ class RestaurantRestControllerTest {
         when(restaurantController.getByName(restaurant.getName())).thenReturn(restaurant);
         when(restaurantMapper.toRestaurantResponseDTO(restaurant)).thenReturn(response);
 
-        mockMvc.perform(get("/v1/restaurants").param("name", restaurant.getName()))
+        mockMvc.perform(get("/v1/restaurants/search").param("name", restaurant.getName()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(restaurant.getName()));
     }
