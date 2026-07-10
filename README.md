@@ -143,6 +143,16 @@ O projeto possui testes unitários (entidades, use cases, mappers e controllers 
 ./mvnw test
 ```
 
+## Cobertura
+
+A cobertura de testes é gerada com **JaCoCo**, já configurado no ciclo de build do Maven.
+
+- `./mvnw test` executa a suíte de testes e gera o relatório de cobertura.
+- O relatório HTML fica disponível em `target/site/jacoco/index.html`.
+- Para visualizar o relatório completo no navegador, abra o arquivo `target/site/jacoco/index.html` após a execução dos testes.
+- `./mvnw verify` também aplica o gate mínimo de cobertura configurado no projeto.
+- Atualmente, o build exige cobertura mínima de `80%` para instruções (`INSTRUCTION`) no nível do bundle.
+
 ## Documentação interativa
 
 Com a aplicação em execução:
