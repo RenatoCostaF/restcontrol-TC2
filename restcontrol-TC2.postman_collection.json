@@ -3,7 +3,7 @@
     "_postman_id": "e2d20fb8-0b4d-4a94-bbcc-4aef0d3c81a6",
     "name": "restcontrol-TC2",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Collection para a API restcontrol-TC2 com exemplos de payload usando variaveis dinamicas do Postman. Ajuste `baseUrl` e execute os requests de criacao para popular automaticamente os ids da colecao."
+    "description": "Collection para a API restcontrol-TC2 com exemplos de payload usando variaveis dinamicas do Postman. Ajuste `baseUrl`, execute `Load Seeded User Types` para capturar os tipos criados automaticamente pela aplicacao e depois siga os requests de criacao para popular os demais ids da colecao."
   },
   "variable": [
     {
@@ -12,6 +12,14 @@
     },
     {
       "key": "userTypeId",
+      "value": ""
+    },
+    {
+      "key": "ownerUserTypeId",
+      "value": ""
+    },
+    {
+      "key": "customerUserTypeId",
       "value": ""
     },
     {
@@ -67,7 +75,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Dono de Restaurante\",\n  \"code\": \"RESTAURANT_OWNER\"\n}"
+              "raw": "{\n  \"name\": \"Tipo Customizado {{$timestamp}}\",\n  \"code\": \"CUSTOM_TYPE_{{$timestamp}}\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/user-types",
@@ -82,7 +90,29 @@
           }
         },
         {
-          "name": "List User Types",
+          "name": "Load Seeded User Types",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  const ownerType = data.find(item => item.code === 'RESTAURANT_OWNER');",
+                  "  const customerType = data.find(item => item.code === 'CUSTOMER');",
+                  "  if (ownerType?.id) {",
+                  "    pm.collectionVariables.set('ownerUserTypeId', ownerType.id);",
+                  "    pm.collectionVariables.set('userTypeId', ownerType.id);",
+                  "  }",
+                  "  if (customerType?.id) {",
+                  "    pm.collectionVariables.set('customerUserTypeId', customerType.id);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "url": {
@@ -192,7 +222,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"Password123\",\n  \"userTypeId\": \"{{userTypeId}}\"\n}"
+              "raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"Password123\",\n  \"userTypeId\": \"{{ownerUserTypeId}}\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/users",
@@ -235,7 +265,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"Password456\",\n  \"userTypeId\": \"{{userTypeId}}\"\n}"
+              "raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"Password456\",\n  \"userTypeId\": \"{{ownerUserTypeId}}\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/v1/users/{{userId}}",
@@ -355,13 +385,14 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/v1/restaurants?name={{restaurantName}}",
+              "raw": "{{baseUrl}}/v1/restaurants/search?name={{restaurantName}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "v1",
-                "restaurants"
+                "restaurants",
+                "search"
               ],
               "query": [
                 {

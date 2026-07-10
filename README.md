@@ -113,7 +113,7 @@ Todas as respostas de erro seguem o padrão `ProblemDetail` (RFC 7807), com `tit
 | `400 Bad Request` | Falha de validação (Bean Validation) ou regra de domínio violada (ex.: senha curta, preço ≤ 0) |
 | `403 Forbidden` | Usuário tenta excluir um restaurante do qual não é dono |
 | `404 Not Found` | Recurso ou referência (`userTypeId`, `ownerId`, `restaurantId`) inexistente |
-| `409 Conflict` | Conflito de identificador duplicado |
+| `409 Conflict` | Violação de unicidade no banco (ex.: `UserType.code` duplicado) |
 
 ## Como executar
 
@@ -151,3 +151,11 @@ Com a aplicação em execução:
 - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
 Uma collection do Postman também está disponível em [`restcontrol-TC2.postman_collection.json`](./restcontrol-TC2.postman_collection.json).
+
+Fluxo recomendado na collection:
+
+- Execute `Load Seeded User Types` para carregar os IDs de `CUSTOMER` e `RESTAURANT_OWNER` criados automaticamente no startup.
+- Use `Create User` para criar um dono de restaurante com `ownerUserTypeId`.
+- Em seguida execute `Create Restaurant` e `Create Menu Item` para popular os demais IDs encadeados.
+
+O request `Create User Type` da collection cria um tipo customizado para testar o CRUD de `UserType` sem conflitar com os tipos seedados pela aplicação.

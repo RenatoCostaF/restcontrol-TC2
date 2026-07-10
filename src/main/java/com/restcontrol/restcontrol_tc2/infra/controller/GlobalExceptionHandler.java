@@ -4,6 +4,7 @@ import com.restcontrol.restcontrol_tc2.domain.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -59,6 +60,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RestaurantDuplicateIdentified.class)
     public ProblemDetail handleConflict(RuntimeException exception, HttpServletRequest request) {
+        return buildResponse(HttpStatus.CONFLICT, exception, request);
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ProblemDetail handleDuplicateKey(DuplicateKeyException exception, HttpServletRequest request) {
         return buildResponse(HttpStatus.CONFLICT, exception, request);
     }
 
