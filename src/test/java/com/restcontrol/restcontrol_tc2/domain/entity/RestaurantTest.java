@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -97,7 +98,7 @@ class RestaurantTest {
     void shouldAllowActionWhenUserIsOwner() {
         Restaurant restaurant = RestaurantHelper.createRestaurant();
 
-        restaurant.ensureOwnedBy(RestaurantHelper.OWNER_ID);
+        assertDoesNotThrow(() -> restaurant.ensureOwnedBy(RestaurantHelper.OWNER_ID));
     }
 
     @Test

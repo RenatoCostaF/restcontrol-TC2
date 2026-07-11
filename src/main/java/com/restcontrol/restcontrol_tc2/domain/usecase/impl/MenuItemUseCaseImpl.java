@@ -11,6 +11,8 @@ import java.util.List;
 
 public class MenuItemUseCaseImpl implements MenuItemUseCase {
 
+    private static final String MENU_ITEM_NOT_FOUND_MESSAGE = "Menu item not found";
+
     private final MenuItemGateway menuItemGateway;
     private final RestaurantGateway restaurantGateway;
 
@@ -27,7 +29,7 @@ public class MenuItemUseCaseImpl implements MenuItemUseCase {
 
     @Override
     public MenuItem update(MenuItem menuItem) {
-        menuItemGateway.getById(menuItem.getId()).orElseThrow(() -> new MenuItemNotFoundException("Menu item not found"));
+        menuItemGateway.getById(menuItem.getId()).orElseThrow(() -> new MenuItemNotFoundException(MENU_ITEM_NOT_FOUND_MESSAGE));
         validateRestaurantExists(menuItem.getRestaurantId());
         return menuItemGateway.update(menuItem);
     }
@@ -39,13 +41,13 @@ public class MenuItemUseCaseImpl implements MenuItemUseCase {
 
     @Override
     public MenuItem getById(String id) {
-        return menuItemGateway.getById(id).orElseThrow(() -> new MenuItemNotFoundException("Menu item not found"));
+        return menuItemGateway.getById(id).orElseThrow(() -> new MenuItemNotFoundException(MENU_ITEM_NOT_FOUND_MESSAGE));
 
     }
 
     @Override
     public void delete(String id) {
-        menuItemGateway.getById(id).orElseThrow(() -> new MenuItemNotFoundException("Menu item not found"));
+        menuItemGateway.getById(id).orElseThrow(() -> new MenuItemNotFoundException(MENU_ITEM_NOT_FOUND_MESSAGE));
         menuItemGateway.delete(id);
     }
 

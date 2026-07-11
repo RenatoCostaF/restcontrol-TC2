@@ -15,6 +15,9 @@ import com.restcontrol.restcontrol_tc2.domain.usecase.RestaurantUseCase;
 import java.util.List;
 
 public class RestaurantUseCaseImpl implements RestaurantUseCase {
+
+    private static final String RESTAURANT_NOT_FOUND_MESSAGE = "Restaurant not found";
+
     private final RestaurantGateway restaurantGateway;
     private final UserGateway userGateway;
     private final UserTypeGateway userTypeGateway;
@@ -37,7 +40,7 @@ public class RestaurantUseCaseImpl implements RestaurantUseCase {
 
     @Override
     public Restaurant update(Restaurant restaurant) {
-        restaurantGateway.getById(restaurant.getId()).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found"));
+        restaurantGateway.getById(restaurant.getId()).orElseThrow(() -> new RestaurantNotFoundException(RESTAURANT_NOT_FOUND_MESSAGE));
         validateOwnerIsRestaurantOwner(restaurant.getOwnerId());
         return restaurantGateway.update(restaurant);
     }
@@ -49,17 +52,17 @@ public class RestaurantUseCaseImpl implements RestaurantUseCase {
 
     @Override
     public Restaurant getByName(String name) {
-        return restaurantGateway.getByName(name).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found"));
+        return restaurantGateway.getByName(name).orElseThrow(() -> new RestaurantNotFoundException(RESTAURANT_NOT_FOUND_MESSAGE));
     }
 
     @Override
     public Restaurant getById(String id) {
-        return restaurantGateway.getById(id).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found"));
+        return restaurantGateway.getById(id).orElseThrow(() -> new RestaurantNotFoundException(RESTAURANT_NOT_FOUND_MESSAGE));
     }
 
     @Override
     public void delete(String id, String userId) {
-        Restaurant restaurant = restaurantGateway.getById(id).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found"));
+        Restaurant restaurant = restaurantGateway.getById(id).orElseThrow(() -> new RestaurantNotFoundException(RESTAURANT_NOT_FOUND_MESSAGE));
         userGateway.getById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
         restaurant.ensureOwnedBy(userId);
 

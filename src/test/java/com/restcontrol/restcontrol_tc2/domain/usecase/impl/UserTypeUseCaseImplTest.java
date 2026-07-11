@@ -96,9 +96,10 @@ class UserTypeUseCaseImplTest {
     @Test
     @DisplayName("Deve lançar exceção ao buscar tipo de usuário inexistente")
     void shouldThrowWhenGettingNonExistentUserType() {
-        when(userTypeGateway.getById(userType.getId())).thenReturn(Optional.empty());
+        String userTypeId = userType.getId();
+        when(userTypeGateway.getById(userTypeId)).thenReturn(Optional.empty());
 
-        assertThrows(UserTypeNotFoundException.class, () -> userTypeUseCase.getById(userType.getId()));
+        assertThrows(UserTypeNotFoundException.class, () -> userTypeUseCase.getById(userTypeId));
     }
 
     @Test
@@ -115,10 +116,11 @@ class UserTypeUseCaseImplTest {
     @Test
     @DisplayName("Deve lançar exceção ao remover tipo de usuário inexistente")
     void shouldThrowWhenDeletingNonExistentUserType() {
-        when(userTypeGateway.getById(userType.getId())).thenReturn(Optional.empty());
+        String userTypeId = userType.getId();
+        when(userTypeGateway.getById(userTypeId)).thenReturn(Optional.empty());
 
-        assertThrows(UserTypeNotFoundException.class, () -> userTypeUseCase.delete(userType.getId()));
+        assertThrows(UserTypeNotFoundException.class, () -> userTypeUseCase.delete(userTypeId));
 
-        verify(userTypeGateway, never()).delete(userType.getId());
+        verify(userTypeGateway, never()).delete(userTypeId);
     }
 }

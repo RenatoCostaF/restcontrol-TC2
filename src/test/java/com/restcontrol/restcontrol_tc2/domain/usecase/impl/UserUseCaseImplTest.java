@@ -114,9 +114,10 @@ class UserUseCaseImplTest {
     @Test
     @DisplayName("Deve lançar exceção ao buscar usuário inexistente")
     void shouldThrowWhenGettingNonExistentUser() {
-        when(userGateway.getById(user.getId())).thenReturn(Optional.empty());
+        String userId = user.getId();
+        when(userGateway.getById(userId)).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () -> userUseCase.getById(user.getId()));
+        assertThrows(UserNotFoundException.class, () -> userUseCase.getById(userId));
     }
 
     @Test
@@ -133,10 +134,11 @@ class UserUseCaseImplTest {
     @Test
     @DisplayName("Deve lançar exceção ao remover usuário inexistente")
     void shouldThrowWhenDeletingNonExistentUser() {
-        when(userGateway.getById(user.getId())).thenReturn(Optional.empty());
+        String userId = user.getId();
+        when(userGateway.getById(userId)).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () -> userUseCase.delete(user.getId()));
+        assertThrows(UserNotFoundException.class, () -> userUseCase.delete(userId));
 
-        verify(userGateway, never()).delete(user.getId());
+        verify(userGateway, never()).delete(userId);
     }
 }

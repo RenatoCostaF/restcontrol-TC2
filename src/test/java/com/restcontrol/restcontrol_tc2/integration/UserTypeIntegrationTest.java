@@ -87,7 +87,7 @@ class UserTypeIntegrationTest extends AbstractMongoIntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        var createdId = objectMapper.readTree(createResponse).get("id").asText();
+        var createdId = objectMapper.readValue(createResponse, UserType.class).getId();
 
         mockMvc.perform(get("/v1/user-types/{id}", createdId))
                 .andExpect(status().isOk())

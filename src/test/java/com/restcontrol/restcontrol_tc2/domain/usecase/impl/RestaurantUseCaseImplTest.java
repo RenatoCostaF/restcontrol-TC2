@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import com.restcontrol.restcontrol_tc2.domain.gateway.RestaurantGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserGateway;
 import com.restcontrol.restcontrol_tc2.domain.gateway.UserTypeGateway;
-import com.restcontrol.restcontrol_tc2.domain.entity.UserType;
 import com.restcontrol.restcontrol_tc2.domain.entity.Restaurant;
 import com.restcontrol.restcontrol_tc2.domain.exception.ActionNotAllowedForRunningUser;
 import com.restcontrol.restcontrol_tc2.domain.exception.RestaurantNotFoundException;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class RestaurantUseCaseImplTest {
+class RestaurantUseCaseImplTest {
 
     @Mock
     private RestaurantGateway restaurantGateway;
@@ -36,8 +35,6 @@ public class RestaurantUseCaseImplTest {
 
     @Mock
     private UserTypeGateway userTypeGateway;
-
-    private UserType userType;
 
     private RestaurantUseCaseImpl restaurantUseCase;
 
@@ -57,12 +54,12 @@ public class RestaurantUseCaseImplTest {
     @Test
     void createWithValidOwnerTest(){
         //Arrange
-        var userType = RestaurantHelper.createUserType();
+        var ownerType = RestaurantHelper.createUserType();
         var user = RestaurantHelper.createRestaurantOwner();
         var restaurant = RestaurantHelper.createRestaurant();
         when(restaurantGateway.create(any(Restaurant.class))).thenReturn(restaurant);
         when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
-        when(userTypeGateway.getById(userType.getId())).thenReturn(Optional.of(userType));
+        when(userTypeGateway.getById(ownerType.getId())).thenReturn(Optional.of(ownerType));
 
         //Act
         var createdRestaurant = restaurantUseCase.create(restaurant);
@@ -114,7 +111,7 @@ public class RestaurantUseCaseImplTest {
     @Test
     void updateValidRestaurantTest(){
         // Arrange
-        var userType = RestaurantHelper.createUserType();
+        var ownerType = RestaurantHelper.createUserType();
         var user = RestaurantHelper.createRestaurantOwner();
         var restaurant = RestaurantHelper.createRestaurant();
         var updatedRestaurant = new Restaurant(
@@ -127,7 +124,7 @@ public class RestaurantUseCaseImplTest {
         );
         when(restaurantGateway.getById(restaurant.getId())).thenReturn(Optional.of(restaurant));
         when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
-        when(userTypeGateway.getById(userType.getId())).thenReturn(Optional.of(userType));
+        when(userTypeGateway.getById(ownerType.getId())).thenReturn(Optional.of(ownerType));
         when(restaurantGateway.update(any(Restaurant.class))).thenReturn(updatedRestaurant);
 
         // Act
@@ -243,21 +240,10 @@ public class RestaurantUseCaseImplTest {
     @Test
     void deleteTest(){
         // Arrange
-        /*var userType = RestaurantHelper.createUserType();*/
         var user = RestaurantHelper.createRestaurantOwner();
         var restaurant = RestaurantHelper.createRestaurant();
-        var updatedRestaurant = new Restaurant(
-                RestaurantHelper.RESTAURANT_ID,
-                "New Name",
-                "New Address, 999",
-                "Japanese",
-                "from 5PM - 11PM",
-                RestaurantHelper.OWNER_ID
-        );
         when(restaurantGateway.getById(restaurant.getId())).thenReturn(Optional.of(restaurant));
         when(userGateway.getById(user.getId())).thenReturn(Optional.of(user));
-        /*when(userTypeGateway.getById(userType.getId())).thenReturn(Optional.of(userType));*/
-        /*when(restaurantGateway.update(any(Restaurant.class))).thenReturn(updatedRestaurant);*/
 
         //Act
         restaurantUseCase.delete(RestaurantHelper.RESTAURANT_ID, RestaurantHelper.OWNER_ID);

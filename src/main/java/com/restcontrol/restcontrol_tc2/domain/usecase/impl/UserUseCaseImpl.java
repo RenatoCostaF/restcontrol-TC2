@@ -9,6 +9,8 @@ import com.restcontrol.restcontrol_tc2.domain.usecase.UserUseCase;
 
 public class UserUseCaseImpl implements UserUseCase {
 
+    private static final String USER_NOT_FOUND_MESSAGE = "User not found";
+
     private final UserGateway userGateway;
     private final UserTypeGateway userTypeGateway;
 
@@ -25,18 +27,18 @@ public class UserUseCaseImpl implements UserUseCase {
 
     @Override
     public User update(User user) {
-        userGateway.getById(user.getId()).orElseThrow(() -> new UserNotFoundException("User not found"));
+        userGateway.getById(user.getId()).orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND_MESSAGE));
         validateUserTypeExists(user.getUserTypeId());
         return userGateway.update(user);
     }
 
     @Override
     public User getById(String id) {
-        return userGateway.getById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+        return userGateway.getById(id).orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND_MESSAGE));
     }
 
     public void delete(String id) {
-        userGateway.getById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+        userGateway.getById(id).orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND_MESSAGE));
         userGateway.delete(id);
     }
 

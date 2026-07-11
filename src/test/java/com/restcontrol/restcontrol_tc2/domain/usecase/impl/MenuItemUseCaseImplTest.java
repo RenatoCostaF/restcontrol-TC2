@@ -126,9 +126,10 @@ class MenuItemUseCaseImplTest {
     @Test
     @DisplayName("Deve lançar exceção ao buscar item inexistente")
     void shouldThrowWhenGettingNonExistentMenuItem() {
-        when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.empty());
+        String menuItemId = menuItem.getId();
+        when(menuItemGateway.getById(menuItemId)).thenReturn(Optional.empty());
 
-        assertThrows(MenuItemNotFoundException.class, () -> menuItemUseCase.getById(menuItem.getId()));
+        assertThrows(MenuItemNotFoundException.class, () -> menuItemUseCase.getById(menuItemId));
     }
 
     @Test
@@ -145,10 +146,11 @@ class MenuItemUseCaseImplTest {
     @Test
     @DisplayName("Deve lançar exceção ao remover item inexistente")
     void shouldThrowWhenDeletingNonExistentMenuItem() {
-        when(menuItemGateway.getById(menuItem.getId())).thenReturn(Optional.empty());
+        String menuItemId = menuItem.getId();
+        when(menuItemGateway.getById(menuItemId)).thenReturn(Optional.empty());
 
-        assertThrows(MenuItemNotFoundException.class, () -> menuItemUseCase.delete(menuItem.getId()));
+        assertThrows(MenuItemNotFoundException.class, () -> menuItemUseCase.delete(menuItemId));
 
-        verify(menuItemGateway, never()).delete(menuItem.getId());
+        verify(menuItemGateway, never()).delete(menuItemId);
     }
 }

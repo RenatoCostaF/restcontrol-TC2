@@ -9,6 +9,8 @@ import java.util.List;
 
 public class UserTypeUseCaseImpl implements UserTypeUseCase {
 
+    private static final String USER_TYPE_NOT_FOUND_MESSAGE = "UserType not found";
+
     private final UserTypeGateway userTypeGateway;
 
     public UserTypeUseCaseImpl(UserTypeGateway userTypeGateway) {
@@ -22,7 +24,7 @@ public class UserTypeUseCaseImpl implements UserTypeUseCase {
 
     @Override
     public UserType update(UserType userType) {
-        userTypeGateway.getById(userType.getId()).orElseThrow(() -> new UserTypeNotFoundException("UserType not found"));
+        userTypeGateway.getById(userType.getId()).orElseThrow(() -> new UserTypeNotFoundException(USER_TYPE_NOT_FOUND_MESSAGE));
         return userTypeGateway.update(userType);
     }
 
@@ -33,12 +35,12 @@ public class UserTypeUseCaseImpl implements UserTypeUseCase {
 
     @Override
     public UserType getById(String id) {
-        return userTypeGateway.getById(id).orElseThrow(() -> new UserTypeNotFoundException("UserType not found"));
+        return userTypeGateway.getById(id).orElseThrow(() -> new UserTypeNotFoundException(USER_TYPE_NOT_FOUND_MESSAGE));
     }
 
     @Override
     public void delete(String id) {
-        userTypeGateway.getById(id).orElseThrow(() -> new UserTypeNotFoundException("UserType not found"));
+        userTypeGateway.getById(id).orElseThrow(() -> new UserTypeNotFoundException(USER_TYPE_NOT_FOUND_MESSAGE));
         userTypeGateway.delete(id);
     }
 
