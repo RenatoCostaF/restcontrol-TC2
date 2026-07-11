@@ -27,7 +27,7 @@ public abstract class AbstractMongoIntegrationTest {
 
     @DynamicPropertySource
     static void configureMongo(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.uri", MONGO_DB_CONTAINER::getReplicaSetUrl);
+        registry.add("spring.mongodb.uri", MONGO_DB_CONTAINER::getReplicaSetUrl);
     }
 
     @Autowired

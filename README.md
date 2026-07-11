@@ -133,7 +133,7 @@ Pré-requisitos: JDK 21, Maven 3.9+ (ou `./mvnw`) e MongoDB rodando em `localhos
 ./mvnw spring-boot:run
 ```
 
-A aplicação sobe em `http://localhost:8080`, conectando por padrão em `mongodb://localhost:27017/restcontrol-tc2` (sobrescrevível pela variável `SPRING_DATA_MONGODB_URI`).
+A aplicação sobe em `http://localhost:8080`, conectando por padrão em `mongodb://localhost:27017/restcontrol-tc2` (sobrescrevível pela variável `SPRING_MONGODB_URI`).
 
 ## Testes
 
